@@ -4,6 +4,7 @@ using AzulTracker.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzulTracker.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260418082755_ModelCleanup")]
+    partial class ModelCleanup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,170 +114,6 @@ namespace AzulTracker.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Muscles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            MuscleGroup = "Chest",
-                            Name = "Pectoralis Major"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            MuscleGroup = "Chest",
-                            Name = "Pectoralis Minor"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            MuscleGroup = "Back",
-                            Name = "Latissimus Dorsi"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            MuscleGroup = "Back",
-                            Name = "Rhomboids"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            MuscleGroup = "Back",
-                            Name = "Erector Spinae"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            MuscleGroup = "Back",
-                            Name = "Teres Major"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            MuscleGroup = "Shoulders",
-                            Name = "Lateral Deltoid"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            MuscleGroup = "Shoulders",
-                            Name = "Anterior Deltoid"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            MuscleGroup = "Shoulders",
-                            Name = "Posterior Deltoid"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            MuscleGroup = "Shoulders",
-                            Name = "Trapezius"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            MuscleGroup = "Shoulders",
-                            Name = "Rotator Cuff"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            MuscleGroup = "Arms",
-                            Name = "Biceps Brachii"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            MuscleGroup = "Arms",
-                            Name = "Brachialis"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            MuscleGroup = "Arms",
-                            Name = "Triceps Brachii"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            MuscleGroup = "Arms",
-                            Name = "Forearms"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            MuscleGroup = "Core",
-                            Name = "Rectus Abdominis"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            MuscleGroup = "Core",
-                            Name = "Obliques"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            MuscleGroup = "Core",
-                            Name = "Transverse Abdominis"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            MuscleGroup = "Core",
-                            Name = "Serratus Anterior"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            MuscleGroup = "Legs",
-                            Name = "Quadriceps"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            MuscleGroup = "Legs",
-                            Name = "Hamstrings"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            MuscleGroup = "Legs",
-                            Name = "Adductors"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            MuscleGroup = "Legs",
-                            Name = "Abductors"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            MuscleGroup = "Glutes",
-                            Name = "Gluteus Maximus"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            MuscleGroup = "Glutes",
-                            Name = "Gluteus Medius"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            MuscleGroup = "Calves",
-                            Name = "Gastrocnemius"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            MuscleGroup = "Calves",
-                            Name = "Soleus"
-                        });
                 });
 
             modelBuilder.Entity("AzulTracker.API.Models.ProgramDay", b =>
