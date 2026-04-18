@@ -13,6 +13,9 @@ public class AppDbContext : DbContext
     public DbSet<ProgramDay> ProgramDays => Set<ProgramDay>();
     public DbSet<ProgramExercise> ProgramExercises => Set<ProgramExercise>();
     public DbSet<WorkoutLog> WorkoutLogs => Set<WorkoutLog>();
+    public DbSet<Muscle> Muscles { get; set; }
+    public DbSet<ExerciseMuscle> ExerciseMuscles { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
