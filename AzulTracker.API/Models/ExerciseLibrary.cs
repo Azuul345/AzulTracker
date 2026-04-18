@@ -4,9 +4,14 @@ public class ExerciseLibrary
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public string MuscleGroup { get; set; } = string.Empty;
-    public string? MuscleGroupImage { get; set; }
-    public string? Description { get; set; }
+    public string Category { get; set; } = string.Empty;
+    public string? VideoUrl { get; set; }
+    public bool IsApproved { get; set; }
+    public bool IsCustom { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public ICollection<ProgramExercise> ProgramExercises { get; set; } = [];
+    public int? SubmittedByUserId { get; set; }
+    public User? SubmittedBy { get; set; }
+
+    public ICollection<ExerciseMuscle> ExerciseMuscles { get; set; } = [];
 }
