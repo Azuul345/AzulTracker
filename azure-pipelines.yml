@@ -37,7 +37,7 @@ stages:
       - job: BuildFrontend
         displayName: 'Build React Frontend'
         steps:
-          - task: NodeTool@0
+          - task: UseNode@1
             displayName: 'Use Node.js'
             inputs:
               versionSpec: '20.x'
