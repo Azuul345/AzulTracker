@@ -37,6 +37,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Add services to the container.
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TrainingProgramService>();
+builder.Services.AddScoped<ProgramDayService>();
+builder.Services.AddScoped<ProgramExerciseService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 

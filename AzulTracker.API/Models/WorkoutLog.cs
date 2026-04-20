@@ -9,7 +9,7 @@ public class WorkoutLog
     public int RepsCompleted { get; set; }
     public int? RPE { get; set; }
     public string? Notes { get; set; }
-
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public int UserId { get; set; }
     public User User { get; set; } = null!;
 
