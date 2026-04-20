@@ -41,6 +41,7 @@ builder.Services.AddScoped<TrainingProgramService>();
 builder.Services.AddScoped<ProgramDayService>();
 builder.Services.AddScoped<ProgramExerciseService>();
 builder.Services.AddScoped<WorkoutLogService>();
+builder.Services.AddScoped<ExerciseLibraryService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
