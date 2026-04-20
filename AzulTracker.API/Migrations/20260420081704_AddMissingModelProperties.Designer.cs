@@ -4,6 +4,7 @@ using AzulTracker.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzulTracker.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260420081704_AddMissingModelProperties")]
+    partial class AddMissingModelProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -313,7 +316,7 @@ namespace AzulTracker.API.Migrations
                     b.Property<string>("CustomExerciseName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ExerciseLibraryId")
+                    b.Property<int>("ExerciseLibraryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Notes")
@@ -539,7 +542,9 @@ namespace AzulTracker.API.Migrations
                 {
                     b.HasOne("AzulTracker.API.Models.ExerciseLibrary", "ExerciseLibrary")
                         .WithMany()
-                        .HasForeignKey("ExerciseLibraryId");
+                        .HasForeignKey("ExerciseLibraryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AzulTracker.API.Models.ProgramDay", "ProgramDay")
                         .WithMany("ProgramExercises")
