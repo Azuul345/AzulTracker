@@ -5,7 +5,7 @@ public class WorkoutLog
     public int Id { get; set; }
     public DateTime Date { get; set; }
     public int SetNumber { get; set; }
-    public float Weight { get; set; }
+    public double Weight { get; set; }
     public int RepsCompleted { get; set; }
     public int? RPE { get; set; }
     public string? Notes { get; set; }
