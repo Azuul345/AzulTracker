@@ -45,7 +45,10 @@ public class UserService
     {
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
 
-        if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
+        if (user == null) return null;
+        if (!user.IsActive) return null;
+
+        if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return null;
 
         return GenerateAuthResponse(user);
