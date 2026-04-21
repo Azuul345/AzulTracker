@@ -32,7 +32,11 @@ stages:
 
           - script: dotnet build --no-restore --configuration Release
             displayName: 'Build API'
-            workingDirectory: 'AzulTracker.API'
+            workingDirectory: '$(Build.SourcesDirectory)'
+
+          - script: dotnet test --no-build --verbosity normal
+            displayName: 'Run unit tests'
+            workingDirectory: '$(Build.SourcesDirectory)/AzulTracker.Tests'
 
       - job: BuildFrontend
         displayName: 'Build React Frontend'
