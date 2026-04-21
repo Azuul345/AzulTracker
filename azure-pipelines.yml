@@ -28,7 +28,7 @@ stages:
 
           - script: dotnet restore
             displayName: 'Restore NuGet packages'
-            workingDirectory: 'AzulTracker.API'
+            workingDirectory: '$(Build.SourcesDirectory)'
 
           - script: dotnet build AzulTracker.slnx --no-restore --configuration Release
             displayName: 'Build API'
