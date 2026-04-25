@@ -15,11 +15,13 @@ public class ProgramExerciseService(AppDbContext db)
 
         if (!dayBelongsToUser) return [];
 
-        return await db.ProgramExercises
+        var exercises = await db.ProgramExercises
+            .Include(e => e.ExerciseLibrary)
             .Where(e => e.ProgramDayId == programDayId)
             .OrderBy(e => e.OrderIndex)
-            .Select(e => e.ToDto())
             .ToListAsync();
+
+        return exercises.Select(e => e.ToDto()).ToList();
     }
 
     public async Task<(ProgramExerciseDto? Result, string? Error)> CreateAsync(
