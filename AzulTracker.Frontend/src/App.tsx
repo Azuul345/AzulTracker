@@ -3,6 +3,8 @@ import { useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
+import ProgramsPage from './pages/ProgramsPage';
+import ProgramDetailPage from './pages/ProgramDetailPage';
 
 // Protects any route that requires login
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -28,6 +30,22 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+    <Route
+      path="/programs"
+      element={
+        <ProtectedRoute>
+          <ProgramsPage />
+        </ProtectedRoute>
+      }
+    />
+    <Route
+      path="/programs/:id"
+      element={
+       <ProtectedRoute>
+         <ProgramDetailPage />
+      </ProtectedRoute>
+      }
+    />
       {/* Redirect root to dashboard — ProtectedRoute will handle the rest */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
     </Routes>
