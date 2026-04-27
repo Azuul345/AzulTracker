@@ -10,6 +10,7 @@ public static class ProgramExerciseExtensions
         Id = exercise.Id,
         ProgramDayId = exercise.ProgramDayId,
         ExerciseLibraryId = exercise.ExerciseLibraryId,
+        ExerciseName = exercise.ExerciseLibrary?.Name,
         CustomExerciseName = exercise.CustomExerciseName,
         Sets = exercise.Sets,
         Reps = exercise.Reps,

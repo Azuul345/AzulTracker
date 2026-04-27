@@ -26,13 +26,17 @@ stages:
               packageType: 'sdk'
               version: '10.x'
 
-          - script: dotnet restore
+          - script: dotnet restore AzulTracker.slnx
             displayName: 'Restore NuGet packages'
-            workingDirectory: 'AzulTracker.API'
+            workingDirectory: '$(Build.SourcesDirectory)'
 
-          - script: dotnet build --no-restore --configuration Release
+          - script: dotnet build AzulTracker.slnx --no-restore --configuration Release
             displayName: 'Build API'
-            workingDirectory: 'AzulTracker.API'
+            workingDirectory: '$(Build.SourcesDirectory)'
+
+          - script: dotnet test AzulTracker.slnx --no-build --configuration Release --verbosity normal
+            displayName: 'Run unit tests'
+            workingDirectory: '$(Build.SourcesDirectory)'
 
       - job: BuildFrontend
         displayName: 'Build React Frontend'
