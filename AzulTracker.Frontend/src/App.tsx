@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import ProgramsPage from './pages/ProgramsPage';
 import ProgramDetailPage from './pages/ProgramDetailPage';
+import WorkoutPage from './pages/WorkoutPage';
 
 // Protects any route that requires login
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -48,6 +49,7 @@ export default function App() {
     />
       {/* Redirect root to dashboard — ProtectedRoute will handle the rest */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/workout" element={<ProtectedRoute><WorkoutPage /></ProtectedRoute>} />
     </Routes>
   );
 }
