@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   getPrograms, getDays, getExercisesForDay,
-  createDay, updateDay, deleteDay,
-  createExercise, updateExercise, deleteExercise,
+  createDay,  deleteDay, //updateDay,
+  createExercise,  deleteExercise, //updateExercise,
   searchExercises
 } from "../services/programService";
 import type { TrainingProgram, ProgramDay, ProgramExercise, ExerciseSearchResult } from "../types/program";
