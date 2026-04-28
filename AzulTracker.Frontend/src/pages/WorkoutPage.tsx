@@ -5,6 +5,8 @@ import type { WorkoutLogDto } from '../types/workout';
 import type { TrainingProgram, ProgramExercise } from '../types/program';
 import LogSetForm from '../components/LogSetForm';
 
+ const today = new Date().toISOString().split('T')[0];
+
 export default function WorkoutPage() {
   const [activeProgram, setActiveProgram] = useState<TrainingProgram | null>(null);
   const [days, setDays] = useState<{ id: number; name: string }[]>([]);
@@ -16,7 +18,7 @@ export default function WorkoutPage() {
   const [isGuided, setIsGuided] = useState(false);
   const [guidedIndex, setGuidedIndex] = useState(0);
 
-  const today = new Date().toISOString().split('T')[0];
+ 
 
   useEffect(() => {
     const loadData = async () => {

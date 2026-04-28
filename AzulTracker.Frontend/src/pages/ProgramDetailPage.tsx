@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import {
   getPrograms, getDays, getExercisesForDay,
-  createDay,  deleteDay, //updateDay,
-  createExercise,  deleteExercise, //updateExercise,
+  createDay, deleteDay,
+  createExercise, deleteExercise,
   searchExercises
 } from "../services/programService";
 import type { TrainingProgram, ProgramDay, ProgramExercise, ExerciseSearchResult } from "../types/program";
@@ -17,11 +17,9 @@ export default function ProgramDetailPage() {
   const [exercisesByDay, setExercisesByDay] = useState<Record<number, ProgramExercise[]>>({});
   const [error, setError] = useState<string | null>(null);
 
-  // Day form state
   const [showDayForm, setShowDayForm] = useState(false);
   const [dayName, setDayName] = useState("");
 
-  // Exercise form state
   const [activeDayId, setActiveDayId] = useState<number | null>(null);
   const [sets, setSets] = useState(3);
   const [reps, setReps] = useState(8);
@@ -31,30 +29,30 @@ export default function ProgramDetailPage() {
   const [selectedExercise, setSelectedExercise] = useState<ExerciseSearchResult | null>(null);
   const [customName, setCustomName] = useState("");
 
-  useEffect(() => {
-    loadProgram();
-  }, []);
+  const loadProgram = useCallback(async () => {
+    try {
+      const res = await getPrograms();
+      const found = res.data.find(p => p.id === programId);
+      if (!found) { setError("Program not found."); return; }
+      setProgram(found);
 
-  async function loadProgram() {
-  try {
-    const res = await getPrograms();
-    const found = res.data.find(p => p.id === programId);
-    if (!found) { setError("Program not found."); return; }
-    setProgram(found);
+      const daysData = await getDays(programId);
+      setDays(daysData.data);
 
-    const daysData = await getDays(programId);
-    setDays(daysData.data);
-
-    const exMap: Record<number, ProgramExercise[]> = {};
-    for (const day of daysData.data) {
-      const exRes = await getExercisesForDay(programId, day.id);
-      exMap[day.id] = exRes.data;
+      const exMap: Record<number, ProgramExercise[]> = {};
+      for (const day of daysData.data) {
+        const exRes = await getExercisesForDay(programId, day.id);
+        exMap[day.id] = exRes.data;
+      }
+      setExercisesByDay(exMap);
+    } catch {
+      setError("Failed to load program.");
     }
-    setExercisesByDay(exMap);
-  } catch {
-    setError("Failed to load program.");
-  }
-}
+  }, [programId]);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadProgram();
+  }, [loadProgram]);
 
   async function handleSearch(query: string) {
     setSearchQuery(query);

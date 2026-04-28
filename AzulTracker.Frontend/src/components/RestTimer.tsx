@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface Props {
   durationSeconds?: number;
@@ -8,10 +8,15 @@ interface Props {
 export default function RestTimer({ durationSeconds = 90, onComplete }: Props) {
   const [secondsLeft, setSecondsLeft] = useState(durationSeconds);
   const [isActive, setIsActive] = useState(true);
+  const onCompleteRef = useRef(onComplete)
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     if (!isActive || secondsLeft <= 0) {
-      if (secondsLeft <= 0) onComplete?.();
+      if (secondsLeft <= 0) onCompleteRef.current?.();
       return;
     }
 
