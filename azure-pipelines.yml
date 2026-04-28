@@ -53,3 +53,8 @@ stages:
           - script: npm run build
             displayName: 'Build Frontend'
             workingDirectory: 'AzulTracker.Frontend'
+          
+          - script: npm run lint
+            displayName: Lint frontend
+            workingDirectory: 'AzulTracker.Frontend'
+                            
