@@ -2,6 +2,7 @@ using AzulTracker.API.DTOs;
 using AzulTracker.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using AzulTracker.API.Extensions;
 
 namespace AzulTracker.API.Controllers;
 
@@ -45,5 +46,18 @@ public class AuthController : ControllerBase
         var username = User.Identity?.Name;
         var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
         return Ok(new { username, role });
+    }
+
+    [HttpPatch("settings")]
+    [Authorize]
+    public async Task<IActionResult> UpdateSettings([FromBody] UpdateUserSettingsDto dto)
+    {
+        var userId = User.GetUserId();
+        var (success, error) = await _userService.UpdateSettingsAsync(userId, dto);
+
+        if (!success)
+            return BadRequest(new { message = error });
+
+        return NoContent();
     }
 }

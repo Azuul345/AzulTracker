@@ -17,6 +17,8 @@ export interface AuthResponse {
   username: string;
   email: string;
   role: string;
+  preferredWorkoutView: 'FullDay' | 'Guided';  // Add
+  restTimerEnabled: boolean;
 }
 
 // The user object we store in React state after login
@@ -24,4 +26,6 @@ export interface AuthUser {
   username: string;
   email: string;
   role: string;
+  preferredWorkoutView: 'FullDay' | 'Guided';  
+  restTimerEnabled: boolean;  
 }
