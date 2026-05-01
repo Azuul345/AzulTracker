@@ -1,212 +1,143 @@
-import { useEffect, useState, useCallback } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
-  getPrograms, getDays, getExercisesForDay,
-  createDay, deleteDay,
-  createExercise, deleteExercise,
-  searchExercises
-} from "../services/programService";
-import type { TrainingProgram, ProgramDay, ProgramExercise, ExerciseSearchResult } from "../types/program";
+  getPrograms,
+  createProgram,
+  deleteProgram,
+  activateProgram
+} from '../services/programService';
+import type { TrainingProgram } from '../types/program';
 
-export default function ProgramDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const programId = Number(id);
+export default function ProgramsPage() {
+  const [programs, setPrograms] = useState<TrainingProgram[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const [program, setProgram] = useState<TrainingProgram | null>(null);
-  const [days, setDays] = useState<ProgramDay[]>([]);
-  const [exercisesByDay, setExercisesByDay] = useState<Record<number, ProgramExercise[]>>({});
-  const [error, setError] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(false);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [daysPerWeek, setDaysPerWeek] = useState(3);
 
-  const [showDayForm, setShowDayForm] = useState(false);
-  const [dayName, setDayName] = useState("");
+  useEffect(() => {
+    loadPrograms();
+  }, []);
 
-  const [activeDayId, setActiveDayId] = useState<number | null>(null);
-  const [sets, setSets] = useState(3);
-  const [reps, setReps] = useState(8);
-  const [notes, setNotes] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<ExerciseSearchResult[]>([]);
-  const [selectedExercise, setSelectedExercise] = useState<ExerciseSearchResult | null>(null);
-  const [customName, setCustomName] = useState("");
-
-  const loadProgram = useCallback(async () => {
+  async function loadPrograms() {
     try {
       const res = await getPrograms();
-      const found = res.data.find(p => p.id === programId);
-      if (!found) { setError("Program not found."); return; }
-      setProgram(found);
-
-      const daysData = await getDays(programId);
-      setDays(daysData.data);
-
-      const exMap: Record<number, ProgramExercise[]> = {};
-      for (const day of daysData.data) {
-        const exRes = await getExercisesForDay(programId, day.id);
-        exMap[day.id] = exRes.data;
-      }
-      setExercisesByDay(exMap);
+      setPrograms(res.data);
     } catch {
-      setError("Failed to load program.");
-    }
-  }, [programId]);
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    loadProgram();
-  }, [loadProgram]);
-
-  async function handleSearch(query: string) {
-    setSearchQuery(query);
-    setSelectedExercise(null);
-    if (query.length < 2) { setSearchResults([]); return; }
-    try {
-      const res = await searchExercises(query);
-      setSearchResults(res.data);
-    } catch {
-      setSearchResults([]);
+      setError('Failed to load programs.');
+    } finally {
+      setLoading(false);
     }
   }
 
-  async function handleAddDay(e: React.FormEvent) {
+  async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
     try {
-      await createDay(programId, { name: dayName, dayOrder: days.length + 1 });
-      setDayName("");
-      setShowDayForm(false);
-      await loadProgram();
+      await createProgram({ name, description, daysPerWeek });
+      setName('');
+      setDescription('');
+      setDaysPerWeek(3);
+      setShowForm(false);
+      await loadPrograms();
     } catch {
-      setError("Failed to add day.");
+      setError('Failed to create program.');
     }
   }
 
-  async function handleDeleteDay(dayId: number) {
+  async function handleDelete(id: number) {
     try {
-      await deleteDay(programId, dayId);
-      await loadProgram();
+      await deleteProgram(id);
+      await loadPrograms();
     } catch {
-      setError("Failed to delete day.");
+      setError('Failed to delete program.');
     }
   }
 
-  async function handleAddExercise(e: React.FormEvent, dayId: number) {
-    e.preventDefault();
-    const orderIndex = (exercisesByDay[dayId]?.length ?? 0) + 1;
+  async function handleActivate(id: number) {
     try {
-      await createExercise(programId, dayId, {
-        exerciseLibraryId: selectedExercise?.id,
-        customExerciseName: !selectedExercise ? customName : undefined,
-        sets,
-        reps,
-        orderIndex,
-        notes: notes || undefined,
-      });
-      setActiveDayId(null);
-      resetExerciseForm();
-      await loadProgram();
+      await activateProgram(id);
+      await loadPrograms();
     } catch {
-      setError("Failed to add exercise.");
+      setError('Failed to activate program.');
     }
   }
 
-  async function handleDeleteExercise(dayId: number, exerciseId: number) {
-    try {
-      await deleteExercise(programId, dayId, exerciseId);
-      await loadProgram();
-    } catch {
-      setError("Failed to delete exercise.");
-    }
-  }
-
-  function resetExerciseForm() {
-    setSets(3); setReps(8); setNotes("");
-    setSearchQuery(""); setSearchResults([]);
-    setSelectedExercise(null); setCustomName("");
-  }
-
-  if (!program) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div>
-      <h1>{program.name}</h1>
-      {program.description && <p>{program.description}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div style={{ padding: '2rem' }}>
+      <h1>My Programs</h1>
 
-      <button onClick={() => setShowDayForm(!showDayForm)}>
-        {showDayForm ? "Cancel" : "Add Day"}
+      <button
+        onClick={() => setShowForm(!showForm)}
+        style={{ marginTop: '1rem' }}
+      >
+        {showForm ? 'Cancel' : '+ New Program'}
       </button>
 
-      {showDayForm && (
-        <form onSubmit={handleAddDay}>
+      {showForm && (
+        <form onSubmit={handleCreate} style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', maxWidth: 400 }}>
           <input
-            placeholder="Day name (e.g. Push Day)"
-            value={dayName}
-            onChange={e => setDayName(e.target.value)}
+            placeholder="Program name"
+            value={name}
+            onChange={e => setName(e.target.value)}
             required
           />
-          <button type="submit">Add</button>
+          <input
+            placeholder="Description (optional)"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+          />
+          <input
+            type="number"
+            min={1}
+            max={7}
+            placeholder="Days per week"
+            value={daysPerWeek}
+            onChange={e => setDaysPerWeek(Number(e.target.value))}
+            required
+          />
+          <button type="submit">Create</button>
         </form>
       )}
 
-      {days.map(day => (
-        <div key={day.id} style={{ marginTop: "1rem", border: "1px solid #444", padding: "1rem" }}>
-          <h2>{day.name}</h2>
-          <button onClick={() => handleDeleteDay(day.id)}>Delete Day</button>
-
-          <ul>
-            {(exercisesByDay[day.id] ?? []).map(ex => (
-              <li key={ex.id}>
-                {ex.customExerciseName ?? ex.exerciseName ?? `Exercise #${ex.exerciseLibraryId}`} — {ex.sets}×{ex.reps}
-                {ex.notes && <span> ({ex.notes})</span>}
-                <button onClick={() => handleDeleteExercise(day.id, ex.id)}>Remove</button>
-              </li>
-            ))}
-          </ul>
-
-          {activeDayId === day.id ? (
-            <form onSubmit={e => handleAddExercise(e, day.id)}>
-              <div>
-                <input
-                  placeholder="Search exercise library..."
-                  value={searchQuery}
-                  onChange={e => handleSearch(e.target.value)}
-                />
-                {searchResults.length > 0 && (
-                  <ul>
-                    {searchResults.map(r => (
-                      <li key={r.id} style={{ cursor: "pointer" }} onClick={() => {
-                        setSelectedExercise(r);
-                        setSearchQuery(r.name);
-                        setSearchResults([]);
-                      }}>
-                        {r.name} — {r.category}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                {selectedExercise && <p>✅ Selected: {selectedExercise.name}</p>}
-              </div>
-
-              {!selectedExercise && (
+      {programs.length === 0 ? (
+        <p style={{ color: '#666', marginTop: '2rem' }}>No programs yet. Create your first one!</p>
+      ) : (
+        <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          {programs.map(program => (
+            <div key={program.id} style={{ border: '1px solid #ddd', borderRadius: 8, padding: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <input
-                    placeholder="Or type a custom exercise name"
-                    value={customName}
-                    onChange={e => setCustomName(e.target.value)}
-                  />
+                  <h2 style={{ margin: 0 }}>
+                    <Link to={`/programs/${program.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                      {program.name}
+                    </Link>
+                    {program.isActive && (
+                      <span style={{ marginLeft: '0.5rem', fontSize: '0.75rem', color: 'green' }}>● Active</span>
+                    )}
+                  </h2>
+                  {program.description && <p style={{ color: '#666', margin: '0.25rem 0 0' }}>{program.description}</p>}
+                  <p style={{ color: '#999', fontSize: '0.875rem', margin: '0.25rem 0 0' }}>{program.daysPerWeek} days/week</p>
                 </div>
-              )}
-
-              <input type="number" min={1} value={sets} onChange={e => setSets(Number(e.target.value))} placeholder="Sets" required />
-              <input type="number" min={1} value={reps} onChange={e => setReps(Number(e.target.value))} placeholder="Reps" required />
-              <input placeholder="Notes (optional)" value={notes} onChange={e => setNotes(e.target.value)} />
-
-              <button type="submit">Add Exercise</button>
-              <button type="button" onClick={() => { setActiveDayId(null); resetExerciseForm(); }}>Cancel</button>
-            </form>
-          ) : (
-            <button onClick={() => setActiveDayId(day.id)}>+ Add Exercise</button>
-          )}
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  {!program.isActive && (
+                    <button onClick={() => handleActivate(program.id)}>Set Active</button>
+                  )}
+                  <Link to={`/programs/${program.id}`}>
+                    <button>Edit</button>
+                  </Link>
+                  <button onClick={() => handleDelete(program.id)} style={{ color: 'red' }}>Delete</button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }

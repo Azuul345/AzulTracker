@@ -122,7 +122,9 @@ export default function ProgramDetailPage() {
     setSelectedExercise(null); setCustomName("");
   }
 
-  if (!program) return <p>Loading...</p>;
+  if (!program && !error) return <p>Loading...</p>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (!program) return null;
 
   return (
     <div>
