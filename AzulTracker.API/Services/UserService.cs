@@ -79,7 +79,29 @@ public class UserService
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
             Username = user.Username,
-            Role = user.Role
+            Role = user.Role,
+            PreferredWorkoutView = user.PreferredWorkoutView,
+            RestTimerEnabled = user.RestTimerEnabled
         };
     }
+
+    public async Task<(bool Success, string Error)> UpdateSettingsAsync(int userId, UpdateUserSettingsDto dto)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null)
+            return (false, "User not found.");
+
+        var validViews = new[] { "FullDay", "Guided" };
+        if (!validViews.Contains(dto.PreferredWorkoutView))
+            return (false, "PreferredWorkoutView must be 'FullDay' or 'Guided'.");
+
+        user.PreferredWorkoutView = dto.PreferredWorkoutView;
+        user.RestTimerEnabled = dto.RestTimerEnabled;
+
+        await _context.SaveChangesAsync();
+        return (true, string.Empty);
+    }
+
+
 }
+

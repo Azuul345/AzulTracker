@@ -8,6 +8,7 @@ interface AuthContextType {
   login: (token: string, user: AuthUser) => void;
   logout: () => void;
   isAdmin: () => boolean;
+  updateSettings: (view: 'FullDay' | 'Guided', restTimer: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -43,8 +44,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const isAdmin = () => user?.role === 'Admin';
 
+  const updateSettings = (view: 'FullDay' | 'Guided', restTimer: boolean) => {
+  setUser(prev => prev ? {
+    ...prev,
+    preferredWorkoutView: view,
+    restTimerEnabled: restTimer
+  } : null);
+};
+
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, logout, isAdmin }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout, isAdmin, updateSettings }}>
       {children}
     </AuthContext.Provider>
   );
