@@ -5,6 +5,7 @@ public class ProgramExerciseDto
     public int Id { get; set; }
     public int ProgramDayId { get; set; }
     public int? ExerciseLibraryId { get; set; }
+    public string? ExerciseName { get; set; }
     public string? CustomExerciseName { get; set; }
     public int Sets { get; set; }
     public int Reps { get; set; }

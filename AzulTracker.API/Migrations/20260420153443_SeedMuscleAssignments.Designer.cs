@@ -4,6 +4,7 @@ using AzulTracker.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzulTracker.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260420153443_SeedMuscleAssignments")]
+    partial class SeedMuscleAssignments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2330,350 +2333,350 @@ namespace AzulTracker.API.Migrations
                             Id = 63,
                             ExerciseLibraryId = 16,
                             IsPrimary = true,
-                            MuscleId = 3
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 64,
                             ExerciseLibraryId = 16,
                             IsPrimary = true,
-                            MuscleId = 6
+                            MuscleId = 2
                         },
                         new
                         {
                             Id = 65,
                             ExerciseLibraryId = 16,
                             IsPrimary = false,
-                            MuscleId = 12
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 66,
-                            ExerciseLibraryId = 16,
-                            IsPrimary = false,
-                            MuscleId = 13
+                            ExerciseLibraryId = 17,
+                            IsPrimary = true,
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 67,
-                            ExerciseLibraryId = 16,
-                            IsPrimary = false,
-                            MuscleId = 10
+                            ExerciseLibraryId = 17,
+                            IsPrimary = true,
+                            MuscleId = 2
                         },
                         new
                         {
                             Id = 68,
                             ExerciseLibraryId = 17,
                             IsPrimary = true,
-                            MuscleId = 3
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 69,
                             ExerciseLibraryId = 17,
-                            IsPrimary = true,
-                            MuscleId = 6
+                            IsPrimary = false,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 70,
-                            ExerciseLibraryId = 17,
+                            ExerciseLibraryId = 18,
                             IsPrimary = true,
-                            MuscleId = 12
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 71,
-                            ExerciseLibraryId = 17,
-                            IsPrimary = false,
-                            MuscleId = 13
+                            ExerciseLibraryId = 18,
+                            IsPrimary = true,
+                            MuscleId = 2
                         },
                         new
                         {
                             Id = 72,
                             ExerciseLibraryId = 18,
                             IsPrimary = true,
-                            MuscleId = 3
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 73,
                             ExerciseLibraryId = 18,
                             IsPrimary = false,
-                            MuscleId = 6
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 74,
-                            ExerciseLibraryId = 18,
-                            IsPrimary = false,
-                            MuscleId = 10
-                        },
-                        new
-                        {
-                            Id = 75,
-                            ExerciseLibraryId = 18,
-                            IsPrimary = false,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 76,
                             ExerciseLibraryId = 19,
                             IsPrimary = true,
                             MuscleId = 3
                         },
                         new
                         {
-                            Id = 77,
+                            Id = 75,
                             ExerciseLibraryId = 19,
                             IsPrimary = true,
-                            MuscleId = 4
+                            MuscleId = 6
+                        },
+                        new
+                        {
+                            Id = 76,
+                            ExerciseLibraryId = 19,
+                            IsPrimary = false,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 77,
+                            ExerciseLibraryId = 19,
+                            IsPrimary = false,
+                            MuscleId = 13
                         },
                         new
                         {
                             Id = 78,
                             ExerciseLibraryId = 19,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 79,
-                            ExerciseLibraryId = 19,
+                            ExerciseLibraryId = 20,
+                            IsPrimary = true,
+                            MuscleId = 3
+                        },
+                        new
+                        {
+                            Id = 80,
+                            ExerciseLibraryId = 20,
                             IsPrimary = true,
                             MuscleId = 6
                         },
                         new
                         {
-                            Id = 80,
-                            ExerciseLibraryId = 19,
-                            IsPrimary = false,
-                            MuscleId = 10
-                        },
-                        new
-                        {
                             Id = 81,
-                            ExerciseLibraryId = 19,
-                            IsPrimary = false,
+                            ExerciseLibraryId = 20,
+                            IsPrimary = true,
                             MuscleId = 12
                         },
                         new
                         {
                             Id = 82,
                             ExerciseLibraryId = 20,
+                            IsPrimary = false,
+                            MuscleId = 13
+                        },
+                        new
+                        {
+                            Id = 83,
+                            ExerciseLibraryId = 21,
                             IsPrimary = true,
                             MuscleId = 3
                         },
                         new
                         {
-                            Id = 83,
-                            ExerciseLibraryId = 20,
-                            IsPrimary = true,
-                            MuscleId = 4
-                        },
-                        new
-                        {
                             Id = 84,
-                            ExerciseLibraryId = 20,
+                            ExerciseLibraryId = 21,
                             IsPrimary = false,
-                            MuscleId = 5
-                        },
-                        new
-                        {
-                            Id = 85,
-                            ExerciseLibraryId = 20,
-                            IsPrimary = true,
                             MuscleId = 6
                         },
                         new
                         {
-                            Id = 86,
-                            ExerciseLibraryId = 20,
-                            IsPrimary = true,
-                            MuscleId = 9
+                            Id = 85,
+                            ExerciseLibraryId = 21,
+                            IsPrimary = false,
+                            MuscleId = 10
                         },
                         new
                         {
-                            Id = 87,
-                            ExerciseLibraryId = 20,
+                            Id = 86,
+                            ExerciseLibraryId = 21,
                             IsPrimary = false,
                             MuscleId = 12
                         },
                         new
                         {
-                            Id = 88,
-                            ExerciseLibraryId = 21,
+                            Id = 87,
+                            ExerciseLibraryId = 22,
                             IsPrimary = true,
                             MuscleId = 3
                         },
                         new
                         {
-                            Id = 89,
-                            ExerciseLibraryId = 21,
+                            Id = 88,
+                            ExerciseLibraryId = 22,
                             IsPrimary = true,
                             MuscleId = 4
                         },
                         new
                         {
+                            Id = 89,
+                            ExerciseLibraryId = 22,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
                             Id = 90,
-                            ExerciseLibraryId = 21,
+                            ExerciseLibraryId = 22,
                             IsPrimary = true,
                             MuscleId = 6
                         },
                         new
                         {
                             Id = 91,
-                            ExerciseLibraryId = 21,
+                            ExerciseLibraryId = 22,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 9
                         },
                         new
                         {
                             Id = 92,
-                            ExerciseLibraryId = 21,
+                            ExerciseLibraryId = 22,
                             IsPrimary = false,
                             MuscleId = 12
                         },
                         new
                         {
                             Id = 93,
-                            ExerciseLibraryId = 22,
+                            ExerciseLibraryId = 23,
                             IsPrimary = true,
                             MuscleId = 3
                         },
                         new
                         {
                             Id = 94,
-                            ExerciseLibraryId = 22,
+                            ExerciseLibraryId = 23,
                             IsPrimary = true,
                             MuscleId = 4
                         },
                         new
                         {
                             Id = 95,
-                            ExerciseLibraryId = 22,
-                            IsPrimary = true,
-                            MuscleId = 6
-                        },
-                        new
-                        {
-                            Id = 96,
-                            ExerciseLibraryId = 22,
+                            ExerciseLibraryId = 23,
                             IsPrimary = false,
                             MuscleId = 5
                         },
                         new
                         {
+                            Id = 96,
+                            ExerciseLibraryId = 23,
+                            IsPrimary = true,
+                            MuscleId = 6
+                        },
+                        new
+                        {
                             Id = 97,
-                            ExerciseLibraryId = 22,
-                            IsPrimary = false,
-                            MuscleId = 12
+                            ExerciseLibraryId = 23,
+                            IsPrimary = true,
+                            MuscleId = 9
                         },
                         new
                         {
                             Id = 98,
                             ExerciseLibraryId = 23,
-                            IsPrimary = true,
-                            MuscleId = 3
-                        },
-                        new
-                        {
-                            Id = 99,
-                            ExerciseLibraryId = 23,
-                            IsPrimary = true,
-                            MuscleId = 6
-                        },
-                        new
-                        {
-                            Id = 100,
-                            ExerciseLibraryId = 23,
                             IsPrimary = false,
                             MuscleId = 12
                         },
                         new
                         {
+                            Id = 99,
+                            ExerciseLibraryId = 24,
+                            IsPrimary = true,
+                            MuscleId = 3
+                        },
+                        new
+                        {
+                            Id = 100,
+                            ExerciseLibraryId = 24,
+                            IsPrimary = true,
+                            MuscleId = 4
+                        },
+                        new
+                        {
                             Id = 101,
-                            ExerciseLibraryId = 23,
-                            IsPrimary = false,
-                            MuscleId = 13
+                            ExerciseLibraryId = 24,
+                            IsPrimary = true,
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 102,
-                            ExerciseLibraryId = 23,
+                            ExerciseLibraryId = 24,
                             IsPrimary = false,
-                            MuscleId = 10
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 103,
                             ExerciseLibraryId = 24,
+                            IsPrimary = false,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 104,
+                            ExerciseLibraryId = 25,
                             IsPrimary = true,
                             MuscleId = 3
                         },
                         new
                         {
-                            Id = 104,
-                            ExerciseLibraryId = 24,
+                            Id = 105,
+                            ExerciseLibraryId = 25,
+                            IsPrimary = true,
+                            MuscleId = 4
+                        },
+                        new
+                        {
+                            Id = 106,
+                            ExerciseLibraryId = 25,
                             IsPrimary = true,
                             MuscleId = 6
                         },
                         new
                         {
-                            Id = 105,
-                            ExerciseLibraryId = 24,
-                            IsPrimary = true,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 106,
-                            ExerciseLibraryId = 24,
-                            IsPrimary = false,
-                            MuscleId = 13
-                        },
-                        new
-                        {
                             Id = 107,
                             ExerciseLibraryId = 25,
-                            IsPrimary = true,
-                            MuscleId = 3
+                            IsPrimary = false,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 108,
                             ExerciseLibraryId = 25,
                             IsPrimary = false,
-                            MuscleId = 6
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 109,
-                            ExerciseLibraryId = 25,
-                            IsPrimary = false,
-                            MuscleId = 19
+                            ExerciseLibraryId = 26,
+                            IsPrimary = true,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 110,
                             ExerciseLibraryId = 26,
                             IsPrimary = true,
-                            MuscleId = 9
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 111,
                             ExerciseLibraryId = 26,
-                            IsPrimary = true,
-                            MuscleId = 4
+                            IsPrimary = false,
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 112,
                             ExerciseLibraryId = 26,
                             IsPrimary = false,
-                            MuscleId = 11
+                            MuscleId = 13
                         },
                         new
                         {
@@ -2687,266 +2690,266 @@ namespace AzulTracker.API.Migrations
                             Id = 114,
                             ExerciseLibraryId = 27,
                             IsPrimary = true,
-                            MuscleId = 5
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 115,
                             ExerciseLibraryId = 27,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 116,
                             ExerciseLibraryId = 27,
                             IsPrimary = true,
-                            MuscleId = 21
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 117,
                             ExerciseLibraryId = 27,
-                            IsPrimary = true,
-                            MuscleId = 9
+                            IsPrimary = false,
+                            MuscleId = 13
                         },
                         new
                         {
                             Id = 118,
-                            ExerciseLibraryId = 27,
-                            IsPrimary = false,
-                            MuscleId = 10
+                            ExerciseLibraryId = 28,
+                            IsPrimary = true,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 119,
-                            ExerciseLibraryId = 27,
+                            ExerciseLibraryId = 28,
                             IsPrimary = false,
-                            MuscleId = 3
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 120,
                             ExerciseLibraryId = 28,
-                            IsPrimary = true,
-                            MuscleId = 5
+                            IsPrimary = false,
+                            MuscleId = 19
                         },
                         new
                         {
                             Id = 121,
-                            ExerciseLibraryId = 28,
+                            ExerciseLibraryId = 29,
                             IsPrimary = true,
                             MuscleId = 9
                         },
                         new
                         {
                             Id = 122,
-                            ExerciseLibraryId = 28,
+                            ExerciseLibraryId = 29,
+                            IsPrimary = true,
+                            MuscleId = 4
+                        },
+                        new
+                        {
+                            Id = 123,
+                            ExerciseLibraryId = 29,
+                            IsPrimary = false,
+                            MuscleId = 11
+                        },
+                        new
+                        {
+                            Id = 124,
+                            ExerciseLibraryId = 29,
                             IsPrimary = false,
                             MuscleId = 10
                         },
                         new
                         {
-                            Id = 123,
-                            ExerciseLibraryId = 28,
-                            IsPrimary = false,
-                            MuscleId = 3
-                        },
-                        new
-                        {
-                            Id = 124,
-                            ExerciseLibraryId = 28,
-                            IsPrimary = false,
-                            MuscleId = 20
-                        },
-                        new
-                        {
                             Id = 125,
-                            ExerciseLibraryId = 29,
+                            ExerciseLibraryId = 30,
                             IsPrimary = true,
-                            MuscleId = 3
-                        },
-                        new
-                        {
-                            Id = 126,
-                            ExerciseLibraryId = 29,
-                            IsPrimary = true,
-                            MuscleId = 4
-                        },
-                        new
-                        {
-                            Id = 127,
-                            ExerciseLibraryId = 29,
-                            IsPrimary = true,
-                            MuscleId = 6
-                        },
-                        new
-                        {
-                            Id = 128,
-                            ExerciseLibraryId = 29,
-                            IsPrimary = false,
                             MuscleId = 5
                         },
                         new
                         {
-                            Id = 129,
-                            ExerciseLibraryId = 29,
+                            Id = 126,
+                            ExerciseLibraryId = 30,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 127,
+                            ExerciseLibraryId = 30,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 128,
+                            ExerciseLibraryId = 30,
                             IsPrimary = false,
-                            MuscleId = 12
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 129,
+                            ExerciseLibraryId = 30,
+                            IsPrimary = true,
+                            MuscleId = 9
                         },
                         new
                         {
                             Id = 130,
                             ExerciseLibraryId = 30,
-                            IsPrimary = true,
-                            MuscleId = 3
+                            IsPrimary = false,
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 131,
                             ExerciseLibraryId = 30,
-                            IsPrimary = true,
-                            MuscleId = 6
+                            IsPrimary = false,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 132,
-                            ExerciseLibraryId = 30,
-                            IsPrimary = false,
-                            MuscleId = 4
+                            ExerciseLibraryId = 31,
+                            IsPrimary = true,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 133,
-                            ExerciseLibraryId = 30,
-                            IsPrimary = false,
-                            MuscleId = 12
+                            ExerciseLibraryId = 31,
+                            IsPrimary = true,
+                            MuscleId = 9
                         },
                         new
                         {
                             Id = 134,
                             ExerciseLibraryId = 31,
-                            IsPrimary = true,
-                            MuscleId = 4
+                            IsPrimary = false,
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 135,
                             ExerciseLibraryId = 31,
-                            IsPrimary = true,
+                            IsPrimary = false,
                             MuscleId = 3
                         },
                         new
                         {
                             Id = 136,
                             ExerciseLibraryId = 31,
-                            IsPrimary = true,
-                            MuscleId = 6
+                            IsPrimary = false,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 137,
-                            ExerciseLibraryId = 31,
-                            IsPrimary = false,
-                            MuscleId = 9
+                            ExerciseLibraryId = 32,
+                            IsPrimary = true,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 138,
-                            ExerciseLibraryId = 31,
-                            IsPrimary = false,
-                            MuscleId = 12
+                            ExerciseLibraryId = 32,
+                            IsPrimary = true,
+                            MuscleId = 4
                         },
                         new
                         {
                             Id = 139,
                             ExerciseLibraryId = 32,
                             IsPrimary = true,
-                            MuscleId = 4
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 140,
                             ExerciseLibraryId = 32,
-                            IsPrimary = true,
-                            MuscleId = 3
+                            IsPrimary = false,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 141,
                             ExerciseLibraryId = 32,
-                            IsPrimary = true,
-                            MuscleId = 6
+                            IsPrimary = false,
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 142,
-                            ExerciseLibraryId = 32,
-                            IsPrimary = false,
-                            MuscleId = 12
+                            ExerciseLibraryId = 33,
+                            IsPrimary = true,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 143,
                             ExerciseLibraryId = 33,
                             IsPrimary = true,
-                            MuscleId = 4
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 144,
                             ExerciseLibraryId = 33,
-                            IsPrimary = true,
-                            MuscleId = 3
+                            IsPrimary = false,
+                            MuscleId = 4
                         },
                         new
                         {
                             Id = 145,
                             ExerciseLibraryId = 33,
                             IsPrimary = false,
-                            MuscleId = 6
-                        },
-                        new
-                        {
-                            Id = 146,
-                            ExerciseLibraryId = 33,
-                            IsPrimary = false,
                             MuscleId = 12
                         },
                         new
                         {
-                            Id = 147,
-                            ExerciseLibraryId = 33,
-                            IsPrimary = false,
-                            MuscleId = 19
-                        },
-                        new
-                        {
-                            Id = 148,
-                            ExerciseLibraryId = 34,
-                            IsPrimary = true,
-                            MuscleId = 3
-                        },
-                        new
-                        {
-                            Id = 149,
+                            Id = 146,
                             ExerciseLibraryId = 34,
                             IsPrimary = true,
                             MuscleId = 4
                         },
                         new
                         {
-                            Id = 150,
+                            Id = 147,
+                            ExerciseLibraryId = 34,
+                            IsPrimary = true,
+                            MuscleId = 3
+                        },
+                        new
+                        {
+                            Id = 148,
                             ExerciseLibraryId = 34,
                             IsPrimary = true,
                             MuscleId = 6
                         },
                         new
                         {
-                            Id = 151,
+                            Id = 149,
+                            ExerciseLibraryId = 34,
+                            IsPrimary = false,
+                            MuscleId = 9
+                        },
+                        new
+                        {
+                            Id = 150,
                             ExerciseLibraryId = 34,
                             IsPrimary = false,
                             MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 151,
+                            ExerciseLibraryId = 35,
+                            IsPrimary = true,
+                            MuscleId = 4
                         },
                         new
                         {
@@ -2959,7 +2962,7 @@ namespace AzulTracker.API.Migrations
                         {
                             Id = 153,
                             ExerciseLibraryId = 35,
-                            IsPrimary = false,
+                            IsPrimary = true,
                             MuscleId = 6
                         },
                         new
@@ -2967,1029 +2970,1029 @@ namespace AzulTracker.API.Migrations
                             Id = 154,
                             ExerciseLibraryId = 35,
                             IsPrimary = false,
-                            MuscleId = 19
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 155,
                             ExerciseLibraryId = 36,
                             IsPrimary = true,
-                            MuscleId = 8
+                            MuscleId = 4
                         },
                         new
                         {
                             Id = 156,
                             ExerciseLibraryId = 36,
                             IsPrimary = true,
-                            MuscleId = 7
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 157,
                             ExerciseLibraryId = 36,
                             IsPrimary = false,
-                            MuscleId = 14
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 158,
                             ExerciseLibraryId = 36,
                             IsPrimary = false,
-                            MuscleId = 10
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 159,
-                            ExerciseLibraryId = 37,
-                            IsPrimary = true,
-                            MuscleId = 8
+                            ExerciseLibraryId = 36,
+                            IsPrimary = false,
+                            MuscleId = 19
                         },
                         new
                         {
                             Id = 160,
                             ExerciseLibraryId = 37,
                             IsPrimary = true,
-                            MuscleId = 7
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 161,
                             ExerciseLibraryId = 37,
-                            IsPrimary = false,
-                            MuscleId = 14
+                            IsPrimary = true,
+                            MuscleId = 4
                         },
                         new
                         {
                             Id = 162,
                             ExerciseLibraryId = 37,
-                            IsPrimary = false,
-                            MuscleId = 11
+                            IsPrimary = true,
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 163,
-                            ExerciseLibraryId = 38,
-                            IsPrimary = true,
-                            MuscleId = 8
+                            ExerciseLibraryId = 37,
+                            IsPrimary = false,
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 164,
                             ExerciseLibraryId = 38,
                             IsPrimary = true,
-                            MuscleId = 7
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 165,
                             ExerciseLibraryId = 38,
                             IsPrimary = false,
-                            MuscleId = 9
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 166,
                             ExerciseLibraryId = 38,
                             IsPrimary = false,
-                            MuscleId = 14
+                            MuscleId = 19
                         },
                         new
                         {
                             Id = 167,
                             ExerciseLibraryId = 39,
                             IsPrimary = true,
-                            MuscleId = 7
+                            MuscleId = 9
                         },
                         new
                         {
                             Id = 168,
                             ExerciseLibraryId = 39,
-                            IsPrimary = false,
-                            MuscleId = 8
+                            IsPrimary = true,
+                            MuscleId = 4
                         },
                         new
                         {
                             Id = 169,
                             ExerciseLibraryId = 39,
                             IsPrimary = false,
-                            MuscleId = 10
+                            MuscleId = 11
                         },
                         new
                         {
                             Id = 170,
                             ExerciseLibraryId = 40,
                             IsPrimary = true,
-                            MuscleId = 7
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 171,
                             ExerciseLibraryId = 40,
                             IsPrimary = false,
-                            MuscleId = 8
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 172,
                             ExerciseLibraryId = 40,
                             IsPrimary = false,
-                            MuscleId = 10
+                            MuscleId = 19
                         },
                         new
                         {
                             Id = 173,
-                            ExerciseLibraryId = 41,
-                            IsPrimary = true,
-                            MuscleId = 8
+                            ExerciseLibraryId = 40,
+                            IsPrimary = false,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 174,
                             ExerciseLibraryId = 41,
-                            IsPrimary = false,
-                            MuscleId = 1
+                            IsPrimary = true,
+                            MuscleId = 4
                         },
                         new
                         {
                             Id = 175,
                             ExerciseLibraryId = 41,
-                            IsPrimary = false,
-                            MuscleId = 7
+                            IsPrimary = true,
+                            MuscleId = 9
                         },
                         new
                         {
                             Id = 176,
-                            ExerciseLibraryId = 42,
-                            IsPrimary = true,
-                            MuscleId = 9
+                            ExerciseLibraryId = 41,
+                            IsPrimary = false,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 177,
-                            ExerciseLibraryId = 42,
-                            IsPrimary = true,
-                            MuscleId = 4
+                            ExerciseLibraryId = 41,
+                            IsPrimary = false,
+                            MuscleId = 6
                         },
                         new
                         {
                             Id = 178,
-                            ExerciseLibraryId = 42,
-                            IsPrimary = false,
-                            MuscleId = 10
-                        },
-                        new
-                        {
-                            Id = 179,
-                            ExerciseLibraryId = 43,
-                            IsPrimary = true,
-                            MuscleId = 9
-                        },
-                        new
-                        {
-                            Id = 180,
-                            ExerciseLibraryId = 43,
-                            IsPrimary = true,
-                            MuscleId = 4
-                        },
-                        new
-                        {
-                            Id = 181,
-                            ExerciseLibraryId = 43,
-                            IsPrimary = false,
-                            MuscleId = 10
-                        },
-                        new
-                        {
-                            Id = 182,
-                            ExerciseLibraryId = 44,
-                            IsPrimary = true,
-                            MuscleId = 7
-                        },
-                        new
-                        {
-                            Id = 183,
-                            ExerciseLibraryId = 44,
-                            IsPrimary = true,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 184,
-                            ExerciseLibraryId = 44,
-                            IsPrimary = true,
-                            MuscleId = 10
-                        },
-                        new
-                        {
-                            Id = 185,
-                            ExerciseLibraryId = 44,
+                            ExerciseLibraryId = 41,
                             IsPrimary = false,
                             MuscleId = 12
                         },
                         new
                         {
-                            Id = 186,
-                            ExerciseLibraryId = 45,
+                            Id = 179,
+                            ExerciseLibraryId = 42,
                             IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 180,
+                            ExerciseLibraryId = 42,
+                            IsPrimary = true,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 181,
+                            ExerciseLibraryId = 42,
+                            IsPrimary = false,
+                            MuscleId = 14
+                        },
+                        new
+                        {
+                            Id = 182,
+                            ExerciseLibraryId = 42,
+                            IsPrimary = false,
                             MuscleId = 10
                         },
                         new
                         {
-                            Id = 187,
-                            ExerciseLibraryId = 45,
+                            Id = 183,
+                            ExerciseLibraryId = 42,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 11
+                        },
+                        new
+                        {
+                            Id = 184,
+                            ExerciseLibraryId = 43,
+                            IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 185,
+                            ExerciseLibraryId = 43,
+                            IsPrimary = true,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 186,
+                            ExerciseLibraryId = 43,
+                            IsPrimary = false,
+                            MuscleId = 14
+                        },
+                        new
+                        {
+                            Id = 187,
+                            ExerciseLibraryId = 43,
+                            IsPrimary = false,
+                            MuscleId = 11
                         },
                         new
                         {
                             Id = 188,
-                            ExerciseLibraryId = 46,
+                            ExerciseLibraryId = 44,
                             IsPrimary = true,
                             MuscleId = 8
                         },
                         new
                         {
                             Id = 189,
-                            ExerciseLibraryId = 46,
-                            IsPrimary = false,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 190,
-                            ExerciseLibraryId = 46,
-                            IsPrimary = false,
+                            ExerciseLibraryId = 44,
+                            IsPrimary = true,
                             MuscleId = 7
                         },
                         new
                         {
+                            Id = 190,
+                            ExerciseLibraryId = 44,
+                            IsPrimary = false,
+                            MuscleId = 9
+                        },
+                        new
+                        {
                             Id = 191,
-                            ExerciseLibraryId = 46,
+                            ExerciseLibraryId = 44,
                             IsPrimary = false,
                             MuscleId = 14
                         },
                         new
                         {
                             Id = 192,
-                            ExerciseLibraryId = 47,
-                            IsPrimary = true,
-                            MuscleId = 8
+                            ExerciseLibraryId = 44,
+                            IsPrimary = false,
+                            MuscleId = 11
                         },
                         new
                         {
                             Id = 193,
-                            ExerciseLibraryId = 47,
+                            ExerciseLibraryId = 45,
                             IsPrimary = true,
                             MuscleId = 7
                         },
                         new
                         {
                             Id = 194,
-                            ExerciseLibraryId = 47,
+                            ExerciseLibraryId = 45,
                             IsPrimary = false,
-                            MuscleId = 14
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 195,
-                            ExerciseLibraryId = 47,
+                            ExerciseLibraryId = 45,
                             IsPrimary = false,
-                            MuscleId = 20
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 196,
-                            ExerciseLibraryId = 48,
+                            ExerciseLibraryId = 46,
                             IsPrimary = true,
                             MuscleId = 7
                         },
                         new
                         {
                             Id = 197,
-                            ExerciseLibraryId = 48,
-                            IsPrimary = true,
+                            ExerciseLibraryId = 46,
+                            IsPrimary = false,
                             MuscleId = 8
                         },
                         new
                         {
                             Id = 198,
+                            ExerciseLibraryId = 46,
+                            IsPrimary = false,
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 199,
+                            ExerciseLibraryId = 47,
+                            IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 200,
+                            ExerciseLibraryId = 47,
+                            IsPrimary = false,
+                            MuscleId = 1
+                        },
+                        new
+                        {
+                            Id = 201,
+                            ExerciseLibraryId = 47,
+                            IsPrimary = false,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 202,
                             ExerciseLibraryId = 48,
+                            IsPrimary = true,
+                            MuscleId = 9
+                        },
+                        new
+                        {
+                            Id = 203,
+                            ExerciseLibraryId = 48,
+                            IsPrimary = true,
+                            MuscleId = 4
+                        },
+                        new
+                        {
+                            Id = 204,
+                            ExerciseLibraryId = 48,
+                            IsPrimary = false,
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 205,
+                            ExerciseLibraryId = 49,
+                            IsPrimary = true,
+                            MuscleId = 9
+                        },
+                        new
+                        {
+                            Id = 206,
+                            ExerciseLibraryId = 49,
+                            IsPrimary = true,
+                            MuscleId = 4
+                        },
+                        new
+                        {
+                            Id = 207,
+                            ExerciseLibraryId = 49,
+                            IsPrimary = false,
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 208,
+                            ExerciseLibraryId = 50,
+                            IsPrimary = true,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 209,
+                            ExerciseLibraryId = 50,
+                            IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 210,
+                            ExerciseLibraryId = 50,
+                            IsPrimary = true,
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 211,
+                            ExerciseLibraryId = 50,
+                            IsPrimary = false,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 212,
+                            ExerciseLibraryId = 51,
+                            IsPrimary = true,
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 213,
+                            ExerciseLibraryId = 51,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 214,
+                            ExerciseLibraryId = 52,
+                            IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 215,
+                            ExerciseLibraryId = 52,
+                            IsPrimary = false,
+                            MuscleId = 1
+                        },
+                        new
+                        {
+                            Id = 216,
+                            ExerciseLibraryId = 52,
+                            IsPrimary = false,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 217,
+                            ExerciseLibraryId = 52,
+                            IsPrimary = false,
+                            MuscleId = 14
+                        },
+                        new
+                        {
+                            Id = 218,
+                            ExerciseLibraryId = 53,
+                            IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 219,
+                            ExerciseLibraryId = 53,
+                            IsPrimary = true,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 220,
+                            ExerciseLibraryId = 53,
+                            IsPrimary = false,
+                            MuscleId = 14
+                        },
+                        new
+                        {
+                            Id = 221,
+                            ExerciseLibraryId = 53,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 222,
+                            ExerciseLibraryId = 53,
+                            IsPrimary = false,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 223,
+                            ExerciseLibraryId = 54,
+                            IsPrimary = true,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 224,
+                            ExerciseLibraryId = 54,
+                            IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 225,
+                            ExerciseLibraryId = 54,
                             IsPrimary = false,
                             MuscleId = 9
                         },
                         new
                         {
-                            Id = 199,
-                            ExerciseLibraryId = 48,
-                            IsPrimary = false,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 200,
-                            ExerciseLibraryId = 49,
-                            IsPrimary = true,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 201,
-                            ExerciseLibraryId = 49,
-                            IsPrimary = false,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 202,
-                            ExerciseLibraryId = 49,
-                            IsPrimary = false,
-                            MuscleId = 7
-                        },
-                        new
-                        {
-                            Id = 203,
-                            ExerciseLibraryId = 50,
-                            IsPrimary = true,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 204,
-                            ExerciseLibraryId = 50,
-                            IsPrimary = true,
-                            MuscleId = 7
-                        },
-                        new
-                        {
-                            Id = 205,
-                            ExerciseLibraryId = 50,
-                            IsPrimary = false,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 206,
-                            ExerciseLibraryId = 51,
-                            IsPrimary = true,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 207,
-                            ExerciseLibraryId = 51,
-                            IsPrimary = true,
-                            MuscleId = 13
-                        },
-                        new
-                        {
-                            Id = 208,
-                            ExerciseLibraryId = 51,
-                            IsPrimary = false,
-                            MuscleId = 15
-                        },
-                        new
-                        {
-                            Id = 209,
-                            ExerciseLibraryId = 52,
-                            IsPrimary = true,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 210,
-                            ExerciseLibraryId = 52,
-                            IsPrimary = true,
-                            MuscleId = 13
-                        },
-                        new
-                        {
-                            Id = 211,
-                            ExerciseLibraryId = 52,
-                            IsPrimary = false,
-                            MuscleId = 15
-                        },
-                        new
-                        {
-                            Id = 212,
-                            ExerciseLibraryId = 53,
-                            IsPrimary = true,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 213,
-                            ExerciseLibraryId = 53,
-                            IsPrimary = false,
-                            MuscleId = 13
-                        },
-                        new
-                        {
-                            Id = 214,
-                            ExerciseLibraryId = 53,
-                            IsPrimary = false,
-                            MuscleId = 15
-                        },
-                        new
-                        {
-                            Id = 215,
-                            ExerciseLibraryId = 54,
-                            IsPrimary = true,
-                            MuscleId = 13
-                        },
-                        new
-                        {
-                            Id = 216,
-                            ExerciseLibraryId = 54,
-                            IsPrimary = false,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 217,
-                            ExerciseLibraryId = 54,
-                            IsPrimary = true,
-                            MuscleId = 30
-                        },
-                        new
-                        {
-                            Id = 218,
-                            ExerciseLibraryId = 55,
-                            IsPrimary = true,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 219,
-                            ExerciseLibraryId = 55,
-                            IsPrimary = true,
-                            MuscleId = 13
-                        },
-                        new
-                        {
-                            Id = 220,
-                            ExerciseLibraryId = 55,
-                            IsPrimary = false,
-                            MuscleId = 15
-                        },
-                        new
-                        {
-                            Id = 221,
-                            ExerciseLibraryId = 56,
-                            IsPrimary = true,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 222,
-                            ExerciseLibraryId = 56,
-                            IsPrimary = true,
-                            MuscleId = 13
-                        },
-                        new
-                        {
-                            Id = 223,
-                            ExerciseLibraryId = 56,
-                            IsPrimary = false,
-                            MuscleId = 15
-                        },
-                        new
-                        {
-                            Id = 224,
-                            ExerciseLibraryId = 57,
-                            IsPrimary = true,
-                            MuscleId = 12
-                        },
-                        new
-                        {
-                            Id = 225,
-                            ExerciseLibraryId = 57,
-                            IsPrimary = false,
-                            MuscleId = 13
-                        },
-                        new
-                        {
                             Id = 226,
-                            ExerciseLibraryId = 58,
-                            IsPrimary = true,
-                            MuscleId = 12
+                            ExerciseLibraryId = 54,
+                            IsPrimary = false,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 227,
-                            ExerciseLibraryId = 58,
-                            IsPrimary = false,
-                            MuscleId = 13
+                            ExerciseLibraryId = 55,
+                            IsPrimary = true,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 228,
-                            ExerciseLibraryId = 59,
-                            IsPrimary = true,
-                            MuscleId = 30
+                            ExerciseLibraryId = 55,
+                            IsPrimary = false,
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 229,
-                            ExerciseLibraryId = 59,
+                            ExerciseLibraryId = 55,
                             IsPrimary = false,
-                            MuscleId = 12
+                            MuscleId = 7
                         },
                         new
                         {
                             Id = 230,
-                            ExerciseLibraryId = 59,
-                            IsPrimary = false,
-                            MuscleId = 13
+                            ExerciseLibraryId = 56,
+                            IsPrimary = true,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 231,
-                            ExerciseLibraryId = 60,
+                            ExerciseLibraryId = 56,
                             IsPrimary = true,
-                            MuscleId = 12
+                            MuscleId = 7
                         },
                         new
                         {
                             Id = 232,
-                            ExerciseLibraryId = 60,
-                            IsPrimary = true,
-                            MuscleId = 13
+                            ExerciseLibraryId = 56,
+                            IsPrimary = false,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 233,
-                            ExerciseLibraryId = 60,
+                            ExerciseLibraryId = 57,
                             IsPrimary = true,
-                            MuscleId = 30
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 234,
-                            ExerciseLibraryId = 61,
-                            IsPrimary = true,
-                            MuscleId = 13
+                            ExerciseLibraryId = 57,
+                            IsPrimary = false,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 235,
-                            ExerciseLibraryId = 61,
-                            IsPrimary = false,
-                            MuscleId = 12
+                            ExerciseLibraryId = 58,
+                            IsPrimary = true,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 236,
-                            ExerciseLibraryId = 61,
+                            ExerciseLibraryId = 58,
                             IsPrimary = false,
-                            MuscleId = 30
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 237,
+                            ExerciseLibraryId = 58,
+                            IsPrimary = false,
+                            MuscleId = 7
+                        },
+                        new
+                        {
+                            Id = 238,
+                            ExerciseLibraryId = 59,
+                            IsPrimary = true,
+                            MuscleId = 9
+                        },
+                        new
+                        {
+                            Id = 239,
+                            ExerciseLibraryId = 59,
+                            IsPrimary = true,
+                            MuscleId = 4
+                        },
+                        new
+                        {
+                            Id = 240,
+                            ExerciseLibraryId = 59,
+                            IsPrimary = false,
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 241,
+                            ExerciseLibraryId = 59,
+                            IsPrimary = false,
+                            MuscleId = 11
+                        },
+                        new
+                        {
+                            Id = 242,
+                            ExerciseLibraryId = 60,
+                            IsPrimary = true,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 243,
+                            ExerciseLibraryId = 60,
+                            IsPrimary = true,
+                            MuscleId = 13
+                        },
+                        new
+                        {
+                            Id = 244,
+                            ExerciseLibraryId = 60,
+                            IsPrimary = false,
+                            MuscleId = 15
+                        },
+                        new
+                        {
+                            Id = 245,
+                            ExerciseLibraryId = 61,
+                            IsPrimary = true,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 246,
+                            ExerciseLibraryId = 61,
+                            IsPrimary = true,
+                            MuscleId = 13
+                        },
+                        new
+                        {
+                            Id = 247,
+                            ExerciseLibraryId = 61,
+                            IsPrimary = false,
+                            MuscleId = 15
+                        },
+                        new
+                        {
+                            Id = 248,
                             ExerciseLibraryId = 62,
                             IsPrimary = true,
                             MuscleId = 12
                         },
                         new
                         {
-                            Id = 238,
+                            Id = 249,
                             ExerciseLibraryId = 62,
                             IsPrimary = false,
                             MuscleId = 13
                         },
                         new
                         {
-                            Id = 239,
-                            ExerciseLibraryId = 63,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 240,
-                            ExerciseLibraryId = 63,
-                            IsPrimary = false,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 241,
-                            ExerciseLibraryId = 63,
-                            IsPrimary = false,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 242,
-                            ExerciseLibraryId = 64,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 243,
-                            ExerciseLibraryId = 65,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 244,
-                            ExerciseLibraryId = 66,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 245,
-                            ExerciseLibraryId = 67,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 246,
-                            ExerciseLibraryId = 68,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 247,
-                            ExerciseLibraryId = 68,
-                            IsPrimary = false,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 248,
-                            ExerciseLibraryId = 68,
-                            IsPrimary = false,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 249,
-                            ExerciseLibraryId = 69,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
                             Id = 250,
-                            ExerciseLibraryId = 70,
-                            IsPrimary = true,
-                            MuscleId = 14
+                            ExerciseLibraryId = 62,
+                            IsPrimary = false,
+                            MuscleId = 15
                         },
                         new
                         {
                             Id = 251,
-                            ExerciseLibraryId = 71,
+                            ExerciseLibraryId = 63,
                             IsPrimary = true,
-                            MuscleId = 14
+                            MuscleId = 13
                         },
                         new
                         {
                             Id = 252,
-                            ExerciseLibraryId = 71,
+                            ExerciseLibraryId = 63,
                             IsPrimary = false,
-                            MuscleId = 1
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 253,
-                            ExerciseLibraryId = 72,
-                            IsPrimary = true,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 254,
-                            ExerciseLibraryId = 72,
-                            IsPrimary = false,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 255,
-                            ExerciseLibraryId = 73,
+                            ExerciseLibraryId = 63,
                             IsPrimary = true,
                             MuscleId = 15
                         },
                         new
                         {
-                            Id = 256,
-                            ExerciseLibraryId = 74,
+                            Id = 254,
+                            ExerciseLibraryId = 64,
                             IsPrimary = true,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 255,
+                            ExerciseLibraryId = 64,
+                            IsPrimary = true,
+                            MuscleId = 13
+                        },
+                        new
+                        {
+                            Id = 256,
+                            ExerciseLibraryId = 64,
+                            IsPrimary = false,
                             MuscleId = 15
                         },
                         new
                         {
                             Id = 257,
-                            ExerciseLibraryId = 75,
+                            ExerciseLibraryId = 65,
+                            IsPrimary = true,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 258,
+                            ExerciseLibraryId = 65,
+                            IsPrimary = true,
+                            MuscleId = 13
+                        },
+                        new
+                        {
+                            Id = 259,
+                            ExerciseLibraryId = 65,
+                            IsPrimary = false,
+                            MuscleId = 15
+                        },
+                        new
+                        {
+                            Id = 260,
+                            ExerciseLibraryId = 66,
+                            IsPrimary = true,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 261,
+                            ExerciseLibraryId = 66,
+                            IsPrimary = false,
+                            MuscleId = 13
+                        },
+                        new
+                        {
+                            Id = 262,
+                            ExerciseLibraryId = 67,
+                            IsPrimary = true,
+                            MuscleId = 12
+                        },
+                        new
+                        {
+                            Id = 263,
+                            ExerciseLibraryId = 67,
+                            IsPrimary = false,
+                            MuscleId = 13
+                        },
+                        new
+                        {
+                            Id = 264,
+                            ExerciseLibraryId = 68,
                             IsPrimary = true,
                             MuscleId = 15
                         },
                         new
                         {
-                            Id = 258,
-                            ExerciseLibraryId = 76,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 259,
-                            ExerciseLibraryId = 76,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 260,
-                            ExerciseLibraryId = 76,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 261,
-                            ExerciseLibraryId = 76,
-                            IsPrimary = false,
-                            MuscleId = 22
-                        },
-                        new
-                        {
-                            Id = 262,
-                            ExerciseLibraryId = 76,
-                            IsPrimary = false,
-                            MuscleId = 5
-                        },
-                        new
-                        {
-                            Id = 263,
-                            ExerciseLibraryId = 77,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 264,
-                            ExerciseLibraryId = 77,
-                            IsPrimary = false,
-                            MuscleId = 24
-                        },
-                        new
-                        {
                             Id = 265,
-                            ExerciseLibraryId = 77,
+                            ExerciseLibraryId = 68,
                             IsPrimary = false,
-                            MuscleId = 22
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 266,
-                            ExerciseLibraryId = 77,
+                            ExerciseLibraryId = 68,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 267,
-                            ExerciseLibraryId = 78,
+                            ExerciseLibraryId = 69,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 268,
-                            ExerciseLibraryId = 78,
-                            IsPrimary = false,
-                            MuscleId = 24
+                            ExerciseLibraryId = 69,
+                            IsPrimary = true,
+                            MuscleId = 13
                         },
                         new
                         {
                             Id = 269,
-                            ExerciseLibraryId = 78,
-                            IsPrimary = false,
-                            MuscleId = 22
+                            ExerciseLibraryId = 69,
+                            IsPrimary = true,
+                            MuscleId = 15
                         },
                         new
                         {
                             Id = 270,
-                            ExerciseLibraryId = 79,
+                            ExerciseLibraryId = 70,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 13
                         },
                         new
                         {
                             Id = 271,
-                            ExerciseLibraryId = 79,
+                            ExerciseLibraryId = 70,
                             IsPrimary = false,
-                            MuscleId = 24
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 272,
-                            ExerciseLibraryId = 79,
-                            IsPrimary = false,
-                            MuscleId = 21
+                            ExerciseLibraryId = 70,
+                            IsPrimary = true,
+                            MuscleId = 15
                         },
                         new
                         {
                             Id = 273,
-                            ExerciseLibraryId = 79,
-                            IsPrimary = false,
-                            MuscleId = 22
+                            ExerciseLibraryId = 71,
+                            IsPrimary = true,
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 274,
-                            ExerciseLibraryId = 80,
-                            IsPrimary = true,
-                            MuscleId = 20
+                            ExerciseLibraryId = 71,
+                            IsPrimary = false,
+                            MuscleId = 13
                         },
                         new
                         {
                             Id = 275,
-                            ExerciseLibraryId = 80,
+                            ExerciseLibraryId = 72,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 276,
-                            ExerciseLibraryId = 80,
+                            ExerciseLibraryId = 72,
                             IsPrimary = false,
-                            MuscleId = 21
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 277,
-                            ExerciseLibraryId = 80,
+                            ExerciseLibraryId = 72,
                             IsPrimary = false,
-                            MuscleId = 22
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 278,
-                            ExerciseLibraryId = 81,
+                            ExerciseLibraryId = 73,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 279,
-                            ExerciseLibraryId = 81,
+                            ExerciseLibraryId = 74,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 280,
-                            ExerciseLibraryId = 81,
-                            IsPrimary = false,
-                            MuscleId = 21
+                            ExerciseLibraryId = 75,
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 281,
-                            ExerciseLibraryId = 81,
-                            IsPrimary = false,
-                            MuscleId = 22
+                            ExerciseLibraryId = 76,
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 282,
-                            ExerciseLibraryId = 81,
-                            IsPrimary = false,
-                            MuscleId = 29
+                            ExerciseLibraryId = 77,
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 283,
-                            ExerciseLibraryId = 82,
-                            IsPrimary = true,
-                            MuscleId = 20
+                            ExerciseLibraryId = 77,
+                            IsPrimary = false,
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 284,
-                            ExerciseLibraryId = 82,
-                            IsPrimary = true,
-                            MuscleId = 24
+                            ExerciseLibraryId = 77,
+                            IsPrimary = false,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 285,
-                            ExerciseLibraryId = 82,
-                            IsPrimary = false,
-                            MuscleId = 21
+                            ExerciseLibraryId = 78,
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 286,
-                            ExerciseLibraryId = 82,
-                            IsPrimary = false,
-                            MuscleId = 22
+                            ExerciseLibraryId = 79,
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 287,
-                            ExerciseLibraryId = 82,
-                            IsPrimary = false,
-                            MuscleId = 26
+                            ExerciseLibraryId = 80,
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 288,
-                            ExerciseLibraryId = 82,
+                            ExerciseLibraryId = 80,
                             IsPrimary = false,
-                            MuscleId = 29
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 289,
-                            ExerciseLibraryId = 83,
+                            ExerciseLibraryId = 81,
                             IsPrimary = true,
-                            MuscleId = 21
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 290,
-                            ExerciseLibraryId = 83,
-                            IsPrimary = true,
-                            MuscleId = 24
+                            ExerciseLibraryId = 81,
+                            IsPrimary = false,
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 291,
-                            ExerciseLibraryId = 83,
-                            IsPrimary = false,
-                            MuscleId = 5
+                            ExerciseLibraryId = 82,
+                            IsPrimary = true,
+                            MuscleId = 15
                         },
                         new
                         {
                             Id = 292,
-                            ExerciseLibraryId = 84,
+                            ExerciseLibraryId = 83,
                             IsPrimary = true,
-                            MuscleId = 21
+                            MuscleId = 15
                         },
                         new
                         {
                             Id = 293,
                             ExerciseLibraryId = 84,
-                            IsPrimary = false,
-                            MuscleId = 24
+                            IsPrimary = true,
+                            MuscleId = 15
                         },
                         new
                         {
                             Id = 294,
-                            ExerciseLibraryId = 84,
-                            IsPrimary = false,
-                            MuscleId = 5
+                            ExerciseLibraryId = 85,
+                            IsPrimary = true,
+                            MuscleId = 13
                         },
                         new
                         {
                             Id = 295,
                             ExerciseLibraryId = 85,
-                            IsPrimary = true,
-                            MuscleId = 21
+                            IsPrimary = false,
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 296,
-                            ExerciseLibraryId = 86,
+                            ExerciseLibraryId = 85,
                             IsPrimary = true,
-                            MuscleId = 21
+                            MuscleId = 15
                         },
                         new
                         {
                             Id = 297,
                             ExerciseLibraryId = 86,
-                            IsPrimary = false,
-                            MuscleId = 24
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 298,
                             ExerciseLibraryId = 87,
                             IsPrimary = true,
-                            MuscleId = 21
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 299,
-                            ExerciseLibraryId = 87,
-                            IsPrimary = false,
-                            MuscleId = 24
+                            ExerciseLibraryId = 88,
+                            IsPrimary = true,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 300,
                             ExerciseLibraryId = 88,
-                            IsPrimary = true,
-                            MuscleId = 20
+                            IsPrimary = false,
+                            MuscleId = 15
                         },
                         new
                         {
@@ -4017,495 +4020,495 @@ namespace AzulTracker.API.Migrations
                             Id = 304,
                             ExerciseLibraryId = 89,
                             IsPrimary = false,
-                            MuscleId = 29
+                            MuscleId = 22
                         },
                         new
                         {
                             Id = 305,
-                            ExerciseLibraryId = 90,
-                            IsPrimary = true,
-                            MuscleId = 20
+                            ExerciseLibraryId = 89,
+                            IsPrimary = false,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 306,
                             ExerciseLibraryId = 90,
-                            IsPrimary = false,
-                            MuscleId = 24
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 307,
                             ExerciseLibraryId = 90,
                             IsPrimary = false,
-                            MuscleId = 22
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 308,
+                            ExerciseLibraryId = 90,
+                            IsPrimary = false,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 309,
+                            ExerciseLibraryId = 90,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 310,
                             ExerciseLibraryId = 91,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 309,
-                            ExerciseLibraryId = 92,
-                            IsPrimary = true,
-                            MuscleId = 22
-                        },
-                        new
-                        {
-                            Id = 310,
-                            ExerciseLibraryId = 93,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
                             Id = 311,
-                            ExerciseLibraryId = 93,
-                            IsPrimary = true,
+                            ExerciseLibraryId = 91,
+                            IsPrimary = false,
                             MuscleId = 24
                         },
                         new
                         {
                             Id = 312,
-                            ExerciseLibraryId = 93,
+                            ExerciseLibraryId = 91,
                             IsPrimary = false,
-                            MuscleId = 21
+                            MuscleId = 22
                         },
                         new
                         {
                             Id = 313,
-                            ExerciseLibraryId = 93,
-                            IsPrimary = false,
-                            MuscleId = 22
+                            ExerciseLibraryId = 92,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 314,
-                            ExerciseLibraryId = 93,
+                            ExerciseLibraryId = 92,
                             IsPrimary = false,
-                            MuscleId = 29
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 315,
-                            ExerciseLibraryId = 94,
-                            IsPrimary = true,
-                            MuscleId = 22
+                            ExerciseLibraryId = 92,
+                            IsPrimary = false,
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 316,
-                            ExerciseLibraryId = 94,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 317,
-                            ExerciseLibraryId = 94,
-                            IsPrimary = false,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 318,
-                            ExerciseLibraryId = 95,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 319,
-                            ExerciseLibraryId = 95,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 320,
-                            ExerciseLibraryId = 95,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 321,
-                            ExerciseLibraryId = 95,
+                            ExerciseLibraryId = 92,
                             IsPrimary = false,
                             MuscleId = 22
                         },
                         new
                         {
-                            Id = 322,
-                            ExerciseLibraryId = 96,
+                            Id = 317,
+                            ExerciseLibraryId = 93,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 323,
-                            ExerciseLibraryId = 96,
+                            Id = 318,
+                            ExerciseLibraryId = 93,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 324,
-                            ExerciseLibraryId = 96,
+                            Id = 319,
+                            ExerciseLibraryId = 93,
                             IsPrimary = false,
                             MuscleId = 21
                         },
                         new
                         {
+                            Id = 320,
+                            ExerciseLibraryId = 93,
+                            IsPrimary = false,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 321,
+                            ExerciseLibraryId = 94,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 322,
+                            ExerciseLibraryId = 94,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 323,
+                            ExerciseLibraryId = 94,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 324,
+                            ExerciseLibraryId = 94,
+                            IsPrimary = false,
+                            MuscleId = 22
+                        },
+                        new
+                        {
                             Id = 325,
-                            ExerciseLibraryId = 97,
+                            ExerciseLibraryId = 95,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
                             Id = 326,
-                            ExerciseLibraryId = 97,
+                            ExerciseLibraryId = 95,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
                             Id = 327,
-                            ExerciseLibraryId = 97,
+                            ExerciseLibraryId = 95,
                             IsPrimary = false,
                             MuscleId = 21
                         },
                         new
                         {
                             Id = 328,
-                            ExerciseLibraryId = 97,
+                            ExerciseLibraryId = 95,
+                            IsPrimary = false,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 329,
+                            ExerciseLibraryId = 95,
+                            IsPrimary = false,
+                            MuscleId = 26
+                        },
+                        new
+                        {
+                            Id = 330,
+                            ExerciseLibraryId = 96,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 331,
+                            ExerciseLibraryId = 96,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 332,
+                            ExerciseLibraryId = 96,
                             IsPrimary = false,
                             MuscleId = 5
                         },
                         new
                         {
-                            Id = 329,
-                            ExerciseLibraryId = 98,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 330,
-                            ExerciseLibraryId = 98,
-                            IsPrimary = false,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 331,
-                            ExerciseLibraryId = 98,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 332,
-                            ExerciseLibraryId = 99,
-                            IsPrimary = true,
-                            MuscleId = 21
-                        },
-                        new
-                        {
                             Id = 333,
-                            ExerciseLibraryId = 100,
+                            ExerciseLibraryId = 97,
                             IsPrimary = true,
                             MuscleId = 21
                         },
                         new
                         {
                             Id = 334,
-                            ExerciseLibraryId = 101,
+                            ExerciseLibraryId = 97,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 335,
+                            ExerciseLibraryId = 97,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 336,
+                            ExerciseLibraryId = 98,
                             IsPrimary = true,
                             MuscleId = 21
                         },
                         new
                         {
-                            Id = 335,
-                            ExerciseLibraryId = 101,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 336,
-                            ExerciseLibraryId = 102,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
                             Id = 337,
-                            ExerciseLibraryId = 102,
-                            IsPrimary = false,
+                            ExerciseLibraryId = 99,
+                            IsPrimary = true,
                             MuscleId = 21
                         },
                         new
                         {
                             Id = 338,
-                            ExerciseLibraryId = 102,
+                            ExerciseLibraryId = 99,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 339,
-                            ExerciseLibraryId = 103,
+                            ExerciseLibraryId = 100,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 340,
-                            ExerciseLibraryId = 103,
-                            IsPrimary = true,
+                            ExerciseLibraryId = 100,
+                            IsPrimary = false,
                             MuscleId = 24
                         },
                         new
                         {
                             Id = 341,
-                            ExerciseLibraryId = 103,
-                            IsPrimary = false,
-                            MuscleId = 22
-                        },
-                        new
-                        {
-                            Id = 342,
-                            ExerciseLibraryId = 103,
-                            IsPrimary = false,
-                            MuscleId = 5
-                        },
-                        new
-                        {
-                            Id = 343,
-                            ExerciseLibraryId = 104,
+                            ExerciseLibraryId = 101,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 344,
-                            ExerciseLibraryId = 104,
-                            IsPrimary = false,
-                            MuscleId = 22
+                            Id = 342,
+                            ExerciseLibraryId = 102,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
-                            Id = 345,
-                            ExerciseLibraryId = 105,
+                            Id = 343,
+                            ExerciseLibraryId = 102,
                             IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 344,
+                            ExerciseLibraryId = 102,
+                            IsPrimary = false,
                             MuscleId = 21
                         },
                         new
                         {
-                            Id = 346,
-                            ExerciseLibraryId = 105,
+                            Id = 345,
+                            ExerciseLibraryId = 103,
                             IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 346,
+                            ExerciseLibraryId = 103,
+                            IsPrimary = false,
                             MuscleId = 24
                         },
                         new
                         {
                             Id = 347,
-                            ExerciseLibraryId = 105,
+                            ExerciseLibraryId = 103,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 22
                         },
                         new
                         {
                             Id = 348,
-                            ExerciseLibraryId = 106,
-                            IsPrimary = true,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 349,
-                            ExerciseLibraryId = 106,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 350,
-                            ExerciseLibraryId = 106,
-                            IsPrimary = false,
-                            MuscleId = 25
-                        },
-                        new
-                        {
-                            Id = 351,
-                            ExerciseLibraryId = 107,
+                            ExerciseLibraryId = 104,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 352,
-                            ExerciseLibraryId = 107,
-                            IsPrimary = false,
+                            Id = 349,
+                            ExerciseLibraryId = 105,
+                            IsPrimary = true,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 350,
+                            ExerciseLibraryId = 106,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 351,
+                            ExerciseLibraryId = 106,
+                            IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
+                            Id = 352,
+                            ExerciseLibraryId = 106,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
                             Id = 353,
-                            ExerciseLibraryId = 107,
+                            ExerciseLibraryId = 106,
                             IsPrimary = false,
                             MuscleId = 22
                         },
                         new
                         {
                             Id = 354,
-                            ExerciseLibraryId = 108,
+                            ExerciseLibraryId = 107,
+                            IsPrimary = true,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 355,
+                            ExerciseLibraryId = 107,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 355,
-                            ExerciseLibraryId = 108,
+                            Id = 356,
+                            ExerciseLibraryId = 107,
                             IsPrimary = false,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 356,
-                            ExerciseLibraryId = 109,
+                            Id = 357,
+                            ExerciseLibraryId = 108,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 357,
-                            ExerciseLibraryId = 109,
+                            Id = 358,
+                            ExerciseLibraryId = 108,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 358,
-                            ExerciseLibraryId = 109,
+                            Id = 359,
+                            ExerciseLibraryId = 108,
                             IsPrimary = false,
                             MuscleId = 21
                         },
                         new
                         {
-                            Id = 359,
-                            ExerciseLibraryId = 110,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
                             Id = 360,
-                            ExerciseLibraryId = 110,
+                            ExerciseLibraryId = 108,
                             IsPrimary = false,
                             MuscleId = 22
                         },
                         new
                         {
                             Id = 361,
-                            ExerciseLibraryId = 111,
+                            ExerciseLibraryId = 109,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 362,
+                            ExerciseLibraryId = 109,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 362,
-                            ExerciseLibraryId = 111,
-                            IsPrimary = false,
-                            MuscleId = 25
-                        },
-                        new
-                        {
                             Id = 363,
-                            ExerciseLibraryId = 111,
+                            ExerciseLibraryId = 109,
                             IsPrimary = false,
                             MuscleId = 21
                         },
                         new
                         {
                             Id = 364,
-                            ExerciseLibraryId = 112,
+                            ExerciseLibraryId = 110,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 365,
+                            ExerciseLibraryId = 110,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 365,
-                            ExerciseLibraryId = 112,
-                            IsPrimary = false,
-                            MuscleId = 25
-                        },
-                        new
-                        {
                             Id = 366,
-                            ExerciseLibraryId = 112,
+                            ExerciseLibraryId = 110,
                             IsPrimary = false,
                             MuscleId = 21
                         },
                         new
                         {
                             Id = 367,
-                            ExerciseLibraryId = 113,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 368,
-                            ExerciseLibraryId = 113,
-                            IsPrimary = false,
-                            MuscleId = 25
-                        },
-                        new
-                        {
-                            Id = 369,
-                            ExerciseLibraryId = 114,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 370,
-                            ExerciseLibraryId = 114,
-                            IsPrimary = true,
-                            MuscleId = 22
-                        },
-                        new
-                        {
-                            Id = 371,
-                            ExerciseLibraryId = 114,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 372,
-                            ExerciseLibraryId = 114,
+                            ExerciseLibraryId = 110,
                             IsPrimary = false,
                             MuscleId = 5
                         },
                         new
                         {
+                            Id = 368,
+                            ExerciseLibraryId = 111,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 369,
+                            ExerciseLibraryId = 111,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 370,
+                            ExerciseLibraryId = 111,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 371,
+                            ExerciseLibraryId = 112,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 372,
+                            ExerciseLibraryId = 113,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
                             Id = 373,
                             ExerciseLibraryId = 114,
-                            IsPrimary = false,
-                            MuscleId = 3
+                            IsPrimary = true,
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 374,
-                            ExerciseLibraryId = 115,
+                            ExerciseLibraryId = 114,
                             IsPrimary = true,
                             MuscleId = 24
                         },
@@ -4514,1869 +4517,1953 @@ namespace AzulTracker.API.Migrations
                             Id = 375,
                             ExerciseLibraryId = 115,
                             IsPrimary = true,
-                            MuscleId = 22
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 376,
                             ExerciseLibraryId = 115,
                             IsPrimary = false,
-                            MuscleId = 20
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 377,
-                            ExerciseLibraryId = 116,
-                            IsPrimary = true,
-                            MuscleId = 23
+                            ExerciseLibraryId = 115,
+                            IsPrimary = false,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 378,
                             ExerciseLibraryId = 116,
-                            IsPrimary = false,
-                            MuscleId = 25
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 379,
-                            ExerciseLibraryId = 117,
+                            ExerciseLibraryId = 116,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
                             Id = 380,
-                            ExerciseLibraryId = 117,
+                            ExerciseLibraryId = 116,
                             IsPrimary = false,
-                            MuscleId = 25
+                            MuscleId = 22
                         },
                         new
                         {
                             Id = 381,
-                            ExerciseLibraryId = 118,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 382,
-                            ExerciseLibraryId = 118,
-                            IsPrimary = false,
-                            MuscleId = 25
-                        },
-                        new
-                        {
-                            Id = 383,
-                            ExerciseLibraryId = 118,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 384,
-                            ExerciseLibraryId = 119,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 385,
-                            ExerciseLibraryId = 119,
-                            IsPrimary = false,
-                            MuscleId = 25
-                        },
-                        new
-                        {
-                            Id = 386,
-                            ExerciseLibraryId = 120,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 387,
-                            ExerciseLibraryId = 120,
-                            IsPrimary = false,
-                            MuscleId = 25
-                        },
-                        new
-                        {
-                            Id = 388,
-                            ExerciseLibraryId = 120,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 389,
-                            ExerciseLibraryId = 121,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 390,
-                            ExerciseLibraryId = 121,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 391,
-                            ExerciseLibraryId = 121,
+                            ExerciseLibraryId = 116,
                             IsPrimary = false,
                             MuscleId = 5
                         },
                         new
                         {
-                            Id = 392,
-                            ExerciseLibraryId = 122,
+                            Id = 382,
+                            ExerciseLibraryId = 117,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 383,
+                            ExerciseLibraryId = 117,
+                            IsPrimary = false,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 384,
+                            ExerciseLibraryId = 118,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 385,
+                            ExerciseLibraryId = 118,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 393,
-                            ExerciseLibraryId = 122,
+                            Id = 386,
+                            ExerciseLibraryId = 118,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 387,
+                            ExerciseLibraryId = 119,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 388,
+                            ExerciseLibraryId = 119,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 389,
+                            ExerciseLibraryId = 119,
                             IsPrimary = false,
                             MuscleId = 25
                         },
                         new
                         {
-                            Id = 394,
-                            ExerciseLibraryId = 123,
+                            Id = 390,
+                            ExerciseLibraryId = 120,
                             IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 391,
+                            ExerciseLibraryId = 120,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 392,
+                            ExerciseLibraryId = 120,
+                            IsPrimary = false,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 393,
+                            ExerciseLibraryId = 121,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 394,
+                            ExerciseLibraryId = 121,
+                            IsPrimary = false,
                             MuscleId = 24
                         },
                         new
                         {
                             Id = 395,
-                            ExerciseLibraryId = 123,
-                            IsPrimary = false,
-                            MuscleId = 25
+                            ExerciseLibraryId = 122,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 396,
-                            ExerciseLibraryId = 124,
-                            IsPrimary = true,
-                            MuscleId = 25
-                        },
-                        new
-                        {
-                            Id = 397,
-                            ExerciseLibraryId = 124,
-                            IsPrimary = true,
-                            MuscleId = 23
-                        },
-                        new
-                        {
-                            Id = 398,
-                            ExerciseLibraryId = 125,
+                            ExerciseLibraryId = 122,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
+                            Id = 397,
+                            ExerciseLibraryId = 122,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 398,
+                            ExerciseLibraryId = 123,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
                             Id = 399,
+                            ExerciseLibraryId = 123,
+                            IsPrimary = false,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 400,
+                            ExerciseLibraryId = 124,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 401,
+                            ExerciseLibraryId = 124,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 402,
+                            ExerciseLibraryId = 124,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 403,
                             ExerciseLibraryId = 125,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 404,
+                            ExerciseLibraryId = 125,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 405,
+                            ExerciseLibraryId = 126,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 406,
+                            ExerciseLibraryId = 126,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 407,
+                            ExerciseLibraryId = 126,
+                            IsPrimary = true,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 408,
+                            ExerciseLibraryId = 127,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 409,
+                            ExerciseLibraryId = 127,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 410,
+                            ExerciseLibraryId = 128,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 411,
+                            ExerciseLibraryId = 128,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 412,
+                            ExerciseLibraryId = 128,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 413,
+                            ExerciseLibraryId = 129,
+                            IsPrimary = true,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 414,
+                            ExerciseLibraryId = 129,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 415,
+                            ExerciseLibraryId = 129,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 416,
+                            ExerciseLibraryId = 130,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 417,
+                            ExerciseLibraryId = 130,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 418,
+                            ExerciseLibraryId = 130,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 419,
+                            ExerciseLibraryId = 131,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 420,
+                            ExerciseLibraryId = 131,
                             IsPrimary = false,
                             MuscleId = 25
                         },
                         new
                         {
-                            Id = 400,
-                            ExerciseLibraryId = 126,
-                            IsPrimary = true,
-                            MuscleId = 26
-                        },
-                        new
-                        {
-                            Id = 401,
-                            ExerciseLibraryId = 126,
-                            IsPrimary = false,
-                            MuscleId = 27
-                        },
-                        new
-                        {
-                            Id = 402,
-                            ExerciseLibraryId = 127,
-                            IsPrimary = true,
-                            MuscleId = 27
-                        },
-                        new
-                        {
-                            Id = 403,
-                            ExerciseLibraryId = 127,
-                            IsPrimary = false,
-                            MuscleId = 26
-                        },
-                        new
-                        {
-                            Id = 404,
-                            ExerciseLibraryId = 128,
-                            IsPrimary = true,
-                            MuscleId = 26
-                        },
-                        new
-                        {
-                            Id = 405,
-                            ExerciseLibraryId = 128,
-                            IsPrimary = false,
-                            MuscleId = 27
-                        },
-                        new
-                        {
-                            Id = 406,
-                            ExerciseLibraryId = 129,
-                            IsPrimary = true,
-                            MuscleId = 26
-                        },
-                        new
-                        {
-                            Id = 407,
-                            ExerciseLibraryId = 129,
-                            IsPrimary = false,
-                            MuscleId = 27
-                        },
-                        new
-                        {
-                            Id = 408,
-                            ExerciseLibraryId = 130,
-                            IsPrimary = true,
-                            MuscleId = 26
-                        },
-                        new
-                        {
-                            Id = 409,
-                            ExerciseLibraryId = 130,
-                            IsPrimary = false,
-                            MuscleId = 27
-                        },
-                        new
-                        {
-                            Id = 410,
-                            ExerciseLibraryId = 131,
-                            IsPrimary = true,
-                            MuscleId = 26
-                        },
-                        new
-                        {
-                            Id = 411,
-                            ExerciseLibraryId = 131,
-                            IsPrimary = false,
-                            MuscleId = 27
-                        },
-                        new
-                        {
-                            Id = 412,
-                            ExerciseLibraryId = 132,
-                            IsPrimary = true,
-                            MuscleId = 28
-                        },
-                        new
-                        {
-                            Id = 413,
-                            ExerciseLibraryId = 133,
-                            IsPrimary = true,
-                            MuscleId = 26
-                        },
-                        new
-                        {
-                            Id = 414,
-                            ExerciseLibraryId = 133,
-                            IsPrimary = true,
-                            MuscleId = 27
-                        },
-                        new
-                        {
-                            Id = 415,
-                            ExerciseLibraryId = 134,
-                            IsPrimary = true,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 416,
-                            ExerciseLibraryId = 134,
-                            IsPrimary = true,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 417,
-                            ExerciseLibraryId = 134,
-                            IsPrimary = false,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 418,
-                            ExerciseLibraryId = 135,
-                            IsPrimary = true,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 419,
-                            ExerciseLibraryId = 135,
-                            IsPrimary = true,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 420,
-                            ExerciseLibraryId = 135,
-                            IsPrimary = false,
-                            MuscleId = 16
-                        },
-                        new
-                        {
                             Id = 421,
-                            ExerciseLibraryId = 136,
-                            IsPrimary = true,
-                            MuscleId = 16
+                            ExerciseLibraryId = 131,
+                            IsPrimary = false,
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 422,
-                            ExerciseLibraryId = 136,
+                            ExerciseLibraryId = 132,
                             IsPrimary = true,
-                            MuscleId = 18
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 423,
-                            ExerciseLibraryId = 136,
+                            ExerciseLibraryId = 132,
                             IsPrimary = false,
-                            MuscleId = 3
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 424,
-                            ExerciseLibraryId = 136,
+                            ExerciseLibraryId = 132,
                             IsPrimary = false,
-                            MuscleId = 4
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 425,
-                            ExerciseLibraryId = 137,
+                            ExerciseLibraryId = 133,
                             IsPrimary = true,
-                            MuscleId = 16
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 426,
-                            ExerciseLibraryId = 137,
+                            ExerciseLibraryId = 133,
                             IsPrimary = false,
-                            MuscleId = 17
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 427,
-                            ExerciseLibraryId = 137,
-                            IsPrimary = false,
-                            MuscleId = 18
+                            ExerciseLibraryId = 134,
+                            IsPrimary = true,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 428,
-                            ExerciseLibraryId = 137,
-                            IsPrimary = false,
-                            MuscleId = 29
+                            ExerciseLibraryId = 134,
+                            IsPrimary = true,
+                            MuscleId = 22
                         },
                         new
                         {
                             Id = 429,
-                            ExerciseLibraryId = 138,
-                            IsPrimary = true,
-                            MuscleId = 16
+                            ExerciseLibraryId = 134,
+                            IsPrimary = false,
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 430,
-                            ExerciseLibraryId = 138,
+                            ExerciseLibraryId = 134,
                             IsPrimary = false,
-                            MuscleId = 17
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 431,
-                            ExerciseLibraryId = 139,
-                            IsPrimary = true,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 432,
-                            ExerciseLibraryId = 139,
-                            IsPrimary = false,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 433,
-                            ExerciseLibraryId = 140,
-                            IsPrimary = true,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 434,
-                            ExerciseLibraryId = 140,
-                            IsPrimary = false,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 435,
-                            ExerciseLibraryId = 140,
-                            IsPrimary = false,
-                            MuscleId = 29
-                        },
-                        new
-                        {
-                            Id = 436,
-                            ExerciseLibraryId = 141,
-                            IsPrimary = true,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 437,
-                            ExerciseLibraryId = 141,
-                            IsPrimary = false,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 438,
-                            ExerciseLibraryId = 141,
-                            IsPrimary = false,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 439,
-                            ExerciseLibraryId = 142,
-                            IsPrimary = true,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 440,
-                            ExerciseLibraryId = 142,
-                            IsPrimary = true,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 441,
-                            ExerciseLibraryId = 142,
-                            IsPrimary = false,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 442,
-                            ExerciseLibraryId = 143,
-                            IsPrimary = true,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 443,
-                            ExerciseLibraryId = 143,
-                            IsPrimary = true,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 444,
-                            ExerciseLibraryId = 143,
-                            IsPrimary = false,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 445,
-                            ExerciseLibraryId = 144,
-                            IsPrimary = true,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 446,
-                            ExerciseLibraryId = 144,
-                            IsPrimary = true,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 447,
-                            ExerciseLibraryId = 144,
-                            IsPrimary = false,
-                            MuscleId = 17
-                        },
-                        new
-                        {
-                            Id = 448,
-                            ExerciseLibraryId = 145,
-                            IsPrimary = true,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 449,
-                            ExerciseLibraryId = 145,
-                            IsPrimary = true,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 450,
-                            ExerciseLibraryId = 145,
+                            ExerciseLibraryId = 134,
                             IsPrimary = false,
                             MuscleId = 3
                         },
                         new
                         {
-                            Id = 451,
-                            ExerciseLibraryId = 146,
+                            Id = 432,
+                            ExerciseLibraryId = 135,
                             IsPrimary = true,
-                            MuscleId = 16
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 433,
+                            ExerciseLibraryId = 135,
+                            IsPrimary = true,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 434,
+                            ExerciseLibraryId = 135,
+                            IsPrimary = false,
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 435,
+                            ExerciseLibraryId = 136,
+                            IsPrimary = true,
+                            MuscleId = 23
+                        },
+                        new
+                        {
+                            Id = 436,
+                            ExerciseLibraryId = 136,
+                            IsPrimary = false,
+                            MuscleId = 25
+                        },
+                        new
+                        {
+                            Id = 437,
+                            ExerciseLibraryId = 137,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 438,
+                            ExerciseLibraryId = 137,
+                            IsPrimary = false,
+                            MuscleId = 25
+                        },
+                        new
+                        {
+                            Id = 439,
+                            ExerciseLibraryId = 138,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 440,
+                            ExerciseLibraryId = 138,
+                            IsPrimary = false,
+                            MuscleId = 25
+                        },
+                        new
+                        {
+                            Id = 441,
+                            ExerciseLibraryId = 138,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 442,
+                            ExerciseLibraryId = 139,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 443,
+                            ExerciseLibraryId = 139,
+                            IsPrimary = false,
+                            MuscleId = 25
+                        },
+                        new
+                        {
+                            Id = 444,
+                            ExerciseLibraryId = 140,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 445,
+                            ExerciseLibraryId = 140,
+                            IsPrimary = false,
+                            MuscleId = 25
+                        },
+                        new
+                        {
+                            Id = 446,
+                            ExerciseLibraryId = 140,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 447,
+                            ExerciseLibraryId = 141,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 448,
+                            ExerciseLibraryId = 141,
+                            IsPrimary = false,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 449,
+                            ExerciseLibraryId = 141,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 450,
+                            ExerciseLibraryId = 142,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 451,
+                            ExerciseLibraryId = 142,
+                            IsPrimary = false,
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 452,
-                            ExerciseLibraryId = 146,
-                            IsPrimary = false,
-                            MuscleId = 17
+                            ExerciseLibraryId = 143,
+                            IsPrimary = true,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 453,
-                            ExerciseLibraryId = 146,
+                            ExerciseLibraryId = 143,
                             IsPrimary = false,
-                            MuscleId = 18
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 454,
-                            ExerciseLibraryId = 146,
-                            IsPrimary = false,
-                            MuscleId = 29
+                            ExerciseLibraryId = 144,
+                            IsPrimary = true,
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 455,
-                            ExerciseLibraryId = 147,
+                            ExerciseLibraryId = 144,
                             IsPrimary = true,
-                            MuscleId = 16
+                            MuscleId = 23
                         },
                         new
                         {
                             Id = 456,
-                            ExerciseLibraryId = 147,
-                            IsPrimary = false,
-                            MuscleId = 17
+                            ExerciseLibraryId = 145,
+                            IsPrimary = true,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 457,
-                            ExerciseLibraryId = 147,
+                            ExerciseLibraryId = 145,
                             IsPrimary = false,
-                            MuscleId = 29
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 458,
-                            ExerciseLibraryId = 148,
+                            ExerciseLibraryId = 146,
                             IsPrimary = true,
-                            MuscleId = 17
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 459,
-                            ExerciseLibraryId = 148,
-                            IsPrimary = true,
-                            MuscleId = 16
+                            ExerciseLibraryId = 146,
+                            IsPrimary = false,
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 460,
-                            ExerciseLibraryId = 149,
+                            ExerciseLibraryId = 147,
                             IsPrimary = true,
-                            MuscleId = 17
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 461,
-                            ExerciseLibraryId = 149,
+                            ExerciseLibraryId = 147,
                             IsPrimary = false,
-                            MuscleId = 16
+                            MuscleId = 25
                         },
                         new
                         {
                             Id = 462,
-                            ExerciseLibraryId = 149,
-                            IsPrimary = false,
-                            MuscleId = 18
+                            ExerciseLibraryId = 148,
+                            IsPrimary = true,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 463,
-                            ExerciseLibraryId = 150,
-                            IsPrimary = true,
-                            MuscleId = 17
+                            ExerciseLibraryId = 148,
+                            IsPrimary = false,
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 464,
-                            ExerciseLibraryId = 150,
-                            IsPrimary = true,
-                            MuscleId = 18
+                            ExerciseLibraryId = 148,
+                            IsPrimary = false,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 465,
-                            ExerciseLibraryId = 150,
-                            IsPrimary = false,
-                            MuscleId = 16
+                            ExerciseLibraryId = 149,
+                            IsPrimary = true,
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 466,
-                            ExerciseLibraryId = 151,
-                            IsPrimary = true,
-                            MuscleId = 17
+                            ExerciseLibraryId = 149,
+                            IsPrimary = false,
+                            MuscleId = 27
                         },
                         new
                         {
                             Id = 467,
-                            ExerciseLibraryId = 151,
+                            ExerciseLibraryId = 150,
                             IsPrimary = true,
-                            MuscleId = 18
+                            MuscleId = 27
                         },
                         new
                         {
                             Id = 468,
-                            ExerciseLibraryId = 151,
+                            ExerciseLibraryId = 150,
                             IsPrimary = false,
-                            MuscleId = 10
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 469,
-                            ExerciseLibraryId = 152,
+                            ExerciseLibraryId = 151,
                             IsPrimary = true,
-                            MuscleId = 16
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 470,
-                            ExerciseLibraryId = 152,
-                            IsPrimary = true,
-                            MuscleId = 18
+                            ExerciseLibraryId = 151,
+                            IsPrimary = false,
+                            MuscleId = 27
                         },
                         new
                         {
                             Id = 471,
                             ExerciseLibraryId = 152,
-                            IsPrimary = false,
-                            MuscleId = 17
+                            IsPrimary = true,
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 472,
-                            ExerciseLibraryId = 153,
-                            IsPrimary = true,
-                            MuscleId = 22
+                            ExerciseLibraryId = 152,
+                            IsPrimary = false,
+                            MuscleId = 27
                         },
                         new
                         {
                             Id = 473,
                             ExerciseLibraryId = 153,
                             IsPrimary = true,
-                            MuscleId = 17
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 474,
                             ExerciseLibraryId = 153,
                             IsPrimary = false,
-                            MuscleId = 18
+                            MuscleId = 27
                         },
                         new
                         {
                             Id = 475,
                             ExerciseLibraryId = 154,
                             IsPrimary = true,
-                            MuscleId = 10
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 476,
                             ExerciseLibraryId = 154,
-                            IsPrimary = true,
-                            MuscleId = 15
+                            IsPrimary = false,
+                            MuscleId = 27
                         },
                         new
                         {
                             Id = 477,
-                            ExerciseLibraryId = 154,
-                            IsPrimary = false,
-                            MuscleId = 18
+                            ExerciseLibraryId = 156,
+                            IsPrimary = true,
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 478,
-                            ExerciseLibraryId = 154,
-                            IsPrimary = false,
-                            MuscleId = 5
+                            ExerciseLibraryId = 156,
+                            IsPrimary = true,
+                            MuscleId = 27
                         },
                         new
                         {
                             Id = 479,
-                            ExerciseLibraryId = 155,
+                            ExerciseLibraryId = 157,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 480,
-                            ExerciseLibraryId = 155,
+                            ExerciseLibraryId = 157,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 481,
-                            ExerciseLibraryId = 155,
-                            IsPrimary = true,
-                            MuscleId = 8
+                            ExerciseLibraryId = 157,
+                            IsPrimary = false,
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 482,
-                            ExerciseLibraryId = 155,
-                            IsPrimary = false,
-                            MuscleId = 10
+                            ExerciseLibraryId = 158,
+                            IsPrimary = true,
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 483,
-                            ExerciseLibraryId = 155,
-                            IsPrimary = false,
-                            MuscleId = 5
+                            ExerciseLibraryId = 158,
+                            IsPrimary = true,
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 484,
-                            ExerciseLibraryId = 156,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 485,
-                            ExerciseLibraryId = 156,
-                            IsPrimary = true,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 486,
-                            ExerciseLibraryId = 156,
-                            IsPrimary = false,
-                            MuscleId = 5
-                        },
-                        new
-                        {
-                            Id = 487,
-                            ExerciseLibraryId = 156,
+                            ExerciseLibraryId = 158,
                             IsPrimary = false,
                             MuscleId = 16
                         },
                         new
                         {
-                            Id = 488,
-                            ExerciseLibraryId = 157,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 489,
-                            ExerciseLibraryId = 157,
-                            IsPrimary = true,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 490,
-                            ExerciseLibraryId = 157,
-                            IsPrimary = false,
-                            MuscleId = 14
-                        },
-                        new
-                        {
-                            Id = 491,
-                            ExerciseLibraryId = 157,
-                            IsPrimary = false,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 492,
-                            ExerciseLibraryId = 158,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 493,
-                            ExerciseLibraryId = 158,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 494,
-                            ExerciseLibraryId = 158,
-                            IsPrimary = true,
-                            MuscleId = 10
-                        },
-                        new
-                        {
-                            Id = 495,
-                            ExerciseLibraryId = 158,
-                            IsPrimary = false,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 496,
-                            ExerciseLibraryId = 158,
-                            IsPrimary = false,
-                            MuscleId = 5
-                        },
-                        new
-                        {
-                            Id = 497,
+                            Id = 485,
                             ExerciseLibraryId = 159,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 16
                         },
                         new
                         {
-                            Id = 498,
+                            Id = 486,
                             ExerciseLibraryId = 159,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 18
                         },
                         new
                         {
-                            Id = 499,
-                            ExerciseLibraryId = 159,
-                            IsPrimary = true,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 500,
-                            ExerciseLibraryId = 159,
-                            IsPrimary = false,
-                            MuscleId = 10
-                        },
-                        new
-                        {
-                            Id = 501,
-                            ExerciseLibraryId = 159,
-                            IsPrimary = false,
-                            MuscleId = 5
-                        },
-                        new
-                        {
-                            Id = 502,
+                            Id = 487,
                             ExerciseLibraryId = 159,
                             IsPrimary = false,
                             MuscleId = 3
                         },
                         new
                         {
-                            Id = 503,
-                            ExerciseLibraryId = 160,
-                            IsPrimary = true,
+                            Id = 488,
+                            ExerciseLibraryId = 159,
+                            IsPrimary = false,
                             MuscleId = 8
                         },
                         new
                         {
-                            Id = 504,
+                            Id = 489,
                             ExerciseLibraryId = 160,
+                            IsPrimary = true,
+                            MuscleId = 16
+                        },
+                        new
+                        {
+                            Id = 490,
+                            ExerciseLibraryId = 160,
+                            IsPrimary = false,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 491,
+                            ExerciseLibraryId = 160,
+                            IsPrimary = false,
+                            MuscleId = 18
+                        },
+                        new
+                        {
+                            Id = 492,
+                            ExerciseLibraryId = 161,
+                            IsPrimary = true,
+                            MuscleId = 16
+                        },
+                        new
+                        {
+                            Id = 493,
+                            ExerciseLibraryId = 161,
+                            IsPrimary = false,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 494,
+                            ExerciseLibraryId = 162,
+                            IsPrimary = true,
+                            MuscleId = 16
+                        },
+                        new
+                        {
+                            Id = 495,
+                            ExerciseLibraryId = 162,
+                            IsPrimary = false,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 496,
+                            ExerciseLibraryId = 163,
+                            IsPrimary = true,
+                            MuscleId = 16
+                        },
+                        new
+                        {
+                            Id = 497,
+                            ExerciseLibraryId = 163,
+                            IsPrimary = false,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 498,
+                            ExerciseLibraryId = 164,
+                            IsPrimary = true,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 499,
+                            ExerciseLibraryId = 164,
+                            IsPrimary = false,
+                            MuscleId = 16
+                        },
+                        new
+                        {
+                            Id = 500,
+                            ExerciseLibraryId = 164,
+                            IsPrimary = false,
+                            MuscleId = 18
+                        },
+                        new
+                        {
+                            Id = 501,
+                            ExerciseLibraryId = 165,
+                            IsPrimary = true,
+                            MuscleId = 18
+                        },
+                        new
+                        {
+                            Id = 502,
+                            ExerciseLibraryId = 165,
+                            IsPrimary = true,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 503,
+                            ExerciseLibraryId = 165,
+                            IsPrimary = false,
+                            MuscleId = 16
+                        },
+                        new
+                        {
+                            Id = 504,
+                            ExerciseLibraryId = 166,
                             IsPrimary = true,
                             MuscleId = 16
                         },
                         new
                         {
                             Id = 505,
-                            ExerciseLibraryId = 160,
+                            ExerciseLibraryId = 166,
                             IsPrimary = true,
                             MuscleId = 18
                         },
                         new
                         {
                             Id = 506,
-                            ExerciseLibraryId = 160,
+                            ExerciseLibraryId = 166,
                             IsPrimary = false,
-                            MuscleId = 24
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 507,
-                            ExerciseLibraryId = 160,
-                            IsPrimary = false,
-                            MuscleId = 14
+                            ExerciseLibraryId = 167,
+                            IsPrimary = true,
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 508,
-                            ExerciseLibraryId = 160,
-                            IsPrimary = false,
-                            MuscleId = 20
+                            ExerciseLibraryId = 167,
+                            IsPrimary = true,
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 509,
-                            ExerciseLibraryId = 161,
-                            IsPrimary = true,
-                            MuscleId = 20
+                            ExerciseLibraryId = 167,
+                            IsPrimary = false,
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 510,
-                            ExerciseLibraryId = 161,
+                            ExerciseLibraryId = 168,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 511,
-                            ExerciseLibraryId = 161,
+                            ExerciseLibraryId = 168,
                             IsPrimary = true,
-                            MuscleId = 21
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 512,
-                            ExerciseLibraryId = 161,
-                            IsPrimary = false,
-                            MuscleId = 5
-                        },
-                        new
-                        {
-                            Id = 513,
-                            ExerciseLibraryId = 161,
+                            ExerciseLibraryId = 168,
                             IsPrimary = false,
                             MuscleId = 3
                         },
                         new
                         {
+                            Id = 513,
+                            ExerciseLibraryId = 169,
+                            IsPrimary = true,
+                            MuscleId = 16
+                        },
+                        new
+                        {
                             Id = 514,
-                            ExerciseLibraryId = 161,
+                            ExerciseLibraryId = 169,
                             IsPrimary = false,
-                            MuscleId = 10
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 515,
-                            ExerciseLibraryId = 162,
-                            IsPrimary = true,
-                            MuscleId = 10
+                            ExerciseLibraryId = 169,
+                            IsPrimary = false,
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 516,
-                            ExerciseLibraryId = 162,
+                            ExerciseLibraryId = 170,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 517,
-                            ExerciseLibraryId = 162,
+                            ExerciseLibraryId = 170,
                             IsPrimary = false,
-                            MuscleId = 24
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 518,
-                            ExerciseLibraryId = 162,
-                            IsPrimary = false,
-                            MuscleId = 8
+                            ExerciseLibraryId = 171,
+                            IsPrimary = true,
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 519,
-                            ExerciseLibraryId = 163,
+                            ExerciseLibraryId = 171,
                             IsPrimary = true,
-                            MuscleId = 8
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 520,
-                            ExerciseLibraryId = 163,
+                            ExerciseLibraryId = 172,
                             IsPrimary = true,
-                            MuscleId = 14
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 521,
-                            ExerciseLibraryId = 163,
+                            ExerciseLibraryId = 172,
                             IsPrimary = false,
-                            MuscleId = 20
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 522,
-                            ExerciseLibraryId = 163,
+                            ExerciseLibraryId = 172,
                             IsPrimary = false,
-                            MuscleId = 24
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 523,
-                            ExerciseLibraryId = 164,
+                            ExerciseLibraryId = 173,
                             IsPrimary = true,
-                            MuscleId = 8
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 524,
-                            ExerciseLibraryId = 164,
+                            ExerciseLibraryId = 173,
                             IsPrimary = true,
-                            MuscleId = 14
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 525,
-                            ExerciseLibraryId = 164,
+                            ExerciseLibraryId = 173,
                             IsPrimary = false,
-                            MuscleId = 20
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 526,
-                            ExerciseLibraryId = 164,
-                            IsPrimary = false,
-                            MuscleId = 24
+                            ExerciseLibraryId = 174,
+                            IsPrimary = true,
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 527,
-                            ExerciseLibraryId = 164,
-                            IsPrimary = false,
-                            MuscleId = 22
+                            ExerciseLibraryId = 174,
+                            IsPrimary = true,
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 528,
-                            ExerciseLibraryId = 165,
-                            IsPrimary = true,
+                            ExerciseLibraryId = 174,
+                            IsPrimary = false,
                             MuscleId = 10
                         },
                         new
                         {
                             Id = 529,
-                            ExerciseLibraryId = 165,
+                            ExerciseLibraryId = 175,
+                            IsPrimary = true,
+                            MuscleId = 16
+                        },
+                        new
+                        {
+                            Id = 530,
+                            ExerciseLibraryId = 175,
                             IsPrimary = true,
                             MuscleId = 18
                         },
                         new
                         {
-                            Id = 530,
-                            ExerciseLibraryId = 165,
+                            Id = 531,
+                            ExerciseLibraryId = 175,
+                            IsPrimary = false,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 532,
+                            ExerciseLibraryId = 176,
+                            IsPrimary = true,
+                            MuscleId = 22
+                        },
+                        new
+                        {
+                            Id = 533,
+                            ExerciseLibraryId = 176,
+                            IsPrimary = true,
+                            MuscleId = 17
+                        },
+                        new
+                        {
+                            Id = 534,
+                            ExerciseLibraryId = 176,
+                            IsPrimary = false,
+                            MuscleId = 18
+                        },
+                        new
+                        {
+                            Id = 535,
+                            ExerciseLibraryId = 177,
+                            IsPrimary = true,
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 536,
+                            ExerciseLibraryId = 177,
+                            IsPrimary = true,
+                            MuscleId = 15
+                        },
+                        new
+                        {
+                            Id = 537,
+                            ExerciseLibraryId = 177,
+                            IsPrimary = false,
+                            MuscleId = 18
+                        },
+                        new
+                        {
+                            Id = 538,
+                            ExerciseLibraryId = 177,
                             IsPrimary = false,
                             MuscleId = 5
                         },
                         new
                         {
-                            Id = 531,
-                            ExerciseLibraryId = 165,
-                            IsPrimary = false,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 532,
-                            ExerciseLibraryId = 166,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 533,
-                            ExerciseLibraryId = 166,
-                            IsPrimary = true,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 534,
-                            ExerciseLibraryId = 166,
-                            IsPrimary = false,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 535,
-                            ExerciseLibraryId = 166,
-                            IsPrimary = false,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 536,
-                            ExerciseLibraryId = 167,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 537,
-                            ExerciseLibraryId = 167,
-                            IsPrimary = false,
-                            MuscleId = 3
-                        },
-                        new
-                        {
-                            Id = 538,
-                            ExerciseLibraryId = 167,
-                            IsPrimary = false,
-                            MuscleId = 12
-                        },
-                        new
-                        {
                             Id = 539,
-                            ExerciseLibraryId = 167,
-                            IsPrimary = false,
-                            MuscleId = 21
+                            ExerciseLibraryId = 178,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 540,
-                            ExerciseLibraryId = 168,
-                            IsPrimary = true,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 541,
-                            ExerciseLibraryId = 168,
-                            IsPrimary = true,
-                            MuscleId = 7
-                        },
-                        new
-                        {
-                            Id = 542,
-                            ExerciseLibraryId = 168,
-                            IsPrimary = false,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 543,
-                            ExerciseLibraryId = 168,
-                            IsPrimary = false,
-                            MuscleId = 18
-                        },
-                        new
-                        {
-                            Id = 544,
-                            ExerciseLibraryId = 168,
-                            IsPrimary = false,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 545,
-                            ExerciseLibraryId = 169,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 546,
-                            ExerciseLibraryId = 169,
+                            ExerciseLibraryId = 178,
                             IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 547,
-                            ExerciseLibraryId = 169,
+                            Id = 541,
+                            ExerciseLibraryId = 178,
+                            IsPrimary = true,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 542,
+                            ExerciseLibraryId = 178,
                             IsPrimary = false,
-                            MuscleId = 26
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 543,
+                            ExerciseLibraryId = 178,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 544,
+                            ExerciseLibraryId = 179,
+                            IsPrimary = true,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 545,
+                            ExerciseLibraryId = 179,
+                            IsPrimary = true,
+                            MuscleId = 21
+                        },
+                        new
+                        {
+                            Id = 546,
+                            ExerciseLibraryId = 179,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 547,
+                            ExerciseLibraryId = 179,
+                            IsPrimary = false,
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 548,
-                            ExerciseLibraryId = 170,
+                            ExerciseLibraryId = 180,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
                             Id = 549,
-                            ExerciseLibraryId = 170,
-                            IsPrimary = false,
-                            MuscleId = 1
+                            ExerciseLibraryId = 180,
+                            IsPrimary = true,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 550,
-                            ExerciseLibraryId = 170,
+                            ExerciseLibraryId = 180,
                             IsPrimary = false,
                             MuscleId = 14
                         },
                         new
                         {
                             Id = 551,
-                            ExerciseLibraryId = 170,
-                            IsPrimary = false,
-                            MuscleId = 16
-                        },
-                        new
-                        {
-                            Id = 552,
-                            ExerciseLibraryId = 170,
+                            ExerciseLibraryId = 180,
                             IsPrimary = false,
                             MuscleId = 24
                         },
                         new
                         {
-                            Id = 553,
-                            ExerciseLibraryId = 171,
+                            Id = 552,
+                            ExerciseLibraryId = 181,
                             IsPrimary = true,
-                            MuscleId = 1
+                            MuscleId = 20
+                        },
+                        new
+                        {
+                            Id = 553,
+                            ExerciseLibraryId = 181,
+                            IsPrimary = true,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 554,
-                            ExerciseLibraryId = 171,
+                            ExerciseLibraryId = 181,
                             IsPrimary = true,
-                            MuscleId = 2
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 555,
-                            ExerciseLibraryId = 172,
-                            IsPrimary = true,
-                            MuscleId = 1
+                            ExerciseLibraryId = 181,
+                            IsPrimary = false,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 556,
-                            ExerciseLibraryId = 172,
-                            IsPrimary = true,
-                            MuscleId = 2
+                            ExerciseLibraryId = 181,
+                            IsPrimary = false,
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 557,
-                            ExerciseLibraryId = 172,
+                            ExerciseLibraryId = 182,
                             IsPrimary = true,
-                            MuscleId = 14
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 558,
-                            ExerciseLibraryId = 172,
-                            IsPrimary = false,
-                            MuscleId = 8
+                            ExerciseLibraryId = 182,
+                            IsPrimary = true,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 559,
-                            ExerciseLibraryId = 173,
-                            IsPrimary = true,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 560,
-                            ExerciseLibraryId = 173,
-                            IsPrimary = true,
-                            MuscleId = 2
-                        },
-                        new
-                        {
-                            Id = 561,
-                            ExerciseLibraryId = 173,
+                            ExerciseLibraryId = 182,
                             IsPrimary = true,
                             MuscleId = 8
                         },
                         new
                         {
-                            Id = 562,
-                            ExerciseLibraryId = 173,
+                            Id = 560,
+                            ExerciseLibraryId = 182,
                             IsPrimary = false,
-                            MuscleId = 14
+                            MuscleId = 10
+                        },
+                        new
+                        {
+                            Id = 561,
+                            ExerciseLibraryId = 182,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 562,
+                            ExerciseLibraryId = 182,
+                            IsPrimary = false,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 563,
-                            ExerciseLibraryId = 174,
+                            ExerciseLibraryId = 183,
                             IsPrimary = true,
-                            MuscleId = 9
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 564,
-                            ExerciseLibraryId = 174,
+                            ExerciseLibraryId = 183,
                             IsPrimary = true,
-                            MuscleId = 4
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 565,
-                            ExerciseLibraryId = 174,
-                            IsPrimary = false,
-                            MuscleId = 11
+                            ExerciseLibraryId = 183,
+                            IsPrimary = true,
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 566,
-                            ExerciseLibraryId = 175,
-                            IsPrimary = true,
-                            MuscleId = 3
+                            ExerciseLibraryId = 183,
+                            IsPrimary = false,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 567,
-                            ExerciseLibraryId = 175,
+                            ExerciseLibraryId = 183,
                             IsPrimary = false,
-                            MuscleId = 1
+                            MuscleId = 17
                         },
                         new
                         {
                             Id = 568,
-                            ExerciseLibraryId = 175,
+                            ExerciseLibraryId = 183,
                             IsPrimary = false,
-                            MuscleId = 19
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 569,
-                            ExerciseLibraryId = 175,
-                            IsPrimary = false,
-                            MuscleId = 14
+                            ExerciseLibraryId = 184,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 570,
-                            ExerciseLibraryId = 176,
+                            ExerciseLibraryId = 184,
                             IsPrimary = true,
-                            MuscleId = 4
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 571,
-                            ExerciseLibraryId = 176,
+                            ExerciseLibraryId = 184,
                             IsPrimary = true,
-                            MuscleId = 9
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 572,
-                            ExerciseLibraryId = 176,
+                            ExerciseLibraryId = 184,
+                            IsPrimary = false,
+                            MuscleId = 5
+                        },
+                        new
+                        {
+                            Id = 573,
+                            ExerciseLibraryId = 184,
                             IsPrimary = false,
                             MuscleId = 3
                         },
                         new
                         {
-                            Id = 573,
-                            ExerciseLibraryId = 176,
-                            IsPrimary = false,
-                            MuscleId = 6
-                        },
-                        new
-                        {
                             Id = 574,
-                            ExerciseLibraryId = 176,
+                            ExerciseLibraryId = 184,
                             IsPrimary = false,
-                            MuscleId = 12
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 575,
-                            ExerciseLibraryId = 177,
+                            ExerciseLibraryId = 185,
                             IsPrimary = true,
                             MuscleId = 10
                         },
                         new
                         {
                             Id = 576,
-                            ExerciseLibraryId = 177,
-                            IsPrimary = false,
-                            MuscleId = 5
+                            ExerciseLibraryId = 185,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 577,
-                            ExerciseLibraryId = 178,
+                            ExerciseLibraryId = 185,
+                            IsPrimary = false,
+                            MuscleId = 24
+                        },
+                        new
+                        {
+                            Id = 578,
+                            ExerciseLibraryId = 185,
+                            IsPrimary = false,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 579,
+                            ExerciseLibraryId = 186,
                             IsPrimary = true,
                             MuscleId = 8
                         },
                         new
                         {
-                            Id = 578,
-                            ExerciseLibraryId = 178,
-                            IsPrimary = false,
-                            MuscleId = 1
-                        },
-                        new
-                        {
-                            Id = 579,
-                            ExerciseLibraryId = 178,
-                            IsPrimary = false,
-                            MuscleId = 7
-                        },
-                        new
-                        {
                             Id = 580,
-                            ExerciseLibraryId = 179,
+                            ExerciseLibraryId = 186,
                             IsPrimary = true,
-                            MuscleId = 9
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 581,
-                            ExerciseLibraryId = 179,
-                            IsPrimary = true,
-                            MuscleId = 4
+                            ExerciseLibraryId = 186,
+                            IsPrimary = false,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 582,
-                            ExerciseLibraryId = 179,
+                            ExerciseLibraryId = 186,
                             IsPrimary = false,
-                            MuscleId = 10
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 583,
-                            ExerciseLibraryId = 179,
-                            IsPrimary = false,
-                            MuscleId = 11
+                            ExerciseLibraryId = 187,
+                            IsPrimary = true,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 584,
-                            ExerciseLibraryId = 180,
+                            ExerciseLibraryId = 187,
                             IsPrimary = true,
-                            MuscleId = 13
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 585,
-                            ExerciseLibraryId = 180,
+                            ExerciseLibraryId = 187,
                             IsPrimary = false,
-                            MuscleId = 12
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 586,
-                            ExerciseLibraryId = 180,
+                            ExerciseLibraryId = 187,
                             IsPrimary = false,
-                            MuscleId = 30
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 587,
-                            ExerciseLibraryId = 181,
-                            IsPrimary = true,
-                            MuscleId = 14
+                            ExerciseLibraryId = 187,
+                            IsPrimary = false,
+                            MuscleId = 22
                         },
                         new
                         {
                             Id = 588,
-                            ExerciseLibraryId = 182,
+                            ExerciseLibraryId = 188,
                             IsPrimary = true,
-                            MuscleId = 14
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 589,
-                            ExerciseLibraryId = 183,
+                            ExerciseLibraryId = 188,
                             IsPrimary = true,
-                            MuscleId = 14
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 590,
-                            ExerciseLibraryId = 183,
+                            ExerciseLibraryId = 188,
                             IsPrimary = false,
-                            MuscleId = 15
+                            MuscleId = 5
                         },
                         new
                         {
                             Id = 591,
-                            ExerciseLibraryId = 184,
-                            IsPrimary = true,
-                            MuscleId = 20
+                            ExerciseLibraryId = 188,
+                            IsPrimary = false,
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 592,
-                            ExerciseLibraryId = 184,
-                            IsPrimary = false,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 593,
-                            ExerciseLibraryId = 184,
-                            IsPrimary = false,
-                            MuscleId = 21
-                        },
-                        new
-                        {
-                            Id = 594,
-                            ExerciseLibraryId = 185,
+                            ExerciseLibraryId = 189,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 595,
-                            ExerciseLibraryId = 185,
-                            IsPrimary = false,
+                            Id = 593,
+                            ExerciseLibraryId = 189,
+                            IsPrimary = true,
                             MuscleId = 24
                         },
                         new
                         {
+                            Id = 594,
+                            ExerciseLibraryId = 189,
+                            IsPrimary = false,
+                            MuscleId = 8
+                        },
+                        new
+                        {
+                            Id = 595,
+                            ExerciseLibraryId = 189,
+                            IsPrimary = false,
+                            MuscleId = 16
+                        },
+                        new
+                        {
                             Id = 596,
-                            ExerciseLibraryId = 186,
+                            ExerciseLibraryId = 190,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
                             Id = 597,
-                            ExerciseLibraryId = 186,
-                            IsPrimary = true,
-                            MuscleId = 24
+                            ExerciseLibraryId = 190,
+                            IsPrimary = false,
+                            MuscleId = 3
                         },
                         new
                         {
                             Id = 598,
-                            ExerciseLibraryId = 186,
-                            IsPrimary = true,
-                            MuscleId = 22
+                            ExerciseLibraryId = 190,
+                            IsPrimary = false,
+                            MuscleId = 12
                         },
                         new
                         {
                             Id = 599,
-                            ExerciseLibraryId = 187,
-                            IsPrimary = true,
-                            MuscleId = 20
+                            ExerciseLibraryId = 190,
+                            IsPrimary = false,
+                            MuscleId = 21
                         },
                         new
                         {
                             Id = 600,
-                            ExerciseLibraryId = 187,
-                            IsPrimary = false,
-                            MuscleId = 24
+                            ExerciseLibraryId = 191,
+                            IsPrimary = true,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 601,
-                            ExerciseLibraryId = 188,
+                            ExerciseLibraryId = 191,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 7
                         },
                         new
                         {
                             Id = 602,
-                            ExerciseLibraryId = 188,
-                            IsPrimary = true,
-                            MuscleId = 21
+                            ExerciseLibraryId = 191,
+                            IsPrimary = false,
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 603,
-                            ExerciseLibraryId = 188,
+                            ExerciseLibraryId = 191,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 18
                         },
                         new
                         {
                             Id = 604,
-                            ExerciseLibraryId = 189,
+                            ExerciseLibraryId = 191,
+                            IsPrimary = false,
+                            MuscleId = 1
+                        },
+                        new
+                        {
+                            Id = 605,
+                            ExerciseLibraryId = 192,
                             IsPrimary = true,
                             MuscleId = 20
                         },
                         new
                         {
-                            Id = 605,
-                            ExerciseLibraryId = 189,
+                            Id = 606,
+                            ExerciseLibraryId = 192,
                             IsPrimary = true,
                             MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 606,
-                            ExerciseLibraryId = 189,
-                            IsPrimary = false,
-                            MuscleId = 21
                         },
                         new
                         {
                             Id = 607,
-                            ExerciseLibraryId = 190,
-                            IsPrimary = true,
-                            MuscleId = 21
+                            ExerciseLibraryId = 192,
+                            IsPrimary = false,
+                            MuscleId = 26
                         },
                         new
                         {
                             Id = 608,
-                            ExerciseLibraryId = 190,
+                            ExerciseLibraryId = 193,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 609,
-                            ExerciseLibraryId = 190,
+                            ExerciseLibraryId = 193,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 610,
-                            ExerciseLibraryId = 191,
-                            IsPrimary = true,
-                            MuscleId = 24
+                            ExerciseLibraryId = 193,
+                            IsPrimary = false,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 611,
-                            ExerciseLibraryId = 191,
+                            ExerciseLibraryId = 193,
                             IsPrimary = false,
-                            MuscleId = 25
+                            MuscleId = 16
                         },
                         new
                         {
                             Id = 612,
-                            ExerciseLibraryId = 192,
-                            IsPrimary = true,
+                            ExerciseLibraryId = 193,
+                            IsPrimary = false,
                             MuscleId = 24
                         },
                         new
                         {
                             Id = 613,
-                            ExerciseLibraryId = 192,
-                            IsPrimary = false,
-                            MuscleId = 25
+                            ExerciseLibraryId = 194,
+                            IsPrimary = true,
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 614,
-                            ExerciseLibraryId = 193,
+                            ExerciseLibraryId = 194,
                             IsPrimary = true,
-                            MuscleId = 24
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 615,
-                            ExerciseLibraryId = 193,
+                            ExerciseLibraryId = 194,
                             IsPrimary = false,
-                            MuscleId = 21
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 616,
-                            ExerciseLibraryId = 193,
+                            ExerciseLibraryId = 194,
                             IsPrimary = false,
-                            MuscleId = 5
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 617,
-                            ExerciseLibraryId = 194,
+                            ExerciseLibraryId = 195,
                             IsPrimary = true,
-                            MuscleId = 16
+                            MuscleId = 10
                         },
                         new
                         {
                             Id = 618,
-                            ExerciseLibraryId = 194,
+                            ExerciseLibraryId = 195,
                             IsPrimary = true,
-                            MuscleId = 18
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 619,
-                            ExerciseLibraryId = 194,
+                            ExerciseLibraryId = 195,
                             IsPrimary = false,
-                            MuscleId = 17
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 620,
                             ExerciseLibraryId = 195,
-                            IsPrimary = true,
-                            MuscleId = 16
+                            IsPrimary = false,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 621,
-                            ExerciseLibraryId = 195,
-                            IsPrimary = false,
-                            MuscleId = 18
+                            ExerciseLibraryId = 196,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 622,
-                            ExerciseLibraryId = 195,
+                            ExerciseLibraryId = 196,
                             IsPrimary = false,
-                            MuscleId = 29
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 623,
                             ExerciseLibraryId = 196,
-                            IsPrimary = true,
-                            MuscleId = 17
+                            IsPrimary = false,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 624,
                             ExerciseLibraryId = 196,
                             IsPrimary = false,
-                            MuscleId = 16
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 625,
-                            ExerciseLibraryId = 196,
-                            IsPrimary = false,
-                            MuscleId = 18
+                            ExerciseLibraryId = 197,
+                            IsPrimary = true,
+                            MuscleId = 20
                         },
                         new
                         {
                             Id = 626,
-                            ExerciseLibraryId = 196,
-                            IsPrimary = false,
-                            MuscleId = 29
+                            ExerciseLibraryId = 197,
+                            IsPrimary = true,
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 627,
                             ExerciseLibraryId = 197,
-                            IsPrimary = true,
-                            MuscleId = 17
+                            IsPrimary = false,
+                            MuscleId = 14
                         },
                         new
                         {
                             Id = 628,
                             ExerciseLibraryId = 197,
-                            IsPrimary = true,
-                            MuscleId = 18
+                            IsPrimary = false,
+                            MuscleId = 24
                         },
                         new
                         {
                             Id = 629,
-                            ExerciseLibraryId = 197,
-                            IsPrimary = false,
-                            MuscleId = 16
+                            ExerciseLibraryId = 198,
+                            IsPrimary = true,
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 630,
                             ExerciseLibraryId = 198,
                             IsPrimary = true,
-                            MuscleId = 20
+                            MuscleId = 2
                         },
                         new
                         {
                             Id = 631,
-                            ExerciseLibraryId = 198,
+                            ExerciseLibraryId = 199,
                             IsPrimary = true,
-                            MuscleId = 8
+                            MuscleId = 1
                         },
                         new
                         {
                             Id = 632,
-                            ExerciseLibraryId = 198,
-                            IsPrimary = false,
+                            ExerciseLibraryId = 199,
+                            IsPrimary = true,
                             MuscleId = 14
                         },
                         new
                         {
                             Id = 633,
-                            ExerciseLibraryId = 198,
+                            ExerciseLibraryId = 199,
                             IsPrimary = false,
-                            MuscleId = 24
+                            MuscleId = 8
                         },
                         new
                         {
                             Id = 634,
-                            ExerciseLibraryId = 199,
-                            IsPrimary = true,
-                            MuscleId = 10
-                        },
-                        new
-                        {
-                            Id = 635,
-                            ExerciseLibraryId = 199,
-                            IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 636,
-                            ExerciseLibraryId = 199,
-                            IsPrimary = false,
-                            MuscleId = 24
-                        },
-                        new
-                        {
-                            Id = 637,
-                            ExerciseLibraryId = 199,
-                            IsPrimary = false,
-                            MuscleId = 8
-                        },
-                        new
-                        {
-                            Id = 638,
                             ExerciseLibraryId = 200,
                             IsPrimary = true,
-                            MuscleId = 20
-                        },
-                        new
-                        {
-                            Id = 639,
-                            ExerciseLibraryId = 200,
-                            IsPrimary = false,
                             MuscleId = 1
                         },
                         new
                         {
-                            Id = 640,
+                            Id = 635,
                             ExerciseLibraryId = 200,
-                            IsPrimary = false,
+                            IsPrimary = true,
+                            MuscleId = 2
+                        },
+                        new
+                        {
+                            Id = 636,
+                            ExerciseLibraryId = 200,
+                            IsPrimary = true,
                             MuscleId = 8
                         },
                         new
                         {
-                            Id = 641,
+                            Id = 637,
                             ExerciseLibraryId = 200,
                             IsPrimary = false,
                             MuscleId = 14
+                        },
+                        new
+                        {
+                            Id = 638,
+                            ExerciseLibraryId = 155,
+                            IsPrimary = true,
+                            MuscleId = 28
+                        },
+                        new
+                        {
+                            Id = 639,
+                            ExerciseLibraryId = 160,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 640,
+                            ExerciseLibraryId = 169,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 641,
+                            ExerciseLibraryId = 170,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 642,
+                            ExerciseLibraryId = 163,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 643,
+                            ExerciseLibraryId = 94,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 644,
+                            ExerciseLibraryId = 95,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 645,
+                            ExerciseLibraryId = 93,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 646,
+                            ExerciseLibraryId = 106,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 647,
+                            ExerciseLibraryId = 102,
+                            IsPrimary = false,
+                            MuscleId = 29
+                        },
+                        new
+                        {
+                            Id = 648,
+                            ExerciseLibraryId = 63,
+                            IsPrimary = false,
+                            MuscleId = 30
+                        },
+                        new
+                        {
+                            Id = 649,
+                            ExerciseLibraryId = 68,
+                            IsPrimary = true,
+                            MuscleId = 30
+                        },
+                        new
+                        {
+                            Id = 650,
+                            ExerciseLibraryId = 69,
+                            IsPrimary = true,
+                            MuscleId = 30
+                        },
+                        new
+                        {
+                            Id = 651,
+                            ExerciseLibraryId = 70,
+                            IsPrimary = false,
+                            MuscleId = 30
+                        },
+                        new
+                        {
+                            Id = 652,
+                            ExerciseLibraryId = 85,
+                            IsPrimary = false,
+                            MuscleId = 30
+                        },
+                        new
+                        {
+                            Id = 653,
+                            ExerciseLibraryId = 88,
+                            IsPrimary = false,
+                            MuscleId = 30
                         });
                 });
 
