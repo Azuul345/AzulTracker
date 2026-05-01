@@ -24,6 +24,8 @@ export default function RegisterPage() {
         username: response.username,
         email: response.email,
         role: response.role,
+        preferredWorkoutView: response.preferredWorkoutView,  
+  restTimerEnabled: response.restTimerEnabled, 
       });
       navigate('/dashboard');
     } catch {
