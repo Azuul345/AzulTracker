@@ -108,8 +108,15 @@ public class UserService
         if (dto.NewPassword != dto.ConfirmNewPassword)
             return (false, "New passwords do not match.");
 
-        if (string.IsNullOrWhiteSpace(dto.NewPassword) || dto.NewPassword.Length < 6)
-            return (false, "New password must be at least 6 characters.");
+        if (string.IsNullOrWhiteSpace(dto.NewPassword) || dto.NewPassword.Length < 8)
+            return (false, "New password must be at least 8 characters.");
+
+        var hasUpper = dto.NewPassword.Any(char.IsUpper);
+        var hasLower = dto.NewPassword.Any(char.IsLower);
+        var hasDigit = dto.NewPassword.Any(char.IsDigit);
+        if (!hasUpper || !hasLower || !hasDigit)
+            return (false, "Password must contain at least one uppercase letter, one lowercase letter, and one number.");
+
 
         var user = await _context.Users.FindAsync(userId);
         if (user == null)
