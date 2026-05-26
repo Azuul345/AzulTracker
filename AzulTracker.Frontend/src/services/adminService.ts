@@ -32,6 +32,21 @@ export interface AdminVideoUrl {
   createdAt: string;
 }
 
+export interface AdminExercise {
+  id: number;
+  name: string;
+  category: string;
+  description: string | null;
+  videoUrl: string | null;
+  isApproved: boolean;
+  muscles: {
+    muscleId: number;
+    muscleName: string;
+    muscleGroup: string;
+    isPrimary: boolean;
+  }[];
+}
+
 // --- User Management ---
 
 export async function getUsers(): Promise<AdminUser[]> {
@@ -65,6 +80,41 @@ export async function approveExercise(id: number): Promise<void> {
   await api.put(`/admin/exercises/${id}/approve`);
 }
 
+// --- Exercise Library Management ---
+
+export async function getAllExercises(): Promise<AdminExercise[]> {
+  const response = await api.get<AdminExercise[]>('/admin/exercises/all');
+  return response.data;
+}
+
+export async function updateExercise(
+  id: number,
+  data: { name: string; category: string; videoUrl: string | null }
+): Promise<void> {
+  await api.put(`/admin/exercises/${id}`, data);
+}
+
+export interface Muscle {
+  id: number;
+  name: string;
+  muscleGroup: string;
+  imageUrl: string | null;
+}
+
+export interface MuscleAssignment {
+  muscleId: number;
+  isPrimary: boolean;
+}
+
+export async function getAllMuscles(): Promise<Muscle[]> {
+  const response = await api.get<Muscle[]>('/admin/muscles');
+  return response.data;
+}
+
+export async function assignMuscles(exerciseId: number, muscles: MuscleAssignment[]): Promise<void> {
+  await api.put(`/admin/exercises/${exerciseId}/muscles`, { muscles });
+}
+
 // --- Video Moderation ---
 
 export async function getPendingVideos(): Promise<AdminVideoUrl[]> {
@@ -75,3 +125,4 @@ export async function getPendingVideos(): Promise<AdminVideoUrl[]> {
 export async function blockVideo(id: number): Promise<void> {
   await api.put(`/admin/videos/${id}/block`);
 }
+

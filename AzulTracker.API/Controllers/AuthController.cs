@@ -3,11 +3,14 @@ using AzulTracker.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using AzulTracker.API.Extensions;
+using Microsoft.AspNetCore.RateLimiting;
+
 
 namespace AzulTracker.API.Controllers;
 
 [ApiController]
 [Route("api/auth")]
+[EnableRateLimiting("GeneralPolicy")]
 public class AuthController : ControllerBase
 {
     private readonly UserService _userService;
@@ -18,6 +21,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
+    [EnableRateLimiting("AuthPolicy")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
         var result = await _userService.RegisterAsync(dto);
@@ -29,6 +33,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("AuthPolicy")]
     public async Task<IActionResult> Login(LoginDto dto)
     {
         var result = await _userService.LoginAsync(dto);
@@ -59,5 +64,18 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = error });
 
         return NoContent();
+    }
+
+    [HttpPost("change-password")]
+    [Authorize]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+    {
+        var userId = User.GetUserId();
+        var (success, error) = await _userService.ChangePasswordAsync(userId, dto);
+
+        if (!success)
+            return BadRequest(new { message = error });
+
+        return Ok(new { message = "Password changed successfully." });
     }
 }

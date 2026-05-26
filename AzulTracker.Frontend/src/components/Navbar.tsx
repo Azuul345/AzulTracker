@@ -9,6 +9,7 @@ export default function Navbar() {
     logout();
     navigate('/login');
   };
+  
 
   if (!user) return null;
 
@@ -42,7 +43,7 @@ export default function Navbar() {
 
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
         <span style={{ color: '#666', fontSize: '0.875rem' }}>{user.username}</span>
-        <Link to="/settings" style={linkStyle}>Settings</Link>
+        <Link to="/settings" style={{ ...buttonStyle, textDecoration: 'none' }}>Settings</Link>
         <button onClick={handleLogout} style={buttonStyle}>Logout</button>
       </div>
     </nav>
@@ -62,4 +63,5 @@ const buttonStyle: React.CSSProperties = {
   padding: '0.25rem 0.75rem',
   cursor: 'pointer',
   fontSize: '0.9rem',
+  color: '#333',
 };

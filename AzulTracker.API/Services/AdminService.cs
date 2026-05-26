@@ -197,4 +197,63 @@ public class AdminService(AppDbContext db)
         await db.SaveChangesAsync();
         return (true, string.Empty);
     }
+
+    // ── Exercise Library Management        
+    public async Task<List<AdminExerciseDto>> GetAllExercisesAsync()
+    {
+        var exercises = await db.ExerciseLibrary
+            .Include(e => e.ExerciseMuscles)
+                .ThenInclude(em => em.Muscle)
+            .OrderBy(e => e.Name)
+            .ToListAsync(); // fetch into memory first
+
+        return exercises.Select(e => new AdminExerciseDto
+        {
+            Id = e.Id,
+            Name = e.Name,
+            Category = e.Category,
+            Description = e.Description,
+            VideoUrl = e.VideoUrl,
+            IsApproved = e.IsApproved,
+            Muscles = e.ExerciseMuscles.Select(em => new ExerciseMuscleDto
+            {
+                MuscleId = em.MuscleId,
+                MuscleName = em.Muscle.Name,
+                MuscleGroup = em.Muscle.MuscleGroup,
+                IsPrimary = em.IsPrimary
+            }).ToList()
+        }).ToList(); // then map in memory
+    }
+    public async Task<(bool Success, string Error)> UpdateExerciseAsync(int exerciseId, UpdateExerciseDto dto)
+    {
+        var exercise = await db.ExerciseLibrary.FindAsync(exerciseId);
+        if (exercise is null) return (false, "Exercise not found.");
+
+        if (!string.IsNullOrWhiteSpace(dto.Name))
+            exercise.Name = dto.Name;
+
+        if (!string.IsNullOrWhiteSpace(dto.Category))
+            exercise.Category = dto.Category;
+
+        exercise.VideoUrl = dto.VideoUrl;
+
+        await db.SaveChangesAsync();
+        return (true, string.Empty);
+    }
+
+    public async Task<List<MuscleDto>> GetAllMusclesAsync()
+    {
+        return await db.Muscles
+            .OrderBy(m => m.MuscleGroup)
+            .ThenBy(m => m.Name)
+            .Select(m => new MuscleDto
+            {
+                Id = m.Id,
+                Name = m.Name,
+                MuscleGroup = m.MuscleGroup,
+                ImageUrl = m.ImageUrl
+            })
+            .ToListAsync();
+    }
+
 }
