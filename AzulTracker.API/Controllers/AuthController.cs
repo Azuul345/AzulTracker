@@ -3,11 +3,14 @@ using AzulTracker.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using AzulTracker.API.Extensions;
+using Microsoft.AspNetCore.RateLimiting;
+
 
 namespace AzulTracker.API.Controllers;
 
 [ApiController]
 [Route("api/auth")]
+[EnableRateLimiting("GeneralPolicy")]
 public class AuthController : ControllerBase
 {
     private readonly UserService _userService;
@@ -18,6 +21,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register")]
+    [EnableRateLimiting("AuthPolicy")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
         var result = await _userService.RegisterAsync(dto);
@@ -29,6 +33,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
+    [EnableRateLimiting("AuthPolicy")]
     public async Task<IActionResult> Login(LoginDto dto)
     {
         var result = await _userService.LoginAsync(dto);
