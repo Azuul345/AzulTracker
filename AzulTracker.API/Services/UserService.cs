@@ -102,6 +102,30 @@ public class UserService
         return (true, string.Empty);
     }
 
+    public async Task<(bool Success, string Error)> ChangePasswordAsync(int userId, ChangePasswordDto dto)
+    {
+        // Validate new passwords match before touching the DB
+        if (dto.NewPassword != dto.ConfirmNewPassword)
+            return (false, "New passwords do not match.");
+
+        if (string.IsNullOrWhiteSpace(dto.NewPassword) || dto.NewPassword.Length < 6)
+            return (false, "New password must be at least 6 characters.");
+
+        var user = await _context.Users.FindAsync(userId);
+        if (user == null)
+            return (false, "User not found.");
+
+        // Verify current password against stored hash
+        if (!BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, user.PasswordHash))
+            return (false, "Current password is incorrect.");
+
+        // Hash and save the new password
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+        await _context.SaveChangesAsync();
+
+        return (true, string.Empty);
+    }
+
 
 }
 
