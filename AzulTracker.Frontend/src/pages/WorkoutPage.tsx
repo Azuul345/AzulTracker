@@ -4,8 +4,9 @@ import { getPrograms, getDays, getExercisesForDay } from '../services/programSer
 import type { WorkoutLogDto } from '../types/workout';
 import type { TrainingProgram, ProgramExercise } from '../types/program';
 import LogSetForm from '../components/LogSetForm';
+import VideoEmbed from '../components/VideoEmbed';
 
- const today = new Date().toISOString().split('T')[0];
+const today = new Date().toISOString().split('T')[0];
 
 export default function WorkoutPage() {
   const [activeProgram, setActiveProgram] = useState<TrainingProgram | null>(null);
@@ -17,8 +18,15 @@ export default function WorkoutPage() {
   const [error, setError] = useState<string | null>(null);
   const [isGuided, setIsGuided] = useState(false);
   const [guidedIndex, setGuidedIndex] = useState(0);
+  const [openVideoIds, setOpenVideoIds] = useState<Set<number>>(new Set()); // ✅ inside component
 
- 
+  const toggleVideo = (id: number) => { // ✅ inside component
+    setOpenVideoIds(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -100,6 +108,19 @@ export default function WorkoutPage() {
               <h3>{exerciseName}</h3>
               <p>{exercise.sets} sets × {exercise.reps} reps</p>
               {exercise.notes && <p><em>{exercise.notes}</em></p>}
+
+              {exercise.videoUrl && (
+                <div style={{ marginTop: '12px', marginBottom: '12px' }}>
+                  <button onClick={() => toggleVideo(exercise.id)}>
+                    {openVideoIds.has(exercise.id) ? 'Hide Video' : 'Watch Video'}
+                  </button>
+                  {openVideoIds.has(exercise.id) && (
+                    <div style={{ marginTop: '8px' }}>
+                      <VideoEmbed url={exercise.videoUrl} />
+                    </div>
+                  )}
+                </div>
+              )}
 
               {logsForThisExercise.length > 0 && (
                 <div>

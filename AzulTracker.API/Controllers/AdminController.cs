@@ -96,4 +96,27 @@ public class AdminController(AdminService adminService) : ControllerBase
         if (!success) return BadRequest(error);
         return NoContent();
     }
+
+    [HttpGet("exercises/all")]
+    public async Task<IActionResult> GetAllExercises()
+    {
+        var exercises = await adminService.GetAllExercisesAsync();
+        return Ok(exercises);
+    }
+
+    [HttpPut("exercises/{id}")]
+    public async Task<IActionResult> UpdateExercise(int id, UpdateExerciseDto dto)
+    {
+        var (success, error) = await adminService.UpdateExerciseAsync(id, dto);
+        if (!success) return NotFound(error);
+        return NoContent();
+    }
+
+    [HttpGet("muscles")]
+    public async Task<IActionResult> GetAllMuscles()
+    {
+        var muscles = await adminService.GetAllMusclesAsync();
+        return Ok(muscles);
+    }
+
 }
