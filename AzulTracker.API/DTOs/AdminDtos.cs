@@ -90,3 +90,24 @@ public class MuscleAssignmentDto
     public int MuscleId { get; set; }
     public bool IsPrimary { get; set; }
 }
+
+public class AdminExerciseDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
+    public string? Description { get; set; }
+    public string? VideoUrl { get; set; }
+    public bool IsApproved { get; set; }
+    public List<ExerciseMuscleDto> Muscles { get; set; } = [];  // reuses existing DTO
+}
+
+// ExerciseMuscleDto already exists in ExerciseLibraryDtos.cs — do NOT add it again
+
+public class UpdateExerciseDto
+{
+    public string Name { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
+    public string? VideoUrl { get; set; }
+
+}

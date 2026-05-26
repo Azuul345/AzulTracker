@@ -16,7 +16,7 @@ public static class ProgramExerciseExtensions
         Reps = exercise.Reps,
         OrderIndex = exercise.OrderIndex,
         Notes = exercise.Notes,
-        VideoUrl = exercise.VideoUrl
+        VideoUrl = exercise.VideoUrl ?? exercise.ExerciseLibrary?.VideoUrl
     };
 
     public static ProgramExercise ToEntity(this CreateProgramExerciseDto dto, int programDayId) => new()
