@@ -20,10 +20,14 @@ export default function WorkoutPage() {
   const [guidedIndex, setGuidedIndex] = useState(0);
   const [openVideoIds, setOpenVideoIds] = useState<Set<number>>(new Set()); // ✅ inside component
 
-  const toggleVideo = (id: number) => { // ✅ inside component
+  const toggleVideo = (id: number) => {
     setOpenVideoIds(prev => {
       const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
       return next;
     });
   };
