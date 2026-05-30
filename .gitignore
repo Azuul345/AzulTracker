@@ -492,3 +492,6 @@ dist/
 
 # User secrets
 appsettings.Development.json
+
+# Bicep secrets - never commit
+infra/main.secrets.bicepparam
