@@ -1,0 +1,91 @@
+﻿trigger:
+  branches:
+    include:
+      - main
+      - dev
+
+pr:
+  branches:
+    include:
+      - main
+      - dev
+
+stages:
+
+- stage: Build
+  displayName: Build & Test
+  jobs:
+
+  - job: BuildAPI
+    displayName: Build ASP.NET Core API
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: sdk
+        version: '10.x'
+
+    - script: dotnet restore AzulTracker.API/AzulTracker.API.csproj
+      displayName: Restore API
+
+    - script: dotnet build AzulTracker.API/AzulTracker.API.csproj --no-restore --configuration Release
+      displayName: Build API
+
+    - script: dotnet test AzulTracker.Tests/AzulTracker.Tests.csproj --no-restore --configuration Release
+      displayName: Run Tests
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish API
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: AzulTracker.API/AzulTracker.API.csproj
+        arguments: '--configuration Release --output $(Build.ArtifactStagingDirectory)/api'
+        zipAfterPublish: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: Upload API Artifact
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/api'
+        ArtifactName: 'api'
+
+  - job: BuildFrontend
+    displayName: Build React Frontend
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: UseNode@1
+      inputs:
+        version: '20.x'
+
+    - script: npm install
+      displayName: npm install
+      workingDirectory: AzulTracker.Frontend
+
+    - script: npm run build
+      displayName: npm build
+      workingDirectory: AzulTracker.Frontend
+
+- stage: Deploy
+  displayName: Deploy to Azure
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+
+  - deployment: DeployAPI
+    displayName: Deploy API to App Service
+    pool:
+      vmImage: ubuntu-latest
+    environment: production
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            displayName: Deploy to azultracker-api
+            inputs:
+              azureSubscription: 'AzureServiceConnection'
+              appType: webApp
+              appName: 'azultracker-api'
+              package: '$(Pipeline.Workspace)/api/*.zip'
