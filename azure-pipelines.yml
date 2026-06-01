@@ -102,6 +102,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: self
           - task: AzureStaticWebApp@0
             displayName: Deploy to azultracker-frontend
             inputs:
@@ -109,6 +110,7 @@ stages:
               app_build_command: 'npm run build'
               output_location: 'dist'
               skip_api_build: true
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
             env:
               azure_static_web_apps_api_token: $(deployment_token)
               VITE_API_URL: 'https://azultracker-api.azurewebsites.net'
