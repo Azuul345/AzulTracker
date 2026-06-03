@@ -83,8 +83,8 @@ stages:
           npm | "$(Agent.OS)"
         path: '$(npm_config_cache)'
 
-    - script: npm ci
-      displayName: npm ci
+    - script: npm install
+      displayName: npm install
       workingDirectory: AzulTracker.Frontend
       env:
         npm_config_cache: $(npm_config_cache)
