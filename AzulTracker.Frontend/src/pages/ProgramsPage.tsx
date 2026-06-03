@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   getPrograms,
@@ -18,12 +18,9 @@ export default function ProgramsPage() {
   const [description, setDescription] = useState('');
   const [daysPerWeek, setDaysPerWeek] = useState(3);
 
-  useEffect(() => {
-    loadPrograms();
-  }, []);
-
-  async function loadPrograms() {
+  const loadPrograms = useCallback(async () => {
     try {
+      setError('');
       const res = await getPrograms();
       setPrograms(res.data);
     } catch {
@@ -31,11 +28,17 @@ export default function ProgramsPage() {
     } finally {
       setLoading(false);
     }
-  }
+  }, []);
+
+  useEffect(() => {
+    loadPrograms();
+  }, [loadPrograms]);
 
   async function handleCreate(e: React.FormEvent) {
     e.preventDefault();
+
     try {
+      setError('');
       await createProgram({ name, description, daysPerWeek });
       setName('');
       setDescription('');
@@ -49,6 +52,7 @@ export default function ProgramsPage() {
 
   async function handleDelete(id: number) {
     try {
+      setError('');
       await deleteProgram(id);
       await loadPrograms();
     } catch {
@@ -58,6 +62,7 @@ export default function ProgramsPage() {
 
   async function handleActivate(id: number) {
     try {
+      setError('');
       await activateProgram(id);
       await loadPrograms();
     } catch {
@@ -66,13 +71,27 @@ export default function ProgramsPage() {
   }
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>My Programs</h1>
+    <div
+      className="page-shell programs-page"
+      style={{ padding: '2rem' }}
+    >
+      <div className="page-header">
+        <h1>My Programs</h1>
+        <p style={{ color: '#666', marginTop: '0.5rem' }}>
+          Create a training program, then edit it to add days and exercises.
+        </p>
+      </div>
+
+      {error && (
+        <p className="form-error" style={{ color: 'red', marginTop: '1rem' }}>
+          {error}
+        </p>
+      )}
 
       <button
+        className="action-button"
         onClick={() => setShowForm(!showForm)}
         style={{ marginTop: '1rem' }}
       >
@@ -80,58 +99,145 @@ export default function ProgramsPage() {
       </button>
 
       {showForm && (
-        <form onSubmit={handleCreate} style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', maxWidth: 400 }}>
-          <input
-            placeholder="Program name"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            required
-          />
-          <input
-            placeholder="Description (optional)"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-          />
-          <input
-            type="number"
-            min={1}
-            max={7}
-            placeholder="Days per week"
-            value={daysPerWeek}
-            onChange={e => setDaysPerWeek(Number(e.target.value))}
-            required
-          />
-          <button type="submit">Create</button>
+        <form
+          className="form-card create-program-form"
+          onSubmit={handleCreate}
+          style={{
+            marginTop: '1rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.75rem',
+            maxWidth: 400
+          }}
+        >
+          <div className="form-field">
+            <label htmlFor="program-name">Program name</label>
+            <input
+              id="program-name"
+              placeholder="Push / Pull / Legs"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="program-description">Description</label>
+            <input
+              id="program-description"
+              placeholder="Optional notes about this program"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+            />
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="days-per-week">Days per week</label>
+            <input
+              id="days-per-week"
+              type="number"
+              min={1}
+              max={7}
+              value={daysPerWeek}
+              onChange={e => setDaysPerWeek(Number(e.target.value))}
+              required
+            />
+            <small style={{ color: '#666' }}>
+              How many workout days this program is built for each week.
+            </small>
+          </div>
+
+          <button type="submit">Create Program</button>
         </form>
       )}
 
       {programs.length === 0 ? (
-        <p style={{ color: '#666', marginTop: '2rem' }}>No programs yet. Create your first one!</p>
+        <p style={{ color: '#666', marginTop: '2rem' }}>
+          No programs yet. Create your first one.
+        </p>
       ) : (
-        <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div
+          className="program-list"
+          style={{
+            marginTop: '2rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}
+        >
           {programs.map(program => (
-            <div key={program.id} style={{ border: '1px solid #ddd', borderRadius: 8, padding: '1rem' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
+            <div
+              key={program.id}
+              className="program-card"
+              style={{
+                border: '1px solid #ddd',
+                borderRadius: 8,
+                padding: '1rem'
+              }}
+            >
+              <div
+                className="program-card__content"
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  gap: '1rem'
+                }}
+              >
+                <div className="program-card__info">
                   <h2 style={{ margin: 0 }}>
-                    <Link to={`/programs/${program.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Link
+                      to={`/programs/${program.id}`}
+                      className="program-card__title-link"
+                      style={{ textDecoration: 'none', color: 'inherit' }}
+                    >
                       {program.name}
                     </Link>
                     {program.isActive && (
-                      <span style={{ marginLeft: '0.5rem', fontSize: '0.75rem', color: 'green' }}>● Active</span>
+                      <span
+                        className="program-status program-status--active"
+                        style={{
+                          marginLeft: '0.5rem',
+                          fontSize: '0.75rem',
+                          color: 'green'
+                        }}
+                      >
+                        ● Active
+                      </span>
                     )}
                   </h2>
-                  {program.description && <p style={{ color: '#666', margin: '0.25rem 0 0' }}>{program.description}</p>}
-                  <p style={{ color: '#999', fontSize: '0.875rem', margin: '0.25rem 0 0' }}>{program.daysPerWeek} days/week</p>
-                </div>
-                <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  {!program.isActive && (
-                    <button onClick={() => handleActivate(program.id)}>Set Active</button>
+
+                  {program.description && (
+                    <p style={{ color: '#666', margin: '0.25rem 0 0' }}>
+                      {program.description}
+                    </p>
                   )}
+
+                  <p style={{ color: '#999', fontSize: '0.875rem', margin: '0.25rem 0 0' }}>
+                    {program.daysPerWeek} days per week
+                  </p>
+                </div>
+
+                <div
+                  className="program-card__actions"
+                  style={{ display: 'flex', gap: '0.5rem' }}
+                >
+                  {!program.isActive && (
+                    <button onClick={() => handleActivate(program.id)}>
+                      Set Active
+                    </button>
+                  )}
+
                   <Link to={`/programs/${program.id}`}>
-                    <button>Edit</button>
+                    <button>Edit Program</button>
                   </Link>
-                  <button onClick={() => handleDelete(program.id)} style={{ color: 'red' }}>Delete</button>
+
+                  <button
+                    onClick={() => handleDelete(program.id)}
+                    style={{ color: 'red' }}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             </div>
