@@ -10,6 +10,10 @@ pr:
       - main
       - dev
 
+variables:
+  NUGET_PACKAGES: '$(Pipeline.Workspace)/.nuget/packages'
+  npm_config_cache: '$(Pipeline.Workspace)/.npm'
+
 stages:
 
 - stage: Build
@@ -26,14 +30,26 @@ stages:
         packageType: sdk
         version: '10.x'
 
+    - task: Cache@2
+      displayName: Cache NuGet packages
+      inputs:
+        key: 'nuget | "$(Agent.OS)" | AzulTracker.slnx | AzulTracker.API/AzulTracker.API.csproj | AzulTracker.Tests/AzulTracker.Tests.csproj'
+        restoreKeys: |
+          nuget | "$(Agent.OS)"
+        path: '$(NUGET_PACKAGES)'
+
     - script: dotnet restore AzulTracker.API/AzulTracker.API.csproj
       displayName: Restore API
+      env:
+        NUGET_PACKAGES: $(NUGET_PACKAGES)
 
     - script: dotnet build AzulTracker.API/AzulTracker.API.csproj --no-restore --configuration Release
       displayName: Build API
 
-    - script: dotnet test AzulTracker.Tests/AzulTracker.Tests.csproj --no-restore --configuration Release
+    - script: dotnet test AzulTracker.Tests/AzulTracker.Tests.csproj --no-build --no-restore --configuration Release
       displayName: Run Tests
+      env:
+        NUGET_PACKAGES: $(NUGET_PACKAGES)
 
     - task: DotNetCoreCLI@2
       displayName: Publish API
@@ -59,8 +75,22 @@ stages:
       inputs:
         version: '20.x'
 
+    - task: Cache@2
+      displayName: Cache npm packages
+      inputs:
+        key: 'npm | "$(Agent.OS)" | AzulTracker.Frontend/package-lock.json'
+        restoreKeys: |
+          npm | "$(Agent.OS)"
+        path: '$(npm_config_cache)'
+
     - script: npm install
       displayName: npm install
+      workingDirectory: AzulTracker.Frontend
+      env:
+        npm_config_cache: $(npm_config_cache)
+
+    - script: npm run lint
+      displayName: npm lint
       workingDirectory: AzulTracker.Frontend
 
     - script: npm run build
@@ -68,6 +98,7 @@ stages:
       workingDirectory: AzulTracker.Frontend
       env:
         VITE_API_URL: 'https://azultracker-api.azurewebsites.net/api'
+        npm_config_cache: $(npm_config_cache)
 
 - stage: Deploy
   displayName: Deploy to Azure
