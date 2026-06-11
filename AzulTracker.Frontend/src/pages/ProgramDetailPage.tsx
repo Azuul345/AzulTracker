@@ -8,13 +8,14 @@ import {
   deleteDay,
   createExercise,
   deleteExercise,
-  searchExercises
+  updateExercise,
+  searchExercises,
 } from "../services/programService";
 import type {
   TrainingProgram,
   ProgramDay,
   ProgramExercise,
-  ExerciseSearchResult
+  ExerciseSearchResult,
 } from "../types/program";
 
 export default function ProgramDetailPage() {
@@ -23,7 +24,9 @@ export default function ProgramDetailPage() {
 
   const [program, setProgram] = useState<TrainingProgram | null>(null);
   const [days, setDays] = useState<ProgramDay[]>([]);
-  const [exercisesByDay, setExercisesByDay] = useState<Record<number, ProgramExercise[]>>({});
+  const [exercisesByDay, setExercisesByDay] = useState<
+    Record<number, ProgramExercise[]>
+  >({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -35,9 +38,19 @@ export default function ProgramDetailPage() {
   const [reps, setReps] = useState(8);
   const [notes, setNotes] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<ExerciseSearchResult[]>([]);
-  const [selectedExercise, setSelectedExercise] = useState<ExerciseSearchResult | null>(null);
+  const [searchResults, setSearchResults] = useState<ExerciseSearchResult[]>(
+    [],
+  );
+  const [selectedExercise, setSelectedExercise] =
+    useState<ExerciseSearchResult | null>(null);
   const [customName, setCustomName] = useState("");
+
+  const [editingExerciseId, setEditingExerciseId] = useState<number | null>(
+    null,
+  );
+  const [editSets, setEditSets] = useState(3);
+  const [editReps, setEditReps] = useState(8);
+  const [editNotes, setEditNotes] = useState("");
 
   const loadProgram = useCallback(async () => {
     try {
@@ -45,7 +58,7 @@ export default function ProgramDetailPage() {
       setLoading(true);
 
       const res = await getPrograms();
-      const found = res.data.find(p => p.id === programId);
+      const found = res.data.find((p) => p.id === programId);
 
       if (!found) {
         setError("Program not found.");
@@ -72,7 +85,6 @@ export default function ProgramDetailPage() {
   }, [programId]);
 
   useEffect(() => {
-    
     loadProgram();
   }, [loadProgram]);
 
@@ -129,7 +141,7 @@ export default function ProgramDetailPage() {
         sets,
         reps,
         orderIndex,
-        notes: notes || undefined
+        notes: notes || undefined,
       });
       setActiveDayId(null);
       resetExerciseForm();
@@ -146,6 +158,29 @@ export default function ProgramDetailPage() {
       await loadProgram();
     } catch {
       setError("Failed to delete exercise.");
+    }
+  }
+
+  async function handleEditExercise(
+    e: React.FormEvent,
+    dayId: number,
+    ex: ProgramExercise,
+  ) {
+    e.preventDefault();
+    try {
+      setError(null);
+      await updateExercise(programId, dayId, ex.id, {
+        exerciseLibraryId: ex.exerciseLibraryId ?? undefined,
+        customExerciseName: ex.customExerciseName ?? undefined,
+        sets: editSets,
+        reps: editReps,
+        orderIndex: ex.orderIndex,
+        notes: editNotes || undefined,
+      });
+      setEditingExerciseId(null);
+      await loadProgram();
+    } catch {
+      setError("Failed to update exercise.");
     }
   }
 
@@ -177,40 +212,123 @@ export default function ProgramDetailPage() {
           <input
             placeholder="Day name (e.g. Push Day)"
             value={dayName}
-            onChange={e => setDayName(e.target.value)}
+            onChange={(e) => setDayName(e.target.value)}
             required
           />
           <button type="submit">Add</button>
         </form>
       )}
 
-      {days.map(day => (
+      {days.map((day) => (
         <div
           key={day.id}
-          style={{ marginTop: "1rem", border: "1px solid #444", padding: "1rem" }}
+          style={{
+            marginTop: "1rem",
+            border: "1px solid #444",
+            padding: "1rem",
+          }}
         >
           <h2>{day.name}</h2>
           <button onClick={() => handleDeleteDay(day.id)}>Delete Day</button>
 
           <ul>
-            {(exercisesByDay[day.id] ?? []).map(ex => (
-              <li key={ex.id}>
-                {ex.customExerciseName ?? ex.exerciseName ?? `Exercise #${ex.exerciseLibraryId}`} — {ex.sets}×{ex.reps}
-                {ex.notes && <span> ({ex.notes})</span>}
-                <button onClick={() => handleDeleteExercise(day.id, ex.id)}>Remove</button>
+            {(exercisesByDay[day.id] ?? []).map((ex) => (
+              <li key={ex.id} style={{ marginBottom: "0.75rem" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <span>
+                    {ex.customExerciseName ??
+                      ex.exerciseName ??
+                      `Exercise #${ex.exerciseLibraryId}`}
+                    {" — "}
+                    {ex.sets}×{ex.reps}
+                    {ex.notes && (
+                      <span style={{ color: "#aaa" }}> ({ex.notes})</span>
+                    )}
+                  </span>
+                  <button
+                    onClick={() => {
+                      setEditingExerciseId(ex.id);
+                      setEditSets(ex.sets);
+                      setEditReps(ex.reps);
+                      setEditNotes(ex.notes ?? "");
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button onClick={() => handleDeleteExercise(day.id, ex.id)}>
+                    Remove
+                  </button>
+                </div>
+
+                {editingExerciseId === ex.id && (
+                  <form
+                    onSubmit={(e) => handleEditExercise(e, day.id, ex)}
+                    style={{
+                      marginTop: "0.5rem",
+                      display: "flex",
+                      gap: "0.5rem",
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    <div>
+                      <label>Sets</label>
+                      <input
+                        type="number"
+                        min={1}
+                        value={editSets}
+                        onChange={(e) => setEditSets(Number(e.target.value))}
+                        style={{ width: 60, display: "block" }}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label>Reps</label>
+                      <input
+                        type="number"
+                        min={1}
+                        value={editReps}
+                        onChange={(e) => setEditReps(Number(e.target.value))}
+                        style={{ width: 60, display: "block" }}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label>Notes</label>
+                      <input
+                        placeholder="Optional"
+                        value={editNotes}
+                        onChange={(e) => setEditNotes(e.target.value)}
+                        style={{ display: "block" }}
+                      />
+                    </div>
+                    <button type="submit">Save</button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingExerciseId(null)}
+                    >
+                      Cancel
+                    </button>
+                  </form>
+                )}
               </li>
             ))}
           </ul>
 
           {activeDayId === day.id ? (
             <form
-              onSubmit={e => handleAddExercise(e, day.id)}
+              onSubmit={(e) => handleAddExercise(e, day.id)}
               style={{
                 marginTop: "1rem",
                 display: "flex",
                 flexDirection: "column",
                 gap: "0.75rem",
-                maxWidth: "500px"
+                maxWidth: "500px",
               }}
             >
               <p style={{ margin: 0, color: "#aaa" }}>
@@ -223,13 +341,17 @@ export default function ProgramDetailPage() {
                   id={`exercise-search-${day.id}`}
                   placeholder="Search exercise library..."
                   value={searchQuery}
-                  onChange={e => handleSearch(e.target.value)}
-                  style={{ display: "block", width: "100%", marginTop: "0.25rem" }}
+                  onChange={(e) => handleSearch(e.target.value)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    marginTop: "0.25rem",
+                  }}
                 />
 
                 {searchResults.length > 0 && (
                   <ul style={{ marginTop: "0.5rem" }}>
-                    {searchResults.map(r => (
+                    {searchResults.map((r) => (
                       <li
                         key={r.id}
                         style={{ cursor: "pointer" }}
@@ -250,13 +372,19 @@ export default function ProgramDetailPage() {
 
               {!selectedExercise && (
                 <div>
-                  <label htmlFor={`custom-exercise-${day.id}`}>Custom exercise name</label>
+                  <label htmlFor={`custom-exercise-${day.id}`}>
+                    Custom exercise name
+                  </label>
                   <input
                     id={`custom-exercise-${day.id}`}
                     placeholder="Type your own exercise name"
                     value={customName}
-                    onChange={e => setCustomName(e.target.value)}
-                    style={{ display: "block", width: "100%", marginTop: "0.25rem" }}
+                    onChange={(e) => setCustomName(e.target.value)}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      marginTop: "0.25rem",
+                    }}
                   />
                 </div>
               )}
@@ -268,7 +396,7 @@ export default function ProgramDetailPage() {
                   type="number"
                   min={1}
                   value={sets}
-                  onChange={e => setSets(Number(e.target.value))}
+                  onChange={(e) => setSets(Number(e.target.value))}
                   required
                   style={{ display: "block", marginTop: "0.25rem" }}
                 />
@@ -281,7 +409,7 @@ export default function ProgramDetailPage() {
                   type="number"
                   min={1}
                   value={reps}
-                  onChange={e => setReps(Number(e.target.value))}
+                  onChange={(e) => setReps(Number(e.target.value))}
                   required
                   style={{ display: "block", marginTop: "0.25rem" }}
                 />
@@ -293,8 +421,12 @@ export default function ProgramDetailPage() {
                   id={`notes-${day.id}`}
                   placeholder="Optional notes"
                   value={notes}
-                  onChange={e => setNotes(e.target.value)}
-                  style={{ display: "block", width: "100%", marginTop: "0.25rem" }}
+                  onChange={(e) => setNotes(e.target.value)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    marginTop: "0.25rem",
+                  }}
                 />
               </div>
 
@@ -312,7 +444,9 @@ export default function ProgramDetailPage() {
               </div>
             </form>
           ) : (
-            <button onClick={() => setActiveDayId(day.id)}>+ Add Exercise</button>
+            <button onClick={() => setActiveDayId(day.id)}>
+              + Add Exercise
+            </button>
           )}
         </div>
       ))}
