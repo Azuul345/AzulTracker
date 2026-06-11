@@ -44,6 +44,7 @@ export default function ProgramDetailPage() {
   const [selectedExercise, setSelectedExercise] =
     useState<ExerciseSearchResult | null>(null);
   const [customName, setCustomName] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
 
   const [editingExerciseId, setEditingExerciseId] = useState<number | null>(
     null,
@@ -51,6 +52,7 @@ export default function ProgramDetailPage() {
   const [editSets, setEditSets] = useState(3);
   const [editReps, setEditReps] = useState(8);
   const [editNotes, setEditNotes] = useState("");
+  const [editVideoUrl, setEditVideoUrl] = useState("");
 
   const loadProgram = useCallback(async () => {
     try {
@@ -142,6 +144,7 @@ export default function ProgramDetailPage() {
         reps,
         orderIndex,
         notes: notes || undefined,
+        videoUrl: videoUrl || undefined,
       });
       setActiveDayId(null);
       resetExerciseForm();
@@ -176,6 +179,7 @@ export default function ProgramDetailPage() {
         reps: editReps,
         orderIndex: ex.orderIndex,
         notes: editNotes || undefined,
+        videoUrl: editVideoUrl || undefined,
       });
       setEditingExerciseId(null);
       await loadProgram();
@@ -188,6 +192,7 @@ export default function ProgramDetailPage() {
     setSets(3);
     setReps(8);
     setNotes("");
+    setVideoUrl("");
     setSearchQuery("");
     setSearchResults([]);
     setSelectedExercise(null);
@@ -250,6 +255,20 @@ export default function ProgramDetailPage() {
                     {ex.notes && (
                       <span style={{ color: "#aaa" }}> ({ex.notes})</span>
                     )}
+                    {ex.videoUrl && (
+                      <a
+                        href={ex.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          marginLeft: "0.5rem",
+                          fontSize: "0.8rem",
+                          color: "#4da6ff",
+                        }}
+                      >
+                        Watch
+                      </a>
+                    )}
                   </span>
                   <button
                     onClick={() => {
@@ -257,6 +276,7 @@ export default function ProgramDetailPage() {
                       setEditSets(ex.sets);
                       setEditReps(ex.reps);
                       setEditNotes(ex.notes ?? "");
+                      setEditVideoUrl(ex.videoUrl ?? "");
                     }}
                   >
                     Edit
@@ -304,6 +324,15 @@ export default function ProgramDetailPage() {
                         placeholder="Optional"
                         value={editNotes}
                         onChange={(e) => setEditNotes(e.target.value)}
+                        style={{ display: "block" }}
+                      />
+                    </div>
+                    <div>
+                      <label>Video URL</label>
+                      <input
+                        placeholder="https://youtube.com/watch?v=... (optional)"
+                        value={editVideoUrl}
+                        onChange={(e) => setEditVideoUrl(e.target.value)}
                         style={{ display: "block" }}
                       />
                     </div>
@@ -422,6 +451,23 @@ export default function ProgramDetailPage() {
                   placeholder="Optional notes"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    marginTop: "0.25rem",
+                  }}
+                />
+              </div>
+
+              <div>
+                <label htmlFor={`video-url-${day.id}`}>
+                  Reference video URL
+                </label>
+                <input
+                  id={`video-url-${day.id}`}
+                  placeholder="https://youtube.com/watch?v=... (optional)"
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
                   style={{
                     display: "block",
                     width: "100%",
