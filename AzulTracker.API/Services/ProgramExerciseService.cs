@@ -17,6 +17,8 @@ public class ProgramExerciseService(AppDbContext db)
 
         var exercises = await db.ProgramExercises
             .Include(e => e.ExerciseLibrary)
+                .ThenInclude(el => el!.ExerciseMuscles)
+                    .ThenInclude(em => em.Muscle)
             .Where(e => e.ProgramDayId == programDayId)
             .OrderBy(e => e.OrderIndex)
             .ToListAsync();
