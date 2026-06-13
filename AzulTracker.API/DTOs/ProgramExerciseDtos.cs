@@ -12,6 +12,7 @@ public class ProgramExerciseDto
     public int OrderIndex { get; set; }
     public string? Notes { get; set; }
     public string? VideoUrl { get; set; }
+    public List<ExerciseMuscleDto> Muscles { get; set; } = [];
 }
 
 public class CreateProgramExerciseDto
