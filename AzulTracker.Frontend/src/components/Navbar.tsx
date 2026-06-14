@@ -11,7 +11,7 @@ export default function Navbar() {
   useEffect(() => {
     if (!isAdmin()) return;
     getPendingExerciseCount().then((count) => setPendingCount(count));
-  }, []);
+  }, [isAdmin]);
 
   const handleLogout = () => {
     logout();

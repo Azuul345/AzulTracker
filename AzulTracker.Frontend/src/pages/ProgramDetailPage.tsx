@@ -126,22 +126,6 @@ export default function ProgramDetailPage() {
     "Calves",
   ];
 
-  function toggleMuscleAssignment(muscleId: number) {
-    setMuscleAssignments((prev) => {
-      const existing = prev.find((m) => m.muscleId === muscleId);
-      if (existing) return prev.filter((m) => m.muscleId !== muscleId);
-      return [...prev, { muscleId, isPrimary: true }];
-    });
-  }
-
-  function toggleMuscleIsPrimary(muscleId: number) {
-    setMuscleAssignments((prev) =>
-      prev.map((m) =>
-        m.muscleId === muscleId ? { ...m, isPrimary: !m.isPrimary } : m,
-      ),
-    );
-  }
-
   function resetSubmitForm() {
     setShowSubmitForm(false);
     setSubmitName("");
