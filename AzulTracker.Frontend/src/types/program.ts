@@ -40,3 +40,15 @@ export interface ExerciseSearchResult {
   name: string;
   category: string;
 }
+export interface MuscleOption {
+  id: number;
+  name: string;
+  muscleGroup: string;
+  imageUrl: string | null;
+  isApproved: boolean;
+}
+
+export interface MuscleAssignment {
+  muscleId: number;
+  isPrimary: boolean;
+}

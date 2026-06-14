@@ -80,6 +80,14 @@ public class AdminController(AdminService adminService) : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("exercises/{id}/reject")]
+    public async Task<IActionResult> RejectExercise(int id)
+    {
+        var (success, error) = await adminService.RejectExerciseAsync(id);
+        if (!success) return BadRequest(error);
+        return NoContent();
+    }
+
     // ── Muscle Management ────────────────────────────────────────────
 
     [HttpPost("muscles")]
@@ -132,6 +140,46 @@ public class AdminController(AdminService adminService) : ControllerBase
     {
         var (success, error) = await adminService.DeleteExerciseAsync(id);
         if (!success) return NotFound(error);
+        return NoContent();
+    }
+
+    // ── Pending Muscle Moderation ────────────────────────────────────────
+
+    [HttpGet("muscles/pending")]
+    public async Task<IActionResult> GetPendingMuscles()
+    {
+        var muscles = await adminService.GetPendingMusclesAsync();
+        return Ok(muscles);
+    }
+
+    [HttpGet("muscles/pending/count")]
+    public async Task<IActionResult> GetPendingMuscleCount()
+    {
+        var count = await adminService.GetPendingMuscleCountAsync();
+        return Ok(count);
+    }
+
+    [HttpPut("muscles/{id}/approve")]
+    public async Task<IActionResult> ApproveMuscle(int id)
+    {
+        var (success, error) = await adminService.ApproveMuscleAsync(id);
+        if (!success) return BadRequest(error);
+        return NoContent();
+    }
+
+    [HttpPost("muscles/{id}/image")]
+    public async Task<IActionResult> UploadMuscleImage(int id, IFormFile file)
+    {
+        var (success, error) = await adminService.UploadMuscleImageAsync(id, file);
+        if (!success) return BadRequest(error);
+        return NoContent();
+    }
+
+    [HttpDelete("muscles/{id}")]
+    public async Task<IActionResult> DeletePendingMuscle(int id)
+    {
+        var (success, error) = await adminService.DeletePendingMuscleAsync(id);
+        if (!success) return BadRequest(error);
         return NoContent();
     }
 

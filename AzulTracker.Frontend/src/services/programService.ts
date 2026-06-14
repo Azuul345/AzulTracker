@@ -4,6 +4,7 @@ import type {
   ProgramDay,
   ProgramExercise,
   ExerciseSearchResult,
+  MuscleOption,
 } from "../types/program";
 
 // --- Training Programs ---
@@ -106,3 +107,16 @@ export const searchExercises = (query: string) =>
   api.get<ExerciseSearchResult[]>(
     `/exercises?query=${encodeURIComponent(query)}`,
   );
+
+export const getApprovedMuscles = () =>
+  api.get<MuscleOption[]>("/muscles?approved=true");
+
+export const submitMuscle = (dto: { name: string; muscleGroup: string }) =>
+  api.post<{ id: number; name: string; muscleGroup: string }>("/muscles", dto);
+
+export const submitExercise = (dto: {
+  name: string;
+  category: string;
+  description?: string;
+  muscleAssignments: { muscleId: number; isPrimary: boolean }[];
+}) => api.post<ExerciseSearchResult>("/exercises", dto);

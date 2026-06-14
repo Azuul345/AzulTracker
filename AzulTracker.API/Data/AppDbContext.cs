@@ -47,52 +47,58 @@ public class AppDbContext : DbContext
             .HasForeignKey(v => v.ReviewedByAdminId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<ExerciseLibrary>()
+            .HasOne(e => e.SubmittedBy)
+            .WithMany()
+            .HasForeignKey(e => e.SubmittedByUserId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<Muscle>().HasData(
             // Chest
-            new Muscle { Id = 1, Name = "Pectoralis Major", MuscleGroup = "Chest", ImageUrl = null },
-            new Muscle { Id = 2, Name = "Pectoralis Minor", MuscleGroup = "Chest", ImageUrl = null },
+            new Muscle { Id = 1, Name = "Pectoralis Major", MuscleGroup = "Chest", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 2, Name = "Pectoralis Minor", MuscleGroup = "Chest", ImageUrl = null, IsApproved = true },
 
             // Back
-            new Muscle { Id = 3, Name = "Latissimus Dorsi", MuscleGroup = "Back", ImageUrl = null },
-            new Muscle { Id = 4, Name = "Rhomboids", MuscleGroup = "Back", ImageUrl = null },
-            new Muscle { Id = 5, Name = "Erector Spinae", MuscleGroup = "Back", ImageUrl = null },
-            new Muscle { Id = 6, Name = "Teres Major", MuscleGroup = "Back", ImageUrl = null },
+            new Muscle { Id = 3, Name = "Latissimus Dorsi", MuscleGroup = "Back", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 4, Name = "Rhomboids", MuscleGroup = "Back", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 5, Name = "Erector Spinae", MuscleGroup = "Back", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 6, Name = "Teres Major", MuscleGroup = "Back", ImageUrl = null, IsApproved = true },
 
             // Shoulders
-            new Muscle { Id = 7, Name = "Lateral Deltoid", MuscleGroup = "Shoulders", ImageUrl = null },
-            new Muscle { Id = 8, Name = "Anterior Deltoid", MuscleGroup = "Shoulders", ImageUrl = null },
-            new Muscle { Id = 9, Name = "Posterior Deltoid", MuscleGroup = "Shoulders", ImageUrl = null },
-            new Muscle { Id = 10, Name = "Trapezius", MuscleGroup = "Shoulders", ImageUrl = null },
-            new Muscle { Id = 11, Name = "Rotator Cuff", MuscleGroup = "Shoulders", ImageUrl = null },
+            new Muscle { Id = 7, Name = "Lateral Deltoid", MuscleGroup = "Shoulders", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 8, Name = "Anterior Deltoid", MuscleGroup = "Shoulders", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 9, Name = "Posterior Deltoid", MuscleGroup = "Shoulders", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 10, Name = "Trapezius", MuscleGroup = "Shoulders", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 11, Name = "Rotator Cuff", MuscleGroup = "Shoulders", ImageUrl = null, IsApproved = true },
 
             // Arms
-            new Muscle { Id = 12, Name = "Biceps Brachii", MuscleGroup = "Arms", ImageUrl = null },
-            new Muscle { Id = 13, Name = "Brachialis", MuscleGroup = "Arms", ImageUrl = null },
-            new Muscle { Id = 14, Name = "Triceps Brachii", MuscleGroup = "Arms", ImageUrl = null },
-            new Muscle { Id = 15, Name = "Forearms", MuscleGroup = "Arms", ImageUrl = null },
-            new Muscle { Id = 30, Name = "Brachioradialis", MuscleGroup = "Arms", ImageUrl = null },
+            new Muscle { Id = 12, Name = "Biceps Brachii", MuscleGroup = "Arms", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 13, Name = "Brachialis", MuscleGroup = "Arms", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 14, Name = "Triceps Brachii", MuscleGroup = "Arms", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 15, Name = "Forearms", MuscleGroup = "Arms", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 30, Name = "Brachioradialis", MuscleGroup = "Arms", ImageUrl = null, IsApproved = true },
 
             // Core
-            new Muscle { Id = 16, Name = "Rectus Abdominis", MuscleGroup = "Core", ImageUrl = null },
-            new Muscle { Id = 17, Name = "Obliques", MuscleGroup = "Core", ImageUrl = null },
-            new Muscle { Id = 18, Name = "Transverse Abdominis", MuscleGroup = "Core", ImageUrl = null },
-            new Muscle { Id = 19, Name = "Serratus Anterior", MuscleGroup = "Core", ImageUrl = null },
+            new Muscle { Id = 16, Name = "Rectus Abdominis", MuscleGroup = "Core", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 17, Name = "Obliques", MuscleGroup = "Core", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 18, Name = "Transverse Abdominis", MuscleGroup = "Core", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 19, Name = "Serratus Anterior", MuscleGroup = "Core", ImageUrl = null, IsApproved = true },
 
             // Legs
-            new Muscle { Id = 20, Name = "Quadriceps", MuscleGroup = "Legs", ImageUrl = null },
-            new Muscle { Id = 21, Name = "Hamstrings", MuscleGroup = "Legs", ImageUrl = null },
-            new Muscle { Id = 22, Name = "Adductors", MuscleGroup = "Legs", ImageUrl = null },
-            new Muscle { Id = 23, Name = "Abductors", MuscleGroup = "Legs", ImageUrl = null },
-            new Muscle { Id = 29, Name = "Hip Flexors", MuscleGroup = "Legs", ImageUrl = null},
+            new Muscle { Id = 20, Name = "Quadriceps", MuscleGroup = "Legs", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 21, Name = "Hamstrings", MuscleGroup = "Legs", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 22, Name = "Adductors", MuscleGroup = "Legs", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 23, Name = "Abductors", MuscleGroup = "Legs", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 29, Name = "Hip Flexors", MuscleGroup = "Legs", ImageUrl = null, IsApproved = true},
 
             // Glutes
-            new Muscle { Id = 24, Name = "Gluteus Maximus", MuscleGroup = "Glutes", ImageUrl = null },
-            new Muscle { Id = 25, Name = "Gluteus Medius", MuscleGroup = "Glutes", ImageUrl = null },
+            new Muscle { Id = 24, Name = "Gluteus Maximus", MuscleGroup = "Glutes", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 25, Name = "Gluteus Medius", MuscleGroup = "Glutes", ImageUrl = null, IsApproved = true },
 
             // Calves
-            new Muscle { Id = 26, Name = "Gastrocnemius", MuscleGroup = "Calves", ImageUrl = null },
-            new Muscle { Id = 27, Name = "Soleus", MuscleGroup = "Calves", ImageUrl = null },
-            new Muscle { Id = 28, Name = "Tibialis Anterior", MuscleGroup = "Calves",ImageUrl = null}
+            new Muscle { Id = 26, Name = "Gastrocnemius", MuscleGroup = "Calves", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 27, Name = "Soleus", MuscleGroup = "Calves", ImageUrl = null, IsApproved = true },
+            new Muscle { Id = 28, Name = "Tibialis Anterior", MuscleGroup = "Calves",ImageUrl = null, IsApproved = true}
 
         );
 
@@ -104,6 +110,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -114,6 +121,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -124,6 +132,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -134,6 +143,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -144,6 +154,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -154,6 +165,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -164,6 +176,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -174,6 +187,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -184,6 +198,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -194,6 +209,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -204,6 +220,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -214,6 +231,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -224,6 +242,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -234,6 +253,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -244,6 +264,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -254,6 +275,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -264,6 +286,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -274,6 +297,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -284,6 +308,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -294,6 +319,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -304,6 +330,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -314,6 +341,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -324,6 +352,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -334,6 +363,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -344,6 +374,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -354,6 +385,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -364,6 +396,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -374,6 +407,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -384,6 +418,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -394,6 +429,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -404,6 +440,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -414,6 +451,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -424,6 +462,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -434,6 +473,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -444,6 +484,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -454,6 +495,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -464,6 +506,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -474,6 +517,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -484,6 +528,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -494,6 +539,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -504,6 +550,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -514,6 +561,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -524,6 +572,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -534,6 +583,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -544,6 +594,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -554,6 +605,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -564,6 +616,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -574,6 +627,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -584,6 +638,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -594,6 +649,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -604,6 +660,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -614,6 +671,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -624,6 +682,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -634,6 +693,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -644,6 +704,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -654,6 +715,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -664,6 +726,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -674,6 +737,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -684,6 +748,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -694,6 +759,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -704,6 +770,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -714,6 +781,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -724,6 +792,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -734,6 +803,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -744,6 +814,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -754,6 +825,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -764,6 +836,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -774,6 +847,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -784,6 +858,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -794,6 +869,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -804,6 +880,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -814,6 +891,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -824,6 +902,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -834,6 +913,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -844,6 +924,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -854,6 +935,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -864,6 +946,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -874,6 +957,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -884,6 +968,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -894,6 +979,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -904,6 +990,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -914,6 +1001,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -924,6 +1012,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -934,6 +1023,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -944,6 +1034,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -954,6 +1045,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -964,6 +1056,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -974,6 +1067,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -984,6 +1078,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -994,6 +1089,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1004,6 +1100,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1014,6 +1111,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1024,6 +1122,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1034,6 +1133,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1044,6 +1144,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1054,6 +1155,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1064,6 +1166,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1074,6 +1177,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1084,6 +1188,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1094,6 +1199,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1104,6 +1210,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1114,6 +1221,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1124,6 +1232,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1134,6 +1243,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1144,6 +1254,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1154,6 +1265,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1164,6 +1276,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1174,6 +1287,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1184,6 +1298,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1194,6 +1309,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1204,6 +1320,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1214,6 +1331,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1224,6 +1342,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1234,6 +1353,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1244,6 +1364,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1254,6 +1375,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1264,6 +1386,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1274,6 +1397,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1284,6 +1408,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1294,6 +1419,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1304,6 +1430,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1314,6 +1441,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1324,6 +1452,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1334,6 +1463,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1344,6 +1474,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1354,6 +1485,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1364,6 +1496,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1374,6 +1507,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1384,6 +1518,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1394,6 +1529,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1404,6 +1540,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1414,6 +1551,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1424,6 +1562,7 @@ public class AppDbContext : DbContext
                         Category = "Calves",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1434,6 +1573,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1444,6 +1584,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1454,6 +1595,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1464,6 +1606,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1474,6 +1617,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1484,6 +1628,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1494,6 +1639,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1504,6 +1650,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1514,6 +1661,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1524,6 +1672,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1534,6 +1683,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1544,6 +1694,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1554,6 +1705,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1564,6 +1716,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1574,6 +1727,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1584,6 +1738,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1594,6 +1749,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1604,6 +1760,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1614,6 +1771,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1624,6 +1782,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1634,6 +1793,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1644,6 +1804,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1654,6 +1815,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1664,6 +1826,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1674,6 +1837,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1684,6 +1848,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1694,6 +1859,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1704,6 +1870,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1714,6 +1881,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1724,6 +1892,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1734,6 +1903,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1744,6 +1914,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1754,6 +1925,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1764,6 +1936,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1774,6 +1947,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1784,6 +1958,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1794,6 +1969,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1804,6 +1980,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1814,6 +1991,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1824,6 +2002,7 @@ public class AppDbContext : DbContext
                         Category = "Chest",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1834,6 +2013,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1844,6 +2024,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1854,6 +2035,7 @@ public class AppDbContext : DbContext
                         Category = "Back",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1864,6 +2046,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1874,6 +2057,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1884,6 +2068,7 @@ public class AppDbContext : DbContext
                         Category = "Shoulders",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1894,6 +2079,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1904,6 +2090,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1914,6 +2101,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1924,6 +2112,7 @@ public class AppDbContext : DbContext
                         Category = "Arms",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1934,6 +2123,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1944,6 +2134,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1954,6 +2145,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1964,6 +2156,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1974,6 +2167,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1984,6 +2178,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -1994,6 +2189,7 @@ public class AppDbContext : DbContext
                         Category = "Legs",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2004,6 +2200,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2014,6 +2211,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2024,6 +2222,7 @@ public class AppDbContext : DbContext
                         Category = "Glutes",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2034,6 +2233,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2044,6 +2244,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2054,6 +2255,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2064,6 +2266,7 @@ public class AppDbContext : DbContext
                         Category = "Core",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2074,6 +2277,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2084,6 +2288,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     },
@@ -2094,6 +2299,7 @@ public class AppDbContext : DbContext
                         Category = "Full Body",
                         IsApproved = true,
                         IsCustom = false,
+                        IsRejected = false,
                         SubmittedByUserId = null,
                         CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc)
                     }
@@ -6591,7 +6797,6 @@ public class AppDbContext : DbContext
                         IsPrimary = false
                     }
         );
-
 
     }
 }
