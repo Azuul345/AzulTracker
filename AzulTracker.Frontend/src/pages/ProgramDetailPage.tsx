@@ -10,6 +10,9 @@ import {
   deleteExercise,
   updateExercise,
   searchExercises,
+  submitExercise,
+  submitMuscle,
+  getApprovedMuscles,
 } from "../services/programService";
 import type {
   TrainingProgram,
@@ -17,6 +20,8 @@ import type {
   ProgramExercise,
   ExerciseSearchResult,
   ExerciseMuscle,
+  MuscleOption,
+  MuscleAssignment,
 } from "../types/program";
 
 export default function ProgramDetailPage() {
@@ -59,7 +64,23 @@ export default function ProgramDetailPage() {
   const [showMusclesForExercise, setShowMusclesForExercise] = useState<
     Record<number, boolean>
   >({});
-
+  // Submission form state
+  const [showSubmitForm, setShowSubmitForm] = useState(false);
+  const [submitName, setSubmitName] = useState("");
+  const [submitCategory, setSubmitCategory] = useState("");
+  const [submitDescription, setSubmitDescription] = useState("");
+  const [submitVideoUrl, setSubmitVideoUrl] = useState("");
+  const [availableMuscles, setAvailableMuscles] = useState<MuscleOption[]>([]);
+  const [muscleAssignments, setMuscleAssignments] = useState<
+    MuscleAssignment[]
+  >([]);
+  const [showNewMuscleForm, setShowNewMuscleForm] = useState(false);
+  const [newMuscleName, setNewMuscleName] = useState("");
+  const [newMuscleGroup, setNewMuscleGroup] = useState("");
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [showPrimaryPicker, setShowPrimaryPicker] = useState(false);
+  const [showSecondaryPicker, setShowSecondaryPicker] = useState(false);
   const loadProgram = useCallback(async () => {
     try {
       setError(null);
@@ -89,6 +110,112 @@ export default function ProgramDetailPage() {
   useEffect(() => {
     loadProgram();
   }, [loadProgram]);
+
+  useEffect(() => {
+    getApprovedMuscles().then((res) => setAvailableMuscles(res.data));
+  }, []);
+
+  const MUSCLE_GROUPS = [
+    "Chest",
+    "Back",
+    "Shoulders",
+    "Arms",
+    "Core",
+    "Legs",
+    "Glutes",
+    "Calves",
+  ];
+
+  function toggleMuscleAssignment(muscleId: number) {
+    setMuscleAssignments((prev) => {
+      const existing = prev.find((m) => m.muscleId === muscleId);
+      if (existing) return prev.filter((m) => m.muscleId !== muscleId);
+      return [...prev, { muscleId, isPrimary: true }];
+    });
+  }
+
+  function toggleMuscleIsPrimary(muscleId: number) {
+    setMuscleAssignments((prev) =>
+      prev.map((m) =>
+        m.muscleId === muscleId ? { ...m, isPrimary: !m.isPrimary } : m,
+      ),
+    );
+  }
+
+  function resetSubmitForm() {
+    setShowSubmitForm(false);
+    setSubmitName("");
+    setSubmitCategory("");
+    setSubmitDescription("");
+    setSubmitVideoUrl("");
+    setMuscleAssignments([]);
+    setShowNewMuscleForm(false);
+    setNewMuscleName("");
+    setNewMuscleGroup("");
+    setSubmitError(null);
+    setShowPrimaryPicker(false);
+    setShowSecondaryPicker(false);
+  }
+
+  async function handleSubmitNewExercise(dayId: number) {
+    if (!submitName.trim()) {
+      setSubmitError("Name is required.");
+      return;
+    }
+    if (!submitCategory) {
+      setSubmitError("Category is required.");
+      return;
+    }
+    if (muscleAssignments.length === 0) {
+      setSubmitError("At least one muscle is required.");
+      return;
+    }
+
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      // 1. Submit any new muscles first and collect their IDs
+      let allAssignments = [...muscleAssignments];
+      if (showNewMuscleForm && newMuscleName.trim() && newMuscleGroup) {
+        const muscleRes = await submitMuscle({
+          name: newMuscleName.trim(),
+          muscleGroup: newMuscleGroup,
+        });
+        allAssignments = [
+          ...allAssignments,
+          { muscleId: muscleRes.data.id, isPrimary: true },
+        ];
+      }
+
+      // 2. Submit the exercise to the library
+      const exRes = await submitExercise({
+        name: submitName.trim(),
+        category: submitCategory,
+        description: submitDescription || undefined,
+        muscleAssignments: allAssignments,
+      });
+
+      // 3. Add it to the program day (video URL goes here, NOT on the exercise)
+      const orderIndex = (exercisesByDay[dayId]?.length ?? 0) + 1;
+      await createExercise(programId, dayId, {
+        exerciseLibraryId: exRes.data.id,
+        sets,
+        reps,
+        orderIndex,
+        notes: notes || undefined,
+        videoUrl: submitVideoUrl || undefined,
+      });
+
+      resetSubmitForm();
+      setActiveDayId(null);
+      resetExerciseForm();
+      await loadProgram();
+    } catch {
+      setSubmitError("Submission failed. You may have hit the 3/hour limit.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   async function handleSearch(query: string) {
     setSearchQuery(query);
@@ -563,21 +690,490 @@ export default function ProgramDetailPage() {
 
                 {selectedExercise && <p>Selected: {selectedExercise.name}</p>}
 
+                {/* <--- REPLACE the custom name block with this */}
                 {!selectedExercise && (
-                  <label htmlFor={`custom-exercise-${day.id}`}>
-                    Custom exercise name
-                    <input
-                      id={`custom-exercise-${day.id}`}
-                      placeholder="Type your own exercise name"
-                      value={customName}
-                      onChange={(e) => setCustomName(e.target.value)}
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        marginTop: "0.25rem",
-                      }}
-                    />
-                  </label>
+                  <div id={`day-${day.id}-no-results-section`}>
+                    {!showSubmitForm ? (
+                      <button
+                        type="button"
+                        onClick={() => setShowSubmitForm(true)}
+                        style={{ marginTop: "0.25rem" }}
+                      >
+                        + Submit a new exercise
+                      </button>
+                    ) : (
+                      <div
+                        id={`day-${day.id}-submit-form`}
+                        style={{
+                          border: "1px solid #555",
+                          padding: "1rem",
+                          marginTop: "0.5rem",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "0.75rem",
+                        }}
+                      >
+                        <strong>Submit a new exercise</strong>
+                        {submitError && (
+                          <p style={{ color: "red", margin: 0 }}>
+                            {submitError}
+                          </p>
+                        )}
+
+                        <label>
+                          Name (required)
+                          <input
+                            placeholder="e.g. Cable Lateral Raise"
+                            value={submitName}
+                            onChange={(e) => setSubmitName(e.target.value)}
+                            style={{
+                              display: "block",
+                              width: "100%",
+                              marginTop: "0.25rem",
+                            }}
+                            required
+                          />
+                        </label>
+
+                        <label>
+                          Category (required)
+                          <select
+                            value={submitCategory}
+                            onChange={(e) => setSubmitCategory(e.target.value)}
+                            style={{
+                              display: "block",
+                              width: "100%",
+                              marginTop: "0.25rem",
+                            }}
+                            required
+                          >
+                            <option value="">— Select category —</option>
+                            {MUSCLE_GROUPS.map((g) => (
+                              <option key={g} value={g}>
+                                {g}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+
+                        <label>
+                          Description (optional)
+                          <textarea
+                            placeholder="Describe the exercise..."
+                            value={submitDescription}
+                            onChange={(e) =>
+                              setSubmitDescription(e.target.value)
+                            }
+                            rows={2}
+                            maxLength={1000}
+                            style={{
+                              display: "block",
+                              width: "100%",
+                              marginTop: "0.25rem",
+                            }}
+                          />
+                        </label>
+
+                        <label>
+                          Reference video URL (optional)
+                          <input
+                            placeholder="https://youtube.com/..."
+                            value={submitVideoUrl}
+                            onChange={(e) => setSubmitVideoUrl(e.target.value)}
+                            style={{
+                              display: "block",
+                              width: "100%",
+                              marginTop: "0.25rem",
+                            }}
+                          />
+                        </label>
+
+                        {/* REPLACE the entire muscles div with this */}
+                        <div>
+                          <strong>
+                            Muscles (required — pick at least one)
+                          </strong>
+
+                          {/* Primary Muscles Section */}
+                          <div style={{ marginTop: "0.75rem" }}>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                              }}
+                            >
+                              <span>🔴 Primary muscles</span>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setShowPrimaryPicker(!showPrimaryPicker)
+                                }
+                              >
+                                {showPrimaryPicker
+                                  ? "Close"
+                                  : "+ Add primary muscle"}
+                              </button>
+                            </div>
+
+                            {/* Primary picker */}
+                            {showPrimaryPicker && (
+                              <div
+                                style={{
+                                  border: "1px solid #555",
+                                  padding: "0.5rem",
+                                  marginTop: "0.5rem",
+                                }}
+                              >
+                                {MUSCLE_GROUPS.map((group) => {
+                                  const groupMuscles = availableMuscles.filter(
+                                    (m) =>
+                                      m.muscleGroup === group &&
+                                      !muscleAssignments.find(
+                                        (a) => a.muscleId === m.id,
+                                      ),
+                                  );
+                                  if (groupMuscles.length === 0) return null;
+                                  return (
+                                    <div
+                                      key={group}
+                                      style={{ marginBottom: "0.5rem" }}
+                                    >
+                                      <em style={{ fontSize: "0.85rem" }}>
+                                        {group}
+                                      </em>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexWrap: "wrap",
+                                          gap: "0.4rem",
+                                          marginTop: "0.25rem",
+                                        }}
+                                      >
+                                        {groupMuscles.map((m) => (
+                                          <button
+                                            key={m.id}
+                                            type="button"
+                                            onClick={() => {
+                                              setMuscleAssignments((prev) => [
+                                                ...prev,
+                                                {
+                                                  muscleId: m.id,
+                                                  isPrimary: true,
+                                                },
+                                              ]);
+                                            }}
+                                            style={{
+                                              fontSize: "0.8rem",
+                                              padding: "0.2rem 0.5rem",
+                                            }}
+                                          >
+                                            + {m.name}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+
+                            {/* Selected primary muscles */}
+                            {muscleAssignments.filter((a) => a.isPrimary)
+                              .length > 0 && (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexWrap: "wrap",
+                                  gap: "0.4rem",
+                                  marginTop: "0.4rem",
+                                }}
+                              >
+                                {muscleAssignments
+                                  .filter((a) => a.isPrimary)
+                                  .map((a) => {
+                                    const muscle = availableMuscles.find(
+                                      (m) => m.id === a.muscleId,
+                                    );
+                                    return (
+                                      <span
+                                        key={a.muscleId}
+                                        style={{
+                                          background: "#3a1a1a",
+                                          border: "1px solid #c0392b",
+                                          borderRadius: "4px",
+                                          padding: "0.2rem 0.5rem",
+                                          fontSize: "0.85rem",
+                                          display: "flex",
+                                          alignItems: "center",
+                                          gap: "0.3rem",
+                                        }}
+                                      >
+                                        {muscle?.name}
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            setMuscleAssignments((prev) =>
+                                              prev.filter(
+                                                (x) =>
+                                                  x.muscleId !== a.muscleId,
+                                              ),
+                                            )
+                                          }
+                                          style={{
+                                            background: "none",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            color: "#aaa",
+                                            padding: 0,
+                                          }}
+                                        >
+                                          ✕
+                                        </button>
+                                      </span>
+                                    );
+                                  })}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Secondary Muscles Section */}
+                          <div style={{ marginTop: "0.75rem" }}>
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "0.5rem",
+                              }}
+                            >
+                              <span>⚪ Secondary muscles</span>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setShowSecondaryPicker(!showSecondaryPicker)
+                                }
+                              >
+                                {showSecondaryPicker
+                                  ? "Close"
+                                  : "+ Add secondary muscle"}
+                              </button>
+                            </div>
+
+                            {/* Secondary picker */}
+                            {showSecondaryPicker && (
+                              <div
+                                style={{
+                                  border: "1px solid #555",
+                                  padding: "0.5rem",
+                                  marginTop: "0.5rem",
+                                }}
+                              >
+                                {MUSCLE_GROUPS.map((group) => {
+                                  const groupMuscles = availableMuscles.filter(
+                                    (m) =>
+                                      m.muscleGroup === group &&
+                                      !muscleAssignments.find(
+                                        (a) => a.muscleId === m.id,
+                                      ),
+                                  );
+                                  if (groupMuscles.length === 0) return null;
+                                  return (
+                                    <div
+                                      key={group}
+                                      style={{ marginBottom: "0.5rem" }}
+                                    >
+                                      <em style={{ fontSize: "0.85rem" }}>
+                                        {group}
+                                      </em>
+                                      <div
+                                        style={{
+                                          display: "flex",
+                                          flexWrap: "wrap",
+                                          gap: "0.4rem",
+                                          marginTop: "0.25rem",
+                                        }}
+                                      >
+                                        {groupMuscles.map((m) => (
+                                          <button
+                                            key={m.id}
+                                            type="button"
+                                            onClick={() => {
+                                              setMuscleAssignments((prev) => [
+                                                ...prev,
+                                                {
+                                                  muscleId: m.id,
+                                                  isPrimary: false,
+                                                },
+                                              ]);
+                                            }}
+                                            style={{
+                                              fontSize: "0.8rem",
+                                              padding: "0.2rem 0.5rem",
+                                            }}
+                                          >
+                                            + {m.name}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            )}
+
+                            {/* Selected secondary muscles */}
+                            {muscleAssignments.filter((a) => !a.isPrimary)
+                              .length > 0 && (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexWrap: "wrap",
+                                  gap: "0.4rem",
+                                  marginTop: "0.4rem",
+                                }}
+                              >
+                                {muscleAssignments
+                                  .filter((a) => !a.isPrimary)
+                                  .map((a) => {
+                                    const muscle = availableMuscles.find(
+                                      (m) => m.id === a.muscleId,
+                                    );
+                                    return (
+                                      <span
+                                        key={a.muscleId}
+                                        style={{
+                                          background: "#1a1a2e",
+                                          border: "1px solid #555",
+                                          borderRadius: "4px",
+                                          padding: "0.2rem 0.5rem",
+                                          fontSize: "0.85rem",
+                                          display: "flex",
+                                          alignItems: "center",
+                                          gap: "0.3rem",
+                                        }}
+                                      >
+                                        {muscle?.name}
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            setMuscleAssignments((prev) =>
+                                              prev.filter(
+                                                (x) =>
+                                                  x.muscleId !== a.muscleId,
+                                              ),
+                                            )
+                                          }
+                                          style={{
+                                            background: "none",
+                                            border: "none",
+                                            cursor: "pointer",
+                                            color: "#aaa",
+                                            padding: 0,
+                                          }}
+                                        >
+                                          ✕
+                                        </button>
+                                      </span>
+                                    );
+                                  })}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* New muscle sub-form */}
+                        {!showNewMuscleForm ? (
+                          <button
+                            type="button"
+                            onClick={() => setShowNewMuscleForm(true)}
+                            style={{
+                              alignSelf: "flex-start",
+                              fontSize: "0.85rem",
+                            }}
+                          >
+                            My muscle isn't listed — request a new muscle
+                          </button>
+                        ) : (
+                          <div
+                            style={{
+                              border: "1px dashed #555",
+                              padding: "0.75rem",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "0.5rem",
+                            }}
+                          >
+                            <strong style={{ fontSize: "0.9rem" }}>
+                              Request a new muscle
+                            </strong>
+                            <label>
+                              Muscle name
+                              <input
+                                placeholder="e.g. Long Head Bicep"
+                                value={newMuscleName}
+                                onChange={(e) =>
+                                  setNewMuscleName(e.target.value)
+                                }
+                                style={{
+                                  display: "block",
+                                  width: "100%",
+                                  marginTop: "0.25rem",
+                                }}
+                              />
+                            </label>
+                            <label>
+                              Muscle group
+                              <select
+                                value={newMuscleGroup}
+                                onChange={(e) =>
+                                  setNewMuscleGroup(e.target.value)
+                                }
+                                style={{
+                                  display: "block",
+                                  width: "100%",
+                                  marginTop: "0.25rem",
+                                }}
+                              >
+                                <option value="">— Select group —</option>
+                                {MUSCLE_GROUPS.map((g) => (
+                                  <option key={g} value={g}>
+                                    {g}
+                                  </option>
+                                ))}
+                              </select>
+                            </label>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setShowNewMuscleForm(false);
+                                setNewMuscleName("");
+                                setNewMuscleGroup("");
+                              }}
+                              style={{
+                                alignSelf: "flex-start",
+                                fontSize: "0.8rem",
+                              }}
+                            >
+                              Cancel muscle request
+                            </button>
+                          </div>
+                        )}
+
+                        <div style={{ display: "flex", gap: "0.5rem" }}>
+                          <button
+                            type="button"
+                            onClick={() => handleSubmitNewExercise(day.id)}
+                            disabled={submitting}
+                          >
+                            {submitting ? "Submitting..." : "Submit Exercise"}
+                          </button>
+                          <button type="button" onClick={resetSubmitForm}>
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
 
                 <label htmlFor={`sets-${day.id}`}>

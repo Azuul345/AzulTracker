@@ -66,6 +66,7 @@ public class PendingExerciseDto
     public int? SubmittedByUserId { get; set; }
     public string? SubmittedByUsername { get; set; }
     public DateTime CreatedAt { get; set; }
+    public List<ExerciseMuscleDto> Muscles { get; set; } = [];
 }
 
 // ── Muscle Management
@@ -92,6 +93,7 @@ public class MuscleDto
     public string Name { get; set; } = string.Empty;
     public string MuscleGroup { get; set; } = string.Empty;
     public string? ImageUrl { get; set; }
+    public bool IsApproved { get; set; }
 }
 
 public class AssignMusclesDto

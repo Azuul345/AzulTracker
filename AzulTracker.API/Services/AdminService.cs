@@ -2,10 +2,12 @@
 using AzulTracker.API.DTOs;
 using AzulTracker.API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+
 
 namespace AzulTracker.API.Services;
 
-public class AdminService(AppDbContext db)
+public class AdminService(AppDbContext db, BlobStorageService blobStorageService)
 {
     // ── User Management ──────────────────────────────────────────────
 
@@ -115,8 +117,10 @@ public class AdminService(AppDbContext db)
     public async Task<List<PendingExerciseDto>> GetPendingExercisesAsync()
     {
         return await db.ExerciseLibrary
-            .Where(e => !e.IsApproved)
+            .Where(e => !e.IsApproved && !e.IsRejected)
             .Include(e => e.SubmittedBy)
+            .Include(e => e. ExerciseMuscles)                         
+        .ThenInclude(em => em.Muscle)
             .Select(e => new PendingExerciseDto
             {
                 Id = e.Id,
@@ -125,8 +129,17 @@ public class AdminService(AppDbContext db)
                 VideoUrl = e.VideoUrl,
                 SubmittedByUserId = e.SubmittedByUserId,
                 SubmittedByUsername = e.SubmittedBy != null ? e.SubmittedBy.Username : null,
-                CreatedAt = e.CreatedAt
-            })
+                CreatedAt = e.CreatedAt,
+                Muscles = e.ExerciseMuscles.Select(em => new ExerciseMuscleDto
+                {
+                    MuscleId = em.MuscleId,
+                    MuscleName = em.Muscle.Name,
+                    MuscleGroup = em.Muscle.MuscleGroup,
+                    ImageUrl = em.Muscle.ImageUrl,
+                    IsPrimary = em.IsPrimary
+                }).ToList()
+                })
+            
             .OrderBy(e => e.CreatedAt)
             .ToListAsync();
     }
@@ -263,11 +276,82 @@ public class AdminService(AppDbContext db)
     }
 
     public async Task<(bool Success, string Error)> DeleteExerciseAsync(int exerciseId)
-{
-    var exercise = await db.ExerciseLibrary.FindAsync(exerciseId);
-    if (exercise is null) return (false, "Exercise not found.");
+    {
+        var exercise = await db.ExerciseLibrary.FindAsync(exerciseId);
+        if (exercise is null) return (false, "Exercise not found.");
 
-    db.ExerciseLibrary.Remove(exercise);
+        db.ExerciseLibrary.Remove(exercise);
+        await db.SaveChangesAsync();
+        return (true, string.Empty);
+    }
+
+    public async Task<(bool Success, string Error)> RejectExerciseAsync(int exerciseId)
+    {
+        var exercise = await db.ExerciseLibrary.FindAsync(exerciseId);
+        if (exercise is null) return (false, "Exercise not found.");
+        if (exercise.IsApproved) return (false, "Cannot reject an already approved exercise.");
+        if (exercise.IsRejected) return (false, "Exercise is already rejected.");
+
+        exercise.IsRejected = true;
+        await db.SaveChangesAsync();
+        return (true, string.Empty);
+    }
+    // ── Pending Muscle Moderation ────────────────────────────────────────
+
+    public async Task<List<MuscleDto>> GetPendingMusclesAsync()
+    {
+        return await db.Muscles
+            .Where(m => !m.IsApproved)
+            .OrderBy(m => m.MuscleGroup)
+            .ThenBy(m => m.Name)
+            .Select(m => new MuscleDto
+            {
+                Id = m.Id,
+                Name = m.Name,
+                MuscleGroup = m.MuscleGroup,
+                ImageUrl = m.ImageUrl
+            })
+            .ToListAsync();
+    }
+
+    public async Task<int> GetPendingMuscleCountAsync()
+    {
+        return await db.Muscles.CountAsync(m => !m.IsApproved);
+    }
+
+    public async Task<(bool Success, string Error)> ApproveMuscleAsync(int muscleId)
+    {
+        var muscle = await db.Muscles.FindAsync(muscleId);
+        if (muscle is null) return (false, "Muscle not found.");
+        if (muscle.IsApproved) return (false, "Muscle is already approved.");
+
+        muscle.IsApproved = true;
+        await db.SaveChangesAsync();
+        return (true, string.Empty);
+    }
+
+    public async Task<(bool Success, string Error)> DeletePendingMuscleAsync(int muscleId)
+    {
+        var muscle = await db.Muscles.FindAsync(muscleId);
+        if (muscle is null) return (false, "Muscle not found.");
+        if (muscle.IsApproved) return (false, "Cannot delete an approved muscle.");
+
+        db.Muscles.Remove(muscle);
+        await db.SaveChangesAsync();
+        return (true, string.Empty);
+    }
+
+    public async Task<(bool Success, string Error)> UploadMuscleImageAsync(int muscleId, IFormFile file)
+{
+    var muscle = await db.Muscles.FindAsync(muscleId);
+    if (muscle is null) return (false, "Muscle not found.");
+
+    var extension = Path.GetExtension(file.FileName);
+    var fileName = $"muscle-{muscleId}{extension}";
+
+    var imageUrl = await blobStorageService.UploadMuscleImageAsync(file, fileName);
+    muscle.ImageUrl = imageUrl;
+
     await db.SaveChangesAsync();
     return (true, string.Empty);
 }
