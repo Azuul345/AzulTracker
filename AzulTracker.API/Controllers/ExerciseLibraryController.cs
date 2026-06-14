@@ -3,6 +3,7 @@ using AzulTracker.API.Extensions;
 using AzulTracker.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace AzulTracker.API.Controllers;
 
@@ -29,11 +30,14 @@ public class ExerciseLibraryController(ExerciseLibraryService exerciseLibrarySer
         return Ok(exercise);
     }
 
+
     [HttpPost]
+    [EnableRateLimiting("SubmitPolicy")]
     public async Task<IActionResult> Submit([FromBody] CreateExerciseLibraryDto dto)
     {
         var userId = User.GetUserId();
-        var result = await exerciseLibraryService.SubmitCustomAsync(userId, dto);
+        var isAdmin = User.IsInRole("Admin");
+        var result = await exerciseLibraryService.SubmitCustomAsync(userId, dto, isAdmin);
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }
 

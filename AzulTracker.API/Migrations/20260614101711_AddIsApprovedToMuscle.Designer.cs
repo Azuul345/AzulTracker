@@ -4,6 +4,7 @@ using AzulTracker.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzulTracker.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260614101711_AddIsApprovedToMuscle")]
+    partial class AddIsApprovedToMuscle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,12 +49,12 @@ namespace AzulTracker.API.Migrations
                     b.Property<bool>("IsCustom")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsRejected")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("SubmittedById")
+                        .HasColumnType("int");
 
                     b.Property<int?>("SubmittedByUserId")
                         .HasColumnType("int");
@@ -61,7 +64,7 @@ namespace AzulTracker.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubmittedByUserId");
+                    b.HasIndex("SubmittedById");
 
                     b.ToTable("ExerciseLibrary");
 
@@ -73,7 +76,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Barbell Bench Press"
                         },
                         new
@@ -83,7 +85,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Incline Barbell Bench Press"
                         },
                         new
@@ -93,7 +94,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Decline Barbell Bench Press"
                         },
                         new
@@ -103,7 +103,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Bench Press"
                         },
                         new
@@ -113,7 +112,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Incline Dumbbell Bench Press"
                         },
                         new
@@ -123,7 +121,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Decline Dumbbell Bench Press"
                         },
                         new
@@ -133,7 +130,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Flyes"
                         },
                         new
@@ -143,7 +139,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Incline Dumbbell Flyes"
                         },
                         new
@@ -153,7 +148,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Crossover"
                         },
                         new
@@ -163,7 +157,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Incline Cable Flyes"
                         },
                         new
@@ -173,7 +166,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Low Cable Crossover"
                         },
                         new
@@ -183,7 +175,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Push-Up"
                         },
                         new
@@ -193,7 +184,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Wide Grip Push-Up"
                         },
                         new
@@ -203,7 +193,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dip"
                         },
                         new
@@ -213,7 +202,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Pec Deck"
                         },
                         new
@@ -223,7 +211,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Pull-Up"
                         },
                         new
@@ -233,7 +220,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Chin-Up"
                         },
                         new
@@ -243,7 +229,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Wide Grip Pull-Up"
                         },
                         new
@@ -253,7 +238,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Barbell Row"
                         },
                         new
@@ -263,7 +247,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Pendlay Row"
                         },
                         new
@@ -273,7 +256,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Row"
                         },
                         new
@@ -283,7 +265,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Row"
                         },
                         new
@@ -293,7 +274,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Lat Pulldown"
                         },
                         new
@@ -303,7 +283,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Close Grip Lat Pulldown"
                         },
                         new
@@ -313,7 +292,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Straight Arm Pulldown"
                         },
                         new
@@ -323,7 +301,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Face Pull"
                         },
                         new
@@ -333,7 +310,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Deadlift"
                         },
                         new
@@ -343,7 +319,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Rack Pull"
                         },
                         new
@@ -353,7 +328,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "T-Bar Row"
                         },
                         new
@@ -363,7 +337,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Meadows Row"
                         },
                         new
@@ -373,7 +346,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Chest Supported Row"
                         },
                         new
@@ -383,7 +355,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Seal Row"
                         },
                         new
@@ -393,7 +364,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Inverted Row"
                         },
                         new
@@ -403,7 +373,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Single Arm Cable Row"
                         },
                         new
@@ -413,7 +382,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Rope Pullover"
                         },
                         new
@@ -423,7 +391,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Overhead Press"
                         },
                         new
@@ -433,7 +400,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Shoulder Press"
                         },
                         new
@@ -443,7 +409,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Arnold Press"
                         },
                         new
@@ -453,7 +418,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Lateral Raise"
                         },
                         new
@@ -463,7 +427,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Lateral Raise"
                         },
                         new
@@ -473,7 +436,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Front Raise"
                         },
                         new
@@ -483,7 +445,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Reverse Pec Deck"
                         },
                         new
@@ -493,7 +454,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Rear Delt Flyes"
                         },
                         new
@@ -503,7 +463,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Upright Row"
                         },
                         new
@@ -513,7 +472,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Shrug"
                         },
                         new
@@ -523,7 +481,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Landmine Press"
                         },
                         new
@@ -533,7 +490,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Push Press"
                         },
                         new
@@ -543,7 +499,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Behind The Neck Press"
                         },
                         new
@@ -553,7 +508,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Front Raise"
                         },
                         new
@@ -563,7 +517,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Machine Shoulder Press"
                         },
                         new
@@ -573,7 +526,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Barbell Curl"
                         },
                         new
@@ -583,7 +535,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Curl"
                         },
                         new
@@ -593,7 +544,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Incline Dumbbell Curl"
                         },
                         new
@@ -603,7 +553,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hammer Curl"
                         },
                         new
@@ -613,7 +562,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Preacher Curl"
                         },
                         new
@@ -623,7 +571,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Curl"
                         },
                         new
@@ -633,7 +580,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Concentration Curl"
                         },
                         new
@@ -643,7 +589,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Spider Curl"
                         },
                         new
@@ -653,7 +598,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Reverse Curl"
                         },
                         new
@@ -663,7 +607,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Zottman Curl"
                         },
                         new
@@ -673,7 +616,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cross Body Hammer Curl"
                         },
                         new
@@ -683,7 +625,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Bayesian Curl"
                         },
                         new
@@ -693,7 +634,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Close Grip Bench Press"
                         },
                         new
@@ -703,7 +643,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Skull Crusher"
                         },
                         new
@@ -713,7 +652,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Tricep Pushdown"
                         },
                         new
@@ -723,7 +661,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Overhead Tricep Extension"
                         },
                         new
@@ -733,7 +670,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Tricep Kickback"
                         },
                         new
@@ -743,7 +679,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Diamond Push-Up"
                         },
                         new
@@ -753,7 +688,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Rope Tricep Pushdown"
                         },
                         new
@@ -763,7 +697,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Single Arm Overhead Tricep Extension"
                         },
                         new
@@ -773,7 +706,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Tate Press"
                         },
                         new
@@ -783,7 +715,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "JM Press"
                         },
                         new
@@ -793,7 +724,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Wrist Curl"
                         },
                         new
@@ -803,7 +733,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Reverse Wrist Curl"
                         },
                         new
@@ -813,7 +742,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Behind The Back Wrist Curl"
                         },
                         new
@@ -823,7 +751,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Squat"
                         },
                         new
@@ -833,7 +760,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Front Squat"
                         },
                         new
@@ -843,7 +769,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hack Squat"
                         },
                         new
@@ -853,7 +778,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Leg Press"
                         },
                         new
@@ -863,7 +787,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Bulgarian Split Squat"
                         },
                         new
@@ -873,7 +796,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Lunge"
                         },
                         new
@@ -883,7 +805,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Walking Lunge"
                         },
                         new
@@ -893,7 +814,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Romanian Deadlift"
                         },
                         new
@@ -903,7 +823,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Stiff Leg Deadlift"
                         },
                         new
@@ -913,7 +832,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Nordic Curl"
                         },
                         new
@@ -923,7 +841,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Lying Leg Curl"
                         },
                         new
@@ -933,7 +850,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Seated Leg Curl"
                         },
                         new
@@ -943,7 +859,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Leg Extension"
                         },
                         new
@@ -953,7 +868,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Step Up"
                         },
                         new
@@ -963,7 +877,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Goblet Squat"
                         },
                         new
@@ -973,7 +886,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Sissy Squat"
                         },
                         new
@@ -983,7 +895,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Adductor Machine"
                         },
                         new
@@ -993,7 +904,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Reverse Lunge"
                         },
                         new
@@ -1003,7 +913,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Lateral Lunge"
                         },
                         new
@@ -1013,7 +922,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Box Squat"
                         },
                         new
@@ -1023,7 +931,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Pause Squat"
                         },
                         new
@@ -1033,7 +940,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Safety Bar Squat"
                         },
                         new
@@ -1043,7 +949,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Leg Press Single Leg"
                         },
                         new
@@ -1053,7 +958,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Kneeling Leg Curl"
                         },
                         new
@@ -1063,7 +967,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Standing Leg Curl"
                         },
                         new
@@ -1073,7 +976,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Glute Ham Raise"
                         },
                         new
@@ -1083,7 +985,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Reverse Hyper"
                         },
                         new
@@ -1093,7 +994,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Zercher Squat"
                         },
                         new
@@ -1103,7 +1003,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cyclist Squat"
                         },
                         new
@@ -1113,7 +1012,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Romanian Deadlift"
                         },
                         new
@@ -1123,7 +1021,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Single Leg Romanian Deadlift"
                         },
                         new
@@ -1133,7 +1030,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Landmine Squat"
                         },
                         new
@@ -1143,7 +1039,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Pendulum Squat"
                         },
                         new
@@ -1153,7 +1048,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Smith Machine Squat"
                         },
                         new
@@ -1163,7 +1057,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Spanish Squat"
                         },
                         new
@@ -1173,7 +1066,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hip Thrust"
                         },
                         new
@@ -1183,7 +1075,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Barbell Glute Bridge"
                         },
                         new
@@ -1193,7 +1084,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Kickback"
                         },
                         new
@@ -1203,7 +1093,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Sumo Deadlift"
                         },
                         new
@@ -1213,7 +1102,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Sumo Squat"
                         },
                         new
@@ -1223,7 +1111,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Abductor Machine"
                         },
                         new
@@ -1233,7 +1120,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Glute Kickback Machine"
                         },
                         new
@@ -1243,7 +1129,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Single Leg Hip Thrust"
                         },
                         new
@@ -1253,7 +1138,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Hip Thrust"
                         },
                         new
@@ -1263,7 +1147,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Smith Machine Hip Thrust"
                         },
                         new
@@ -1273,7 +1156,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Pull Through"
                         },
                         new
@@ -1283,7 +1165,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Frog Pump"
                         },
                         new
@@ -1293,7 +1174,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Donkey Kick"
                         },
                         new
@@ -1303,7 +1183,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Fire Hydrant"
                         },
                         new
@@ -1313,7 +1192,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Banded Hip Thrust"
                         },
                         new
@@ -1323,7 +1201,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Standing Calf Raise"
                         },
                         new
@@ -1333,7 +1210,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Seated Calf Raise"
                         },
                         new
@@ -1343,7 +1219,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Leg Press Calf Raise"
                         },
                         new
@@ -1353,7 +1228,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Donkey Calf Raise"
                         },
                         new
@@ -1363,7 +1237,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Single Leg Calf Raise"
                         },
                         new
@@ -1373,7 +1246,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Smith Machine Calf Raise"
                         },
                         new
@@ -1383,7 +1255,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Tibialis Raise"
                         },
                         new
@@ -1393,7 +1264,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Jump Rope"
                         },
                         new
@@ -1403,7 +1273,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Plank"
                         },
                         new
@@ -1413,7 +1282,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Side Plank"
                         },
                         new
@@ -1423,7 +1291,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Ab Wheel Rollout"
                         },
                         new
@@ -1433,7 +1300,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hanging Leg Raise"
                         },
                         new
@@ -1443,7 +1309,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Crunch"
                         },
                         new
@@ -1453,7 +1318,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Crunch"
                         },
                         new
@@ -1463,7 +1327,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Decline Sit-Up"
                         },
                         new
@@ -1473,7 +1336,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Russian Twist"
                         },
                         new
@@ -1483,7 +1345,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Pallof Press"
                         },
                         new
@@ -1493,7 +1354,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dead Bug"
                         },
                         new
@@ -1503,7 +1363,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hollow Body Hold"
                         },
                         new
@@ -1513,7 +1372,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dragon Flag"
                         },
                         new
@@ -1523,7 +1381,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Toes To Bar"
                         },
                         new
@@ -1533,7 +1390,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hanging Knee Raise"
                         },
                         new
@@ -1543,7 +1399,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Bicycle Crunch"
                         },
                         new
@@ -1553,7 +1408,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Windshield Wiper"
                         },
                         new
@@ -1563,7 +1417,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Landmine Rotation"
                         },
                         new
@@ -1573,7 +1426,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Suitcase Carry"
                         },
                         new
@@ -1583,7 +1435,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Stir The Pot"
                         },
                         new
@@ -1593,7 +1444,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Copenhagen Plank"
                         },
                         new
@@ -1603,7 +1453,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Farmers Walk"
                         },
                         new
@@ -1613,7 +1462,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Clean and Press"
                         },
                         new
@@ -1623,7 +1471,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Kettlebell Swing"
                         },
                         new
@@ -1633,7 +1480,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Thruster"
                         },
                         new
@@ -1643,7 +1489,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Power Clean"
                         },
                         new
@@ -1653,7 +1498,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Snatch"
                         },
                         new
@@ -1663,7 +1507,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Turkish Get-Up"
                         },
                         new
@@ -1673,7 +1516,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Trap Bar Deadlift"
                         },
                         new
@@ -1683,7 +1525,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hang Clean"
                         },
                         new
@@ -1693,7 +1534,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Push Jerk"
                         },
                         new
@@ -1703,7 +1543,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Split Jerk"
                         },
                         new
@@ -1713,7 +1552,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Sandbag Carry"
                         },
                         new
@@ -1723,7 +1561,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Sled Push"
                         },
                         new
@@ -1733,7 +1570,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Sled Pull"
                         },
                         new
@@ -1743,7 +1579,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Battle Ropes"
                         },
                         new
@@ -1753,7 +1588,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Box Jump"
                         },
                         new
@@ -1763,7 +1597,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Burpee"
                         },
                         new
@@ -1773,7 +1606,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Svend Press"
                         },
                         new
@@ -1783,7 +1615,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Chest Dip"
                         },
                         new
@@ -1793,7 +1624,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Smith Machine Bench Press"
                         },
                         new
@@ -1803,7 +1633,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Banded Pull Apart"
                         },
                         new
@@ -1813,7 +1642,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Straight Arm Dumbbell Pullover"
                         },
                         new
@@ -1823,7 +1651,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Seated Cable Row Wide Grip"
                         },
                         new
@@ -1833,7 +1660,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Shrug"
                         },
                         new
@@ -1843,7 +1669,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Barbell Front Raise"
                         },
                         new
@@ -1853,7 +1678,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Prone Y Raise"
                         },
                         new
@@ -1863,7 +1687,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Hammer Curl"
                         },
                         new
@@ -1873,7 +1696,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Overhead Cable Tricep Extension"
                         },
                         new
@@ -1883,7 +1705,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Skull Crusher"
                         },
                         new
@@ -1893,7 +1714,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Reverse Grip Tricep Pushdown"
                         },
                         new
@@ -1903,7 +1723,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Single Leg Press"
                         },
                         new
@@ -1913,7 +1732,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Narrow Stance Squat"
                         },
                         new
@@ -1923,7 +1741,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Wide Stance Squat"
                         },
                         new
@@ -1933,7 +1750,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Box Step Down"
                         },
                         new
@@ -1943,7 +1759,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Barbell Hip Hinge"
                         },
                         new
@@ -1953,7 +1768,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Lunge"
                         },
                         new
@@ -1963,7 +1777,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Romanian Deadlift"
                         },
                         new
@@ -1973,7 +1786,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Resistance Band Kickback"
                         },
                         new
@@ -1983,7 +1795,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Weighted Donkey Kick"
                         },
                         new
@@ -1993,7 +1804,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "45 Degree Hip Extension"
                         },
                         new
@@ -2003,7 +1813,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "V-Up"
                         },
                         new
@@ -2013,7 +1822,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Flutter Kick"
                         },
                         new
@@ -2023,7 +1831,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Hanging Oblique Raise"
                         },
                         new
@@ -2033,7 +1840,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Cable Woodchop"
                         },
                         new
@@ -2043,7 +1849,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Dumbbell Thruster"
                         },
                         new
@@ -2053,7 +1858,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Kettlebell Clean"
                         },
                         new
@@ -2063,7 +1867,6 @@ namespace AzulTracker.API.Migrations
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsApproved = true,
                             IsCustom = false,
-                            IsRejected = false,
                             Name = "Prowler Push"
                         });
                 });
@@ -7048,8 +6851,7 @@ namespace AzulTracker.API.Migrations
                 {
                     b.HasOne("AzulTracker.API.Models.User", "SubmittedBy")
                         .WithMany()
-                        .HasForeignKey("SubmittedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SubmittedById");
 
                     b.Navigation("SubmittedBy");
                 });

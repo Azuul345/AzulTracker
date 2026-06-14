@@ -23,6 +23,7 @@ export interface PendingExercise {
   category: string;
   submittedByUsername: string | null;
   createdAt: string;
+  muscles: { muscleId: number; muscleName: string; isPrimary: boolean }[];
 }
 
 export interface AdminVideoUrl {
@@ -83,6 +84,9 @@ export async function approveExercise(id: number): Promise<void> {
   await api.put(`/admin/exercises/${id}/approve`);
 }
 
+export const rejectExercise = (id: number) =>
+  api.put(`/admin/exercises/${id}/reject`);
+
 // --- Exercise Library Management ---
 
 export async function getAllExercises(): Promise<AdminExercise[]> {
@@ -102,6 +106,14 @@ export interface Muscle {
   name: string;
   muscleGroup: string;
   imageUrl: string | null;
+}
+
+export interface PendingMuscle {
+  id: number;
+  name: string;
+  muscleGroup: string;
+  submittedByUsername: string | null;
+  createdAt: string;
 }
 
 export interface MuscleAssignment {
@@ -150,4 +162,30 @@ export async function addMuscle(data: AddMuscleDto): Promise<Muscle> {
 
 export async function deleteExercise(id: number): Promise<void> {
   await api.delete(`/admin/exercises/${id}`);
+}
+
+export async function getPendingMuscles(): Promise<PendingMuscle[]> {
+  const res = await api.get<PendingMuscle[]>("/admin/muscles/pending");
+  return res.data;
+}
+
+export async function getPendingMuscleCount(): Promise<number> {
+  const res = await api.get<number>("/admin/muscles/pending/count");
+  return res.data;
+}
+
+export async function approveMuscle(id: number): Promise<void> {
+  await api.put(`/admin/muscles/${id}/approve`);
+}
+
+export async function uploadMuscleImage(id: number, file: File): Promise<void> {
+  const formData = new FormData();
+  formData.append("file", file);
+  await api.post(`/admin/muscles/${id}/image`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+}
+
+export async function deletePendingMuscle(id: number): Promise<void> {
+  await api.delete(`/admin/muscles/${id}`);
 }

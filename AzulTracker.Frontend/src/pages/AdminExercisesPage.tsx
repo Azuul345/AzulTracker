@@ -2,20 +2,26 @@ import { useEffect, useState } from "react";
 import {
   getPendingExercises,
   approveExercise,
+  rejectExercise,
   getAllExercises,
   updateExercise,
   getAllMuscles,
   assignMuscles,
   addMuscle,
   deleteExercise,
+  getPendingMuscles,
+  approveMuscle,
+  uploadMuscleImage,
+  deletePendingMuscle,
 } from "../services/adminService";
 import type {
   PendingExercise,
   AdminExercise,
   Muscle,
+  PendingMuscle,
 } from "../services/adminService";
 
-type Tab = "library" | "pending" | "muscles";
+type Tab = "library" | "pending" | "pendingMuscles" | "muscles";
 
 const CATEGORIES = [
   "Chest",
@@ -34,6 +40,13 @@ type PendingMuscleState = {
   selectedIsPrimary: boolean;
   saving: boolean;
   saved: boolean;
+  error: string;
+};
+
+type MuscleUploadState = {
+  file: File | null;
+  uploading: boolean;
+  uploaded: boolean;
   error: string;
 };
 
@@ -61,6 +74,12 @@ export default function AdminExercisesPage() {
 
   // --- All muscles for dropdowns ---
   const [allMuscles, setAllMuscles] = useState<Muscle[]>([]);
+  const [pendingMuscles, setPendingMuscles] = useState<PendingMuscle[]>([]);
+  const [pendingMusclesLoading, setPendingMusclesLoading] = useState(true);
+  const [pendingMusclesError, setPendingMusclesError] = useState("");
+  const [muscleUploadState, setMuscleUploadState] = useState<
+    Record<number, MuscleUploadState>
+  >({});
 
   // --- Edit panel state ---
   const [editingExercise, setEditingExercise] = useState<AdminExercise | null>(
@@ -101,6 +120,11 @@ export default function AdminExercisesPage() {
         if (muscles.length > 0) setSelectedMuscleId(muscles[0].id);
       })
       .catch(() => {});
+
+    getPendingMuscles()
+      .then(setPendingMuscles)
+      .catch(() => setPendingMusclesError("Failed to load pending muscles."))
+      .finally(() => setPendingMusclesLoading(false));
   }, []);
 
   // --- Pending muscle panel helpers ---
@@ -131,12 +155,18 @@ export default function AdminExercisesPage() {
   const handleToggleMusclePanel = (exerciseId: number) => {
     setExpandedMusclePanel((prev) => {
       if (prev === exerciseId) return null;
-      // init state for this card if not yet created
       if (!pendingMuscleState[exerciseId]) {
+        // Pre-populate from what the user submitted
+        const exercise = pending.find((e) => e.id === exerciseId);
+        const preloaded = (exercise?.muscles ?? []).map((m) => ({
+          muscleId: m.muscleId,
+          muscleName: m.muscleName,
+          isPrimary: m.isPrimary,
+        }));
         setPendingMuscleState((ps) => ({
           ...ps,
           [exerciseId]: {
-            assignments: [],
+            assignments: preloaded, // <--- pre-filled from user submission
             selectedMuscleId: allMuscles.length > 0 ? allMuscles[0].id : 0,
             selectedIsPrimary: true,
             saving: false,
@@ -208,17 +238,99 @@ export default function AdminExercisesPage() {
     }
   };
 
-  const handleApprove = async (exercise: PendingExercise) => {
+  const handleApprove = async (exerciseId: number) => {
     try {
-      await approveExercise(exercise.id);
-      setPending((prev) => prev.filter((e) => e.id !== exercise.id));
+      await approveExercise(exerciseId);
+      setPending((prev) => prev.filter((e) => e.id !== exerciseId));
       setPendingMuscleState((prev) => {
         const next = { ...prev };
-        delete next[exercise.id];
+        delete next[exerciseId];
         return next;
       });
     } catch {
       setPendingError("Failed to approve exercise.");
+    }
+  };
+
+  const handleReject = async (exerciseId: number) => {
+    try {
+      await rejectExercise(exerciseId);
+      setPending((prev) => prev.filter((e) => e.id !== exerciseId));
+      setPendingMuscleState((prev) => {
+        const next = { ...prev };
+        delete next[exerciseId];
+        return next;
+      });
+    } catch {
+      setPendingError("Failed to reject exercise.");
+    }
+  };
+
+  // --- Pending muscle handlers ---
+  const getMuscleUploadState = (muscleId: number): MuscleUploadState =>
+    muscleUploadState[muscleId] ?? {
+      file: null,
+      uploading: false,
+      uploaded: false,
+      error: "",
+    };
+
+  const updateMuscleUploadState = (
+    muscleId: number,
+    patch: Partial<MuscleUploadState>,
+  ) => {
+    setMuscleUploadState((prev) => ({
+      ...prev,
+      [muscleId]: { ...getMuscleUploadState(muscleId), ...patch },
+    }));
+  };
+
+  const handleMuscleFileChange = (muscleId: number, file: File | null) => {
+    updateMuscleUploadState(muscleId, { file, uploaded: false, error: "" });
+  };
+
+  const handleMuscleImageUpload = async (muscleId: number) => {
+    const state = getMuscleUploadState(muscleId);
+    if (!state.file) return;
+    updateMuscleUploadState(muscleId, { uploading: true, error: "" });
+    try {
+      await uploadMuscleImage(muscleId, state.file);
+      updateMuscleUploadState(muscleId, { uploading: false, uploaded: true });
+    } catch {
+      updateMuscleUploadState(muscleId, {
+        uploading: false,
+        error: "Upload failed. Please try again.",
+      });
+    }
+  };
+
+  const handleApproveMuscle = async (muscleId: number) => {
+    try {
+      await approveMuscle(muscleId);
+      setPendingMuscles((prev) => prev.filter((m) => m.id !== muscleId));
+      setMuscleUploadState((prev) => {
+        const next = { ...prev };
+        delete next[muscleId];
+        return next;
+      });
+    } catch {
+      setPendingMusclesError("Failed to approve muscle.");
+    }
+  };
+
+  const handleRejectMuscle = async (muscle: PendingMuscle) => {
+    if (!confirm(`Reject and delete "${muscle.name}"? This cannot be undone.`))
+      return;
+    try {
+      await deletePendingMuscle(muscle.id);
+      setPendingMuscles((prev) => prev.filter((m) => m.id !== muscle.id));
+      setMuscleUploadState((prev) => {
+        const next = { ...prev };
+        delete next[muscle.id];
+        return next;
+      });
+    } catch {
+      setPendingMusclesError("Failed to reject muscle.");
     }
   };
 
@@ -487,6 +599,10 @@ export default function AdminExercisesPage() {
         <button onClick={() => setActiveTab("pending")}>
           Pending Exercises {pending.length > 0 && `(${pending.length})`}
         </button>
+        <button onClick={() => setActiveTab("pendingMuscles")}>
+          Pending Muscles{" "}
+          {pendingMuscles.length > 0 && `(${pendingMuscles.length})`}
+        </button>
         <button onClick={() => setActiveTab("muscles")}>Add Muscle</button>
       </div>
 
@@ -533,9 +649,16 @@ export default function AdminExercisesPage() {
                     </button>
                     <button
                       id={`approve-exercise-${ex.id}`}
-                      onClick={() => handleApprove(ex)}
+                      onClick={() => handleApprove(ex.id)}
                     >
                       Approve
+                    </button>
+                    <button
+                      id={`reject-exercise-${ex.id}`}
+                      onClick={() => handleReject(ex.id)}
+                      style={{ color: "#e74c3c" }}
+                    >
+                      Reject
                     </button>
                   </div>
 
@@ -694,6 +817,103 @@ export default function AdminExercisesPage() {
           )}
         </div>
       )}
+      {activeTab === "pendingMuscles" && (
+        <div>
+          {pendingMusclesLoading && <p>Loading...</p>}
+          {pendingMusclesError && <p>{pendingMusclesError}</p>}
+          {!pendingMusclesLoading &&
+            !pendingMusclesError &&
+            pendingMuscles.length === 0 && (
+              <p>No pending muscles — you're all caught up.</p>
+            )}
+          {!pendingMusclesLoading &&
+            !pendingMusclesError &&
+            pendingMuscles.map((muscle) => {
+              const upload = getMuscleUploadState(muscle.id);
+              return (
+                <div
+                  key={muscle.id}
+                  style={{
+                    border: "1px solid #444",
+                    padding: "1rem",
+                    marginBottom: "1rem",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "1rem",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <strong>{muscle.name}</strong>
+                    <span>{muscle.muscleGroup}</span>
+                    <span>by {muscle.submittedByUsername ?? "Unknown"}</span>
+                    <span>
+                      {new Date(muscle.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: "0.75rem",
+                      display: "flex",
+                      gap: "0.5rem",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleMuscleFileChange(
+                          muscle.id,
+                          e.target.files?.[0] ?? null,
+                        )
+                      }
+                    />
+                    <button
+                      onClick={() => handleMuscleImageUpload(muscle.id)}
+                      disabled={!upload.file || upload.uploading}
+                    >
+                      {upload.uploading ? "Uploading..." : "Upload Image"}
+                    </button>
+                    {upload.uploaded && (
+                      <span style={{ color: "#2ecc71" }}>✓ Image uploaded</span>
+                    )}
+                    {upload.error && (
+                      <span style={{ color: "#e74c3c" }}>{upload.error}</span>
+                    )}
+                  </div>
+
+                  <div
+                    style={{
+                      marginTop: "0.75rem",
+                      display: "flex",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <button
+                      onClick={() => handleApproveMuscle(muscle.id)}
+                      disabled={!upload.uploaded}
+                    >
+                      Approve
+                    </button>
+                    <button
+                      onClick={() => handleRejectMuscle(muscle)}
+                      style={{ color: "#e74c3c" }}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      )}
+
       {activeTab === "muscles" && (
         <div>
           <h2>Add New Muscle</h2>

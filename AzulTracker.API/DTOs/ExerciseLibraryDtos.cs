@@ -37,6 +37,13 @@ public class CreateExerciseLibraryDto
     [Url(ErrorMessage = "VideoUrl must be a valid URL.")]
     [MaxLength(500, ErrorMessage = "VideoUrl cannot exceed 500 characters.")]
     public string? VideoUrl { get; set; }
+
+    [MaxLength(1000, ErrorMessage = "Description cannot exceed 1000 characters.")]
+    public string? Description { get; set; }
+
+    [Required]
+    [MinLength(1, ErrorMessage = "At least one muscle assignment is required.")]
+    public List<MuscleAssignmentDto> MuscleAssignments { get; set; } = new();
 }
 
 public class UpdateExerciseLibraryDto
