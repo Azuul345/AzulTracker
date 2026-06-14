@@ -6,7 +6,11 @@ import {
   getExercisesForDay,
 } from "../services/programService";
 import type { WorkoutLogDto } from "../types/workout";
-import type { TrainingProgram, ProgramExercise } from "../types/program";
+import type {
+  TrainingProgram,
+  ProgramExercise,
+  ExerciseMuscle,
+} from "../types/program";
 import LogSetForm from "../components/LogSetForm";
 import VideoEmbed from "../components/VideoEmbed";
 
@@ -27,6 +31,20 @@ export default function WorkoutPage() {
   const [guidedIndex, setGuidedIndex] = useState(0);
   const [openVideoIds, setOpenVideoIds] = useState<Set<number>>(new Set()); // ✅ inside component
 
+  const [showMusclesForExercise, setShowMusclesForExercise] = useState<
+    Record<number, boolean>
+  >({});
+
+  const toggleMuscles = (id: number) => {
+    setShowMusclesForExercise((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  function splitMuscles(muscles: NonNullable<ProgramExercise["muscles"]>) {
+    return {
+      primary: muscles.filter((m) => m.isPrimary),
+      secondary: muscles.filter((m) => !m.isPrimary),
+    };
+  }
   const toggleVideo = (id: number) => {
     setOpenVideoIds((prev) => {
       const next = new Set(prev);
@@ -186,6 +204,117 @@ export default function WorkoutPage() {
                       <VideoEmbed url={exercise.videoUrl} />
                     </div>
                   )}
+                </div>
+              )}
+
+              {exercise.muscles && exercise.muscles.length > 0 && (
+                <div
+                  id={`workout-exercise-${exercise.id}-muscles-section`}
+                  style={{ marginTop: "12px", marginBottom: "12px" }}
+                >
+                  <button onClick={() => toggleMuscles(exercise.id)}>
+                    {showMusclesForExercise[exercise.id]
+                      ? "Hide Muscles ▴"
+                      : "Show Muscles ▾"}
+                  </button>
+
+                  {showMusclesForExercise[exercise.id] &&
+                    (() => {
+                      const { primary, secondary } = splitMuscles(
+                        exercise.muscles!,
+                      );
+                      return (
+                        <div
+                          id={`workout-exercise-${exercise.id}-muscles-panel`}
+                        >
+                          {primary.length > 0 && (
+                            <div
+                              id={`workout-exercise-${exercise.id}-primary-muscles`}
+                              style={{ marginTop: "8px" }}
+                            >
+                              <strong>Primary muscles</strong>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  gap: "8px",
+                                  flexWrap: "wrap",
+                                  marginTop: "4px",
+                                }}
+                              >
+                                {primary.map((m: ExerciseMuscle) => (
+                                  <div
+                                    key={m.muscleId}
+                                    id={`workout-exercise-${exercise.id}-muscle-${m.muscleId}`}
+                                    data-muscle-id={m.muscleId}
+                                    data-is-primary="true"
+                                    style={{ textAlign: "center" }}
+                                  >
+                                    {m.imageUrl && (
+                                      <img
+                                        id={`workout-exercise-${exercise.id}-muscle-${m.muscleId}-img`}
+                                        src={m.imageUrl}
+                                        alt={m.muscleName}
+                                        style={{
+                                          width: 80,
+                                          height: 80,
+                                          objectFit: "cover",
+                                        }}
+                                      />
+                                    )}
+                                    <div style={{ fontSize: "0.75rem" }}>
+                                      {m.muscleName}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {secondary.length > 0 && (
+                            <div
+                              id={`workout-exercise-${exercise.id}-secondary-muscles`}
+                              style={{ marginTop: "8px" }}
+                            >
+                              <strong>Secondary muscles</strong>
+                              <div
+                                style={{
+                                  display: "flex",
+                                  gap: "8px",
+                                  flexWrap: "wrap",
+                                  marginTop: "4px",
+                                }}
+                              >
+                                {secondary.map((m: ExerciseMuscle) => (
+                                  <div
+                                    key={m.muscleId}
+                                    id={`workout-exercise-${exercise.id}-muscle-${m.muscleId}`}
+                                    data-muscle-id={m.muscleId}
+                                    data-is-primary="false"
+                                    style={{ textAlign: "center" }}
+                                  >
+                                    {m.imageUrl && (
+                                      <img
+                                        id={`workout-exercise-${exercise.id}-muscle-${m.muscleId}-img`}
+                                        src={m.imageUrl}
+                                        alt={m.muscleName}
+                                        style={{
+                                          width: 80,
+                                          height: 80,
+                                          objectFit: "cover",
+                                        }}
+                                      />
+                                    )}
+                                    <div style={{ fontSize: "0.75rem" }}>
+                                      {m.muscleName}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
                 </div>
               )}
 

@@ -16,6 +16,7 @@ import type {
   ProgramDay,
   ProgramExercise,
   ExerciseSearchResult,
+  ExerciseMuscle,
 } from "../types/program";
 
 export default function ProgramDetailPage() {
@@ -54,30 +55,29 @@ export default function ProgramDetailPage() {
   const [editNotes, setEditNotes] = useState("");
   const [editVideoUrl, setEditVideoUrl] = useState("");
 
+  // NEW: track which exercises have muscles panel open
+  const [showMusclesForExercise, setShowMusclesForExercise] = useState<
+    Record<number, boolean>
+  >({});
+
   const loadProgram = useCallback(async () => {
     try {
       setError(null);
       setLoading(true);
-
       const res = await getPrograms();
       const found = res.data.find((p) => p.id === programId);
-
       if (!found) {
         setError("Program not found.");
         return;
       }
-
       setProgram(found);
-
       const daysData = await getDays(programId);
       setDays(daysData.data);
-
       const exMap: Record<number, ProgramExercise[]> = {};
       for (const day of daysData.data) {
         const exRes = await getExercisesForDay(programId, day.id);
         exMap[day.id] = exRes.data;
       }
-
       setExercisesByDay(exMap);
     } catch {
       setError("Failed to load program.");
@@ -93,12 +93,10 @@ export default function ProgramDetailPage() {
   async function handleSearch(query: string) {
     setSearchQuery(query);
     setSelectedExercise(null);
-
     if (query.length < 2) {
       setSearchResults([]);
       return;
     }
-
     try {
       const res = await searchExercises(query);
       setSearchResults(res.data);
@@ -109,7 +107,6 @@ export default function ProgramDetailPage() {
 
   async function handleAddDay(e: React.FormEvent) {
     e.preventDefault();
-
     try {
       setError(null);
       await createDay(programId, { name: dayName, dayOrder: days.length + 1 });
@@ -134,7 +131,6 @@ export default function ProgramDetailPage() {
   async function handleAddExercise(e: React.FormEvent, dayId: number) {
     e.preventDefault();
     const orderIndex = (exercisesByDay[dayId]?.length ?? 0) + 1;
-
     try {
       setError(null);
       await createExercise(programId, dayId, {
@@ -199,21 +195,37 @@ export default function ProgramDetailPage() {
     setCustomName("");
   }
 
+  function toggleMuscles(exerciseId: number) {
+    setShowMusclesForExercise((prev) => ({
+      ...prev,
+      [exerciseId]: !prev[exerciseId],
+    }));
+  }
+
+  // Helper: split muscles into primary and secondary
+  function splitMuscles(muscles: ExerciseMuscle[]) {
+    const primary = muscles.filter((m) => m.isPrimary);
+    const secondary = muscles.filter((m) => !m.isPrimary);
+    return { primary, secondary };
+  }
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!program) return null;
 
   return (
-    <div>
-      <h1>{program.name}</h1>
-      {program.description && <p>{program.description}</p>}
+    <div id="program-detail-page">
+      <h1 id="program-detail-title">{program.name}</h1>
+      {program.description && (
+        <p id="program-detail-description">{program.description}</p>
+      )}
 
       <button onClick={() => setShowDayForm(!showDayForm)}>
         {showDayForm ? "Cancel" : "Add Day"}
       </button>
 
       {showDayForm && (
-        <form onSubmit={handleAddDay}>
+        <form onSubmit={handleAddDay} id="add-day-form">
           <input
             placeholder="Day name (e.g. Push Day)"
             value={dayName}
@@ -224,39 +236,60 @@ export default function ProgramDetailPage() {
         </form>
       )}
 
-      {days.map((day) => (
-        <div
-          key={day.id}
-          style={{
-            marginTop: "1rem",
-            border: "1px solid #444",
-            padding: "1rem",
-          }}
-        >
-          <h2>{day.name}</h2>
-          <button onClick={() => handleDeleteDay(day.id)}>Delete Day</button>
+      <ul id="days-list" style={{ listStyle: "none", padding: 0 }}>
+        {days.map((day) => (
+          <li
+            key={day.id}
+            id={`day-${day.id}`}
+            style={{
+              marginTop: "1rem",
+              border: "1px solid #444",
+              padding: "1rem",
+            }}
+          >
+            <h2 id={`day-${day.id}-title`}>{day.name}</h2>
+            <button onClick={() => handleDeleteDay(day.id)}>Delete Day</button>
 
-          <ul>
-            {(exercisesByDay[day.id] ?? []).map((ex) => (
-              <li key={ex.id} style={{ marginBottom: "0.75rem" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                  }}
+            <ul
+              id={`day-${day.id}-exercises`}
+              style={{ listStyle: "none", padding: 0 }}
+            >
+              {(exercisesByDay[day.id] ?? []).map((ex) => (
+                <li
+                  key={ex.id}
+                  id={`exercise-${ex.id}`}
+                  data-exercise-id={ex.id}
+                  data-day-id={day.id}
+                  style={{ marginBottom: "0.75rem" }}
                 >
-                  <span>
-                    {ex.customExerciseName ??
-                      ex.exerciseName ??
-                      `Exercise #${ex.exerciseLibraryId}`}
+                  <div
+                    id={`exercise-${ex.id}-header`}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.5rem",
+                    }}
+                  >
+                    <strong id={`exercise-${ex.id}-name`}>
+                      {ex.customExerciseName ??
+                        ex.exerciseName ??
+                        `Exercise #${ex.exerciseLibraryId}`}
+                    </strong>
                     {" — "}
-                    {ex.sets}×{ex.reps}
+                    <span id={`exercise-${ex.id}-volume`}>
+                      {ex.sets}×{ex.reps}
+                    </span>
                     {ex.notes && (
-                      <span style={{ color: "#aaa" }}> ({ex.notes})</span>
+                      <span
+                        id={`exercise-${ex.id}-notes`}
+                        style={{ color: "#aaa" }}
+                      >
+                        ({ex.notes})
+                      </span>
                     )}
                     {ex.videoUrl && (
                       <a
+                        id={`exercise-${ex.id}-video-link`}
                         href={ex.videoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -269,117 +302,249 @@ export default function ProgramDetailPage() {
                         Watch
                       </a>
                     )}
-                  </span>
-                  <button
-                    onClick={() => {
-                      setEditingExerciseId(ex.id);
-                      setEditSets(ex.sets);
-                      setEditReps(ex.reps);
-                      setEditNotes(ex.notes ?? "");
-                      setEditVideoUrl(ex.videoUrl ?? "");
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button onClick={() => handleDeleteExercise(day.id, ex.id)}>
-                    Remove
-                  </button>
-                </div>
-
-                {editingExerciseId === ex.id && (
-                  <form
-                    onSubmit={(e) => handleEditExercise(e, day.id, ex)}
-                    style={{
-                      marginTop: "0.5rem",
-                      display: "flex",
-                      gap: "0.5rem",
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    <div>
-                      <label>Sets</label>
-                      <input
-                        type="number"
-                        min={1}
-                        value={editSets}
-                        onChange={(e) => setEditSets(Number(e.target.value))}
-                        style={{ width: 60, display: "block" }}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label>Reps</label>
-                      <input
-                        type="number"
-                        min={1}
-                        value={editReps}
-                        onChange={(e) => setEditReps(Number(e.target.value))}
-                        style={{ width: 60, display: "block" }}
-                        required
-                      />
-                    </div>
-                    <div>
-                      <label>Notes</label>
-                      <input
-                        placeholder="Optional"
-                        value={editNotes}
-                        onChange={(e) => setEditNotes(e.target.value)}
-                        style={{ display: "block" }}
-                      />
-                    </div>
-                    <div>
-                      <label>Video URL</label>
-                      <input
-                        placeholder="https://youtube.com/watch?v=... (optional)"
-                        value={editVideoUrl}
-                        onChange={(e) => setEditVideoUrl(e.target.value)}
-                        style={{ display: "block" }}
-                      />
-                    </div>
-                    <button type="submit">Save</button>
                     <button
-                      type="button"
-                      onClick={() => setEditingExerciseId(null)}
+                      id={`exercise-${ex.id}-edit-btn`}
+                      onClick={() => {
+                        setEditingExerciseId(ex.id);
+                        setEditSets(ex.sets);
+                        setEditReps(ex.reps);
+                        setEditNotes(ex.notes ?? "");
+                        setEditVideoUrl(ex.videoUrl ?? "");
+                      }}
                     >
-                      Cancel
+                      Edit
                     </button>
-                  </form>
-                )}
-              </li>
-            ))}
-          </ul>
+                    <button
+                      id={`exercise-${ex.id}-delete-btn`}
+                      onClick={() => handleDeleteExercise(day.id, ex.id)}
+                    >
+                      Remove
+                    </button>
 
-          {activeDayId === day.id ? (
-            <form
-              onSubmit={(e) => handleAddExercise(e, day.id)}
-              style={{
-                marginTop: "1rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "0.75rem",
-                maxWidth: "500px",
-              }}
-            >
-              <p style={{ margin: 0, color: "#aaa" }}>
-                Search the exercise library or enter a custom exercise name.
-              </p>
+                    {/* NEW: Show Muscles toggle button — only if muscles data exists */}
+                    {ex.muscles && ex.muscles.length > 0 && (
+                      <button
+                        id={`exercise-${ex.id}-muscles-toggle-btn`}
+                        onClick={() => toggleMuscles(ex.id)}
+                      >
+                        {showMusclesForExercise[ex.id]
+                          ? "Hide Muscles"
+                          : "Show Muscles"}
+                      </button>
+                    )}
+                  </div>
 
-              <div>
-                <label htmlFor={`exercise-search-${day.id}`}>Exercise</label>
-                <input
-                  id={`exercise-search-${day.id}`}
-                  placeholder="Search exercise library..."
-                  value={searchQuery}
-                  onChange={(e) => handleSearch(e.target.value)}
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    marginTop: "0.25rem",
-                  }}
-                />
+                  {/* NEW: Muscles panel */}
+                  {showMusclesForExercise[ex.id] &&
+                    ex.muscles &&
+                    ex.muscles.length > 0 && (
+                      <div
+                        id={`exercise-${ex.id}-muscles-panel`}
+                        data-exercise-id={ex.id}
+                        style={{ marginTop: "0.5rem" }}
+                      >
+                        {(() => {
+                          const { primary, secondary } = splitMuscles(
+                            ex.muscles!,
+                          );
+                          return (
+                            <>
+                              {primary.length > 0 && (
+                                <div
+                                  id={`exercise-${ex.id}-primary-muscles`}
+                                  style={{ marginBottom: "0.5rem" }}
+                                >
+                                  <strong>Primary muscles</strong>
+                                  <div
+                                    id={`exercise-${ex.id}-primary-muscles-images`}
+                                    style={{
+                                      display: "flex",
+                                      gap: "0.5rem",
+                                      flexWrap: "wrap",
+                                      marginTop: "0.25rem",
+                                    }}
+                                  >
+                                    {primary.map((muscle) => (
+                                      <div
+                                        key={muscle.muscleId}
+                                        id={`exercise-${ex.id}-muscle-${muscle.muscleId}`}
+                                        data-muscle-id={muscle.muscleId}
+                                        data-is-primary="true"
+                                        style={{ textAlign: "center" }}
+                                      >
+                                        {muscle.imageUrl ? (
+                                          <img
+                                            id={`exercise-${ex.id}-muscle-${muscle.muscleId}-img`}
+                                            src={muscle.imageUrl}
+                                            alt={muscle.muscleName}
+                                            style={{
+                                              width: 80,
+                                              height: 80,
+                                              objectFit: "cover",
+                                            }}
+                                          />
+                                        ) : null}
+                                        <div
+                                          id={`exercise-${ex.id}-muscle-${muscle.muscleId}-label`}
+                                          style={{ fontSize: "0.75rem" }}
+                                        >
+                                          {muscle.muscleName}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+
+                              {secondary.length > 0 && (
+                                <div id={`exercise-${ex.id}-secondary-muscles`}>
+                                  <strong>Secondary muscles</strong>
+                                  <div
+                                    id={`exercise-${ex.id}-secondary-muscles-images`}
+                                    style={{
+                                      display: "flex",
+                                      gap: "0.5rem",
+                                      flexWrap: "wrap",
+                                      marginTop: "0.25rem",
+                                    }}
+                                  >
+                                    {secondary.map((muscle) => (
+                                      <div
+                                        key={muscle.muscleId}
+                                        id={`exercise-${ex.id}-muscle-${muscle.muscleId}`}
+                                        data-muscle-id={muscle.muscleId}
+                                        data-is-primary="false"
+                                        style={{ textAlign: "center" }}
+                                      >
+                                        {muscle.imageUrl ? (
+                                          <img
+                                            id={`exercise-${ex.id}-muscle-${muscle.muscleId}-img`}
+                                            src={muscle.imageUrl}
+                                            alt={muscle.muscleName}
+                                            style={{
+                                              width: 80,
+                                              height: 80,
+                                              objectFit: "cover",
+                                            }}
+                                          />
+                                        ) : null}
+                                        <div
+                                          id={`exercise-${ex.id}-muscle-${muscle.muscleId}-label`}
+                                          style={{ fontSize: "0.75rem" }}
+                                        >
+                                          {muscle.muscleName}
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </>
+                          );
+                        })()}
+                      </div>
+                    )}
+
+                  {/* Existing edit form */}
+                  {editingExerciseId === ex.id && (
+                    <form
+                      id={`exercise-${ex.id}-edit-form`}
+                      onSubmit={(e) => handleEditExercise(e, day.id, ex)}
+                      style={{
+                        marginTop: "0.5rem",
+                        display: "flex",
+                        gap: "0.5rem",
+                        alignItems: "flex-end",
+                      }}
+                    >
+                      <label>
+                        Sets
+                        <input
+                          type="number"
+                          min={1}
+                          value={editSets}
+                          onChange={(e) => setEditSets(Number(e.target.value))}
+                          style={{ width: 60, display: "block" }}
+                          required
+                        />
+                      </label>
+                      <label>
+                        Reps
+                        <input
+                          type="number"
+                          min={1}
+                          value={editReps}
+                          onChange={(e) => setEditReps(Number(e.target.value))}
+                          style={{ width: 60, display: "block" }}
+                          required
+                        />
+                      </label>
+                      <label>
+                        Notes
+                        <input
+                          placeholder="Optional"
+                          value={editNotes}
+                          onChange={(e) => setEditNotes(e.target.value)}
+                          style={{ display: "block" }}
+                        />
+                      </label>
+                      <label>
+                        Video URL
+                        <input
+                          placeholder="https://youtube.com/watch?v=... (optional)"
+                          value={editVideoUrl}
+                          onChange={(e) => setEditVideoUrl(e.target.value)}
+                          style={{ display: "block" }}
+                        />
+                      </label>
+                      <button type="submit">Save</button>
+                      <button
+                        type="button"
+                        onClick={() => setEditingExerciseId(null)}
+                      >
+                        Cancel
+                      </button>
+                    </form>
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            {activeDayId === day.id ? (
+              <form
+                id={`day-${day.id}-add-exercise-form`}
+                onSubmit={(e) => handleAddExercise(e, day.id)}
+                style={{
+                  marginTop: "1rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                  maxWidth: "500px",
+                }}
+              >
+                <p style={{ margin: 0, color: "#aaa" }}>
+                  Search the exercise library or enter a custom exercise name.
+                </p>
+                <label htmlFor={`exercise-search-${day.id}`}>
+                  Exercise
+                  <input
+                    id={`exercise-search-${day.id}`}
+                    placeholder="Search exercise library..."
+                    value={searchQuery}
+                    onChange={(e) => handleSearch(e.target.value)}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      marginTop: "0.25rem",
+                    }}
+                  />
+                </label>
 
                 {searchResults.length > 0 && (
-                  <ul style={{ marginTop: "0.5rem" }}>
+                  <ul
+                    id={`day-${day.id}-search-results`}
+                    style={{ marginTop: "0.5rem" }}
+                  >
                     {searchResults.map((r) => (
                       <li
                         key={r.id}
@@ -397,105 +562,101 @@ export default function ProgramDetailPage() {
                 )}
 
                 {selectedExercise && <p>Selected: {selectedExercise.name}</p>}
-              </div>
 
-              {!selectedExercise && (
-                <div>
+                {!selectedExercise && (
                   <label htmlFor={`custom-exercise-${day.id}`}>
                     Custom exercise name
+                    <input
+                      id={`custom-exercise-${day.id}`}
+                      placeholder="Type your own exercise name"
+                      value={customName}
+                      onChange={(e) => setCustomName(e.target.value)}
+                      style={{
+                        display: "block",
+                        width: "100%",
+                        marginTop: "0.25rem",
+                      }}
+                    />
                   </label>
+                )}
+
+                <label htmlFor={`sets-${day.id}`}>
+                  Sets
                   <input
-                    id={`custom-exercise-${day.id}`}
-                    placeholder="Type your own exercise name"
-                    value={customName}
-                    onChange={(e) => setCustomName(e.target.value)}
+                    id={`sets-${day.id}`}
+                    type="number"
+                    min={1}
+                    value={sets}
+                    onChange={(e) => setSets(Number(e.target.value))}
+                    required
+                    style={{ display: "block", marginTop: "0.25rem" }}
+                  />
+                </label>
+
+                <label htmlFor={`reps-${day.id}`}>
+                  Reps
+                  <input
+                    id={`reps-${day.id}`}
+                    type="number"
+                    min={1}
+                    value={reps}
+                    onChange={(e) => setReps(Number(e.target.value))}
+                    required
+                    style={{ display: "block", marginTop: "0.25rem" }}
+                  />
+                </label>
+
+                <label htmlFor={`notes-${day.id}`}>
+                  Notes
+                  <input
+                    id={`notes-${day.id}`}
+                    placeholder="Optional notes"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
                     style={{
                       display: "block",
                       width: "100%",
                       marginTop: "0.25rem",
                     }}
                   />
-                </div>
-              )}
+                </label>
 
-              <div>
-                <label htmlFor={`sets-${day.id}`}>Sets</label>
-                <input
-                  id={`sets-${day.id}`}
-                  type="number"
-                  min={1}
-                  value={sets}
-                  onChange={(e) => setSets(Number(e.target.value))}
-                  required
-                  style={{ display: "block", marginTop: "0.25rem" }}
-                />
-              </div>
-
-              <div>
-                <label htmlFor={`reps-${day.id}`}>Reps</label>
-                <input
-                  id={`reps-${day.id}`}
-                  type="number"
-                  min={1}
-                  value={reps}
-                  onChange={(e) => setReps(Number(e.target.value))}
-                  required
-                  style={{ display: "block", marginTop: "0.25rem" }}
-                />
-              </div>
-
-              <div>
-                <label htmlFor={`notes-${day.id}`}>Notes</label>
-                <input
-                  id={`notes-${day.id}`}
-                  placeholder="Optional notes"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    marginTop: "0.25rem",
-                  }}
-                />
-              </div>
-
-              <div>
                 <label htmlFor={`video-url-${day.id}`}>
                   Reference video URL
+                  <input
+                    id={`video-url-${day.id}`}
+                    placeholder="https://youtube.com/watch?v=... (optional)"
+                    value={videoUrl}
+                    onChange={(e) => setVideoUrl(e.target.value)}
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      marginTop: "0.25rem",
+                    }}
+                  />
                 </label>
-                <input
-                  id={`video-url-${day.id}`}
-                  placeholder="https://youtube.com/watch?v=... (optional)"
-                  value={videoUrl}
-                  onChange={(e) => setVideoUrl(e.target.value)}
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    marginTop: "0.25rem",
-                  }}
-                />
-              </div>
 
-              <div style={{ display: "flex", gap: "0.5rem" }}>
-                <button type="submit">Add Exercise</button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setActiveDayId(null);
-                    resetExerciseForm();
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          ) : (
-            <button onClick={() => setActiveDayId(day.id)}>
-              + Add Exercise
-            </button>
-          )}
-        </div>
-      ))}
+                <div style={{ display: "flex", gap: "0.5rem" }}>
+                  <button type="submit">Add Exercise</button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveDayId(null);
+                      resetExerciseForm();
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <button onClick={() => setActiveDayId(day.id)}>
+                + Add Exercise
+              </button>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
