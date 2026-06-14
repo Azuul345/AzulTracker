@@ -15,4 +15,7 @@ public class ExerciseLibrary
     public User? SubmittedBy { get; set; }
 
     public ICollection<ExerciseMuscle> ExerciseMuscles { get; set; } = [];
+
+    public bool IsRejected { get; set; } = false;
+
 }

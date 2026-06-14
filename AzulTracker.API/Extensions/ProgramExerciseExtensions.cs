@@ -16,7 +16,15 @@ public static class ProgramExerciseExtensions
         Reps = exercise.Reps,
         OrderIndex = exercise.OrderIndex,
         Notes = exercise.Notes,
-        VideoUrl = exercise.VideoUrl ?? exercise.ExerciseLibrary?.VideoUrl
+        VideoUrl = exercise.VideoUrl ?? exercise.ExerciseLibrary?.VideoUrl,
+        Muscles = exercise.ExerciseLibrary?.ExerciseMuscles?
+        .Select(em => new ExerciseMuscleDto
+        {
+            MuscleId = em.MuscleId,
+            MuscleName = em.Muscle.Name,
+            IsPrimary = em.IsPrimary,
+            ImageUrl = em.Muscle.ImageUrl
+        }).ToList() ?? []
     };
 
     public static ProgramExercise ToEntity(this CreateProgramExerciseDto dto, int programDayId) => new()
