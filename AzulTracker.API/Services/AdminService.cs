@@ -256,4 +256,20 @@ public class AdminService(AppDbContext db)
             .ToListAsync();
     }
 
+    public async Task<int> GetPendingExerciseCountAsync()
+    {
+    return await db.ExerciseLibrary
+        .CountAsync(e => !e.IsApproved);
+    }
+
+    public async Task<(bool Success, string Error)> DeleteExerciseAsync(int exerciseId)
+{
+    var exercise = await db.ExerciseLibrary.FindAsync(exerciseId);
+    if (exercise is null) return (false, "Exercise not found.");
+
+    db.ExerciseLibrary.Remove(exercise);
+    await db.SaveChangesAsync();
+    return (true, string.Empty);
+}
+
 }
