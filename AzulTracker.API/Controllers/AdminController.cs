@@ -119,4 +119,20 @@ public class AdminController(AdminService adminService) : ControllerBase
         return Ok(muscles);
     }
 
+    
+    [HttpGet("exercises/pending/count")]
+    public async Task<IActionResult> GetPendingExerciseCount()
+    {
+        var count = await adminService.GetPendingExerciseCountAsync();
+        return Ok(count);
+    }
+
+    [HttpDelete("exercises/{id}")]
+    public async Task<IActionResult> DeleteExercise(int id)
+    {
+        var (success, error) = await adminService.DeleteExerciseAsync(id);
+        if (!success) return NotFound(error);
+        return NoContent();
+    }
+
 }
