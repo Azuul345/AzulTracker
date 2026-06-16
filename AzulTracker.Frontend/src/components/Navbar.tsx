@@ -1,16 +1,31 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { getPendingExerciseCount } from "../services/adminService";
+import {
+  getPendingExerciseCount,
+  getPendingMuscleCount,
+} from "../services/adminService";
 
 export default function Navbar() {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
   const [pendingCount, setPendingCount] = useState(0);
+  const [pendingMuscleCount, setPendingMuscleCount] = useState(0);
 
-  useEffect(() => {
+  const fetchCounts = () => {
     if (!isAdmin()) return;
     getPendingExerciseCount().then((count) => setPendingCount(count));
+    getPendingMuscleCount().then((count) => setPendingMuscleCount(count));
+  };
+
+  useEffect(() => {
+    fetchCounts();
+    window.addEventListener("admin-pending-changed", fetchCounts);
+    const interval = setInterval(fetchCounts, 30000);
+    return () => {
+      window.removeEventListener("admin-pending-changed", fetchCounts);
+      clearInterval(interval);
+    };
   }, [isAdmin]);
 
   const handleLogout = () => {
@@ -57,12 +72,13 @@ export default function Navbar() {
             <Link to="/admin/stats" style={linkStyle}>
               Stats
             </Link>
+
             <Link to="/admin/exercises" style={linkStyle}>
-              Exercises
-              {pendingCount > 0 && (
+              Admin
+              {pendingCount + pendingMuscleCount > 0 && (
                 <span
                   id="admin-pending-badge"
-                  data-pending-count={pendingCount}
+                  data-pending-count={pendingCount + pendingMuscleCount}
                   style={{
                     background: "#c0392b",
                     color: "#fff",
@@ -74,7 +90,7 @@ export default function Navbar() {
                     display: "inline-block",
                   }}
                 >
-                  {pendingCount}
+                  {pendingCount + pendingMuscleCount}
                 </span>
               )}
             </Link>

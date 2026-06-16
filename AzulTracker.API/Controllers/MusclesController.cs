@@ -3,6 +3,7 @@ using AzulTracker.API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using AzulTracker.API.Extensions;
 
 namespace AzulTracker.API.Controllers;
 
@@ -23,7 +24,8 @@ public class MusclesController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateMuscle([FromBody] CreateMuscleDto dto)
     {
-        var result = await _muscleService.CreateMuscleAsync(dto);
+        var userId = User.GetUserId();
+        var result = await _muscleService.CreateMuscleAsync(userId,dto);
         return Ok(result);
     }
 

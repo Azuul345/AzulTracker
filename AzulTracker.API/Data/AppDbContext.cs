@@ -52,6 +52,10 @@ public class AppDbContext : DbContext
             .WithMany()
             .HasForeignKey(e => e.SubmittedByUserId)
             .OnDelete(DeleteBehavior.Restrict);
+        
+        modelBuilder.Entity<Muscle>()
+            .Property(m => m.CreatedAt)
+            .HasDefaultValueSql("GETUTCDATE()");
 
         modelBuilder.Entity<Muscle>().HasData(
             // Chest

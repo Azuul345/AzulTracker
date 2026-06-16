@@ -106,6 +106,7 @@ export interface Muscle {
   name: string;
   muscleGroup: string;
   imageUrl: string | null;
+  isApproved: boolean;
 }
 
 export interface PendingMuscle {
@@ -188,4 +189,9 @@ export async function uploadMuscleImage(id: number, file: File): Promise<void> {
 
 export async function deletePendingMuscle(id: number): Promise<void> {
   await api.delete(`/admin/muscles/${id}`);
+}
+
+export async function getRejectedExercises(): Promise<PendingExercise[]> {
+  const res = await api.get<PendingExercise[]>("/admin/exercises/rejected");
+  return res.data;
 }
