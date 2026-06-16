@@ -13,6 +13,7 @@ import {
   approveMuscle,
   uploadMuscleImage,
   deletePendingMuscle,
+  getRejectedExercises,
 } from "../services/adminService";
 import type {
   PendingExercise,
@@ -21,7 +22,13 @@ import type {
   PendingMuscle,
 } from "../services/adminService";
 
-type Tab = "library" | "pending" | "pendingMuscles" | "muscles";
+type Tab =
+  | "library"
+  | "pending"
+  | "pendingMuscles"
+  | "rejected"
+  | "muscles"
+  | "manageMuscles";
 
 const CATEGORIES = [
   "Chest",
@@ -81,6 +88,14 @@ export default function AdminExercisesPage() {
     Record<number, MuscleUploadState>
   >({});
 
+  const [rejected, setRejected] = useState<PendingExercise[]>([]);
+  const [rejectedLoading, setRejectedLoading] = useState(true);
+  const [rejectedError, setRejectedError] = useState("");
+
+  const [manageMusclesSearch, setManageMusclesSearch] = useState("");
+  const [deletingMuscleId, setDeletingMuscleId] = useState<number | null>(null);
+  const [manageMusclesError, setManageMusclesError] = useState("");
+
   // --- Edit panel state ---
   const [editingExercise, setEditingExercise] = useState<AdminExercise | null>(
     null,
@@ -98,11 +113,15 @@ export default function AdminExercisesPage() {
   const [editError, setEditError] = useState("");
   const [newMuscleName, setNewMuscleName] = useState("");
   const [newMuscleGroup, setNewMuscleGroup] = useState("Chest");
-  const [newMuscleImageUrl, setNewMuscleImageUrl] = useState("");
-  const [muscleFormSaving, setMuscleFormSaving] = useState(false);
-  const [muscleFormSaved, setMuscleFormSaved] = useState(false);
-  const [muscleFormError, setMuscleFormError] = useState("");
 
+  const [muscleFormSaving, setMuscleFormSaving] = useState(false);
+
+  const [muscleFormError, setMuscleFormError] = useState("");
+  const [addMuscleFile, setAddMuscleFile] = useState<File | null>(null);
+  const [addMuscleUploading, setAddMuscleUploading] = useState(false);
+  const [addMuscleUploaded, setAddMuscleUploaded] = useState(false);
+  const [addMuscleUploadError, setAddMuscleUploadError] = useState("");
+  const [createdMuscleId, setCreatedMuscleId] = useState<number | null>(null);
   useEffect(() => {
     getPendingExercises()
       .then(setPending)
@@ -125,8 +144,15 @@ export default function AdminExercisesPage() {
       .then(setPendingMuscles)
       .catch(() => setPendingMusclesError("Failed to load pending muscles."))
       .finally(() => setPendingMusclesLoading(false));
-  }, []);
 
+    getRejectedExercises()
+      .then(setRejected)
+      .catch(() => setRejectedError("Failed to load rejected exercises."))
+      .finally(() => setRejectedLoading(false));
+  }, []);
+  const refreshNavbarCount = () => {
+    window.dispatchEvent(new CustomEvent("admin-pending-changed"));
+  };
   // --- Pending muscle panel helpers ---
   const getOrInitPendingMuscleState = (
     exerciseId: number,
@@ -247,6 +273,7 @@ export default function AdminExercisesPage() {
         delete next[exerciseId];
         return next;
       });
+      refreshNavbarCount();
     } catch {
       setPendingError("Failed to approve exercise.");
     }
@@ -255,12 +282,15 @@ export default function AdminExercisesPage() {
   const handleReject = async (exerciseId: number) => {
     try {
       await rejectExercise(exerciseId);
+      const exercise = pending.find((e) => e.id === exerciseId);
       setPending((prev) => prev.filter((e) => e.id !== exerciseId));
       setPendingMuscleState((prev) => {
         const next = { ...prev };
         delete next[exerciseId];
         return next;
       });
+      refreshNavbarCount();
+      if (exercise) setRejected((prev) => [...prev, exercise]);
     } catch {
       setPendingError("Failed to reject exercise.");
     }
@@ -329,8 +359,45 @@ export default function AdminExercisesPage() {
         delete next[muscle.id];
         return next;
       });
+      refreshNavbarCount();
     } catch {
       setPendingMusclesError("Failed to reject muscle.");
+    }
+  };
+  const handleDeleteRejected = async (exerciseId: number) => {
+    if (
+      !confirm(
+        "Permanently delete this rejected exercise? This cannot be undone.",
+      )
+    )
+      return;
+    try {
+      await deleteExercise(exerciseId);
+      setRejected((prev) => prev.filter((e) => e.id !== exerciseId));
+    } catch {
+      setRejectedError("Failed to delete exercise.");
+    }
+  };
+
+  // --- Manage muscles handlers ---
+  const handleDeleteMuscle = async (muscle: Muscle) => {
+    if (
+      !confirm(
+        `Delete "${muscle.name}" from the muscle library? This cannot be undone.`,
+      )
+    )
+      return;
+    setDeletingMuscleId(muscle.id);
+    setManageMusclesError("");
+    try {
+      await deletePendingMuscle(muscle.id);
+      setAllMuscles((prev) => prev.filter((m) => m.id !== muscle.id));
+    } catch {
+      setManageMusclesError(
+        "Failed to delete muscle. It may be assigned to exercises.",
+      );
+    } finally {
+      setDeletingMuscleId(null);
     }
   };
 
@@ -429,21 +496,38 @@ export default function AdminExercisesPage() {
     }
     setMuscleFormSaving(true);
     setMuscleFormError("");
-    setMuscleFormSaved(false);
+
     try {
       const created = await addMuscle({
         name: newMuscleName.trim(),
         muscleGroup: newMuscleGroup,
-        imageUrl: newMuscleImageUrl.trim() || null,
+        imageUrl: null,
       });
+      setCreatedMuscleId(created.id);
       setAllMuscles((prev) => [...prev, created]);
       setNewMuscleName("");
-      setNewMuscleImageUrl("");
-      setMuscleFormSaved(true);
+      setAddMuscleUploaded(false);
+      setAddMuscleFile(null);
+      setAddMuscleUploadError("");
     } catch {
       setMuscleFormError("Failed to add muscle. Please try again.");
     } finally {
       setMuscleFormSaving(false);
+    }
+  };
+
+  const handleAddMuscleImageUpload = async () => {
+    if (!addMuscleFile || !createdMuscleId) return;
+    setAddMuscleUploading(true);
+    setAddMuscleUploadError("");
+    try {
+      await uploadMuscleImage(createdMuscleId, addMuscleFile);
+      setAddMuscleUploaded(true);
+      // setMuscleFormSaved(true);
+    } catch {
+      setAddMuscleUploadError("Image upload failed. Please try again.");
+    } finally {
+      setAddMuscleUploading(false);
     }
   };
 
@@ -591,7 +675,7 @@ export default function AdminExercisesPage() {
   // --- Default view ---
   return (
     <div>
-      <h1>Exercises</h1>
+      <h1>Admin Panel</h1>
       <div>
         <button onClick={() => setActiveTab("library")}>
           Exercise Library
@@ -602,6 +686,12 @@ export default function AdminExercisesPage() {
         <button onClick={() => setActiveTab("pendingMuscles")}>
           Pending Muscles{" "}
           {pendingMuscles.length > 0 && `(${pendingMuscles.length})`}
+        </button>
+        <button onClick={() => setActiveTab("rejected")}>
+          Rejected Exercises
+        </button>
+        <button onClick={() => setActiveTab("manageMuscles")}>
+          Manage Muscles
         </button>
         <button onClick={() => setActiveTab("muscles")}>Add Muscle</button>
       </div>
@@ -914,51 +1004,207 @@ export default function AdminExercisesPage() {
         </div>
       )}
 
+      {activeTab === "rejected" && (
+        <div>
+          {rejectedLoading && <p>Loading...</p>}
+          {rejectedError && <p>{rejectedError}</p>}
+          {!rejectedLoading && !rejectedError && rejected.length === 0 && (
+            <p>No rejected exercises on record.</p>
+          )}
+          {!rejectedLoading && !rejectedError && rejected.length > 0 && (
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Submitted By</th>
+                  <th>Date</th>
+                  <th>Muscles</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rejected.map((ex) => (
+                  <tr key={ex.id}>
+                    <td>{ex.name}</td>
+                    <td>{ex.category}</td>
+                    <td>{ex.submittedByUsername ?? "Unknown"}</td>
+                    <td>{new Date(ex.createdAt).toLocaleDateString()}</td>
+                    <td>
+                      {ex.muscles.length === 0
+                        ? "None"
+                        : ex.muscles
+                            .map(
+                              (m) =>
+                                `${m.muscleName}${m.isPrimary ? " (primary)" : ""}`,
+                            )
+                            .join(", ")}
+                    </td>
+                    <td>
+                      <button
+                        onClick={() => handleDeleteRejected(ex.id)}
+                        style={{ color: "#e74c3c" }}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
+      {activeTab === "manageMuscles" && (
+        <div>
+          <input
+            type="text"
+            placeholder="Search muscles..."
+            value={manageMusclesSearch}
+            onChange={(e) => setManageMusclesSearch(e.target.value)}
+            style={{ marginBottom: "1rem" }}
+          />
+          {manageMusclesError && (
+            <p style={{ color: "#e74c3c" }}>{manageMusclesError}</p>
+          )}
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Group</th>
+                <th>Status</th>
+                <th>Image</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allMuscles
+                .filter(
+                  (m) =>
+                    m.name
+                      .toLowerCase()
+                      .includes(manageMusclesSearch.toLowerCase()) ||
+                    m.muscleGroup
+                      .toLowerCase()
+                      .includes(manageMusclesSearch.toLowerCase()),
+                )
+                .map((m) => (
+                  <tr key={m.id}>
+                    <td>{m.name}</td>
+                    <td>{m.muscleGroup}</td>
+                    <td>{m.isApproved ? "Approved" : "Pending"}</td>
+                    <td>{m.imageUrl ? "✓ Set" : "Not set"}</td>
+                    <td>
+                      <button
+                        onClick={() => handleDeleteMuscle(m)}
+                        disabled={deletingMuscleId === m.id}
+                        style={{ color: "#e74c3c" }}
+                      >
+                        {deletingMuscleId === m.id ? "Deleting..." : "Delete"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
       {activeTab === "muscles" && (
         <div>
           <h2>Add New Muscle</h2>
-          <div>
-            <label>
-              Name
-              <input
-                type="text"
-                value={newMuscleName}
-                onChange={(e) => setNewMuscleName(e.target.value)}
-                placeholder="e.g. Upper Chest"
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Muscle Group
-              <select
-                value={newMuscleGroup}
-                onChange={(e) => setNewMuscleGroup(e.target.value)}
+          {!createdMuscleId ? (
+            <>
+              <div>
+                <label>
+                  Name
+                  <input
+                    type="text"
+                    value={newMuscleName}
+                    onChange={(e) => setNewMuscleName(e.target.value)}
+                    placeholder="e.g. Upper Chest"
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Muscle Group
+                  <select
+                    value={newMuscleGroup}
+                    onChange={(e) => setNewMuscleGroup(e.target.value)}
+                  >
+                    {CATEGORIES.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              {muscleFormError && (
+                <p style={{ color: "#e74c3c" }}>{muscleFormError}</p>
+              )}
+              <button onClick={handleAddMuscle} disabled={muscleFormSaving}>
+                {muscleFormSaving ? "Creating..." : "Next: Upload Image"}
+              </button>
+            </>
+          ) : (
+            <>
+              <p>
+                Muscle created. Now upload an image for{" "}
+                <strong>
+                  {allMuscles.find((m) => m.id === createdMuscleId)?.name}
+                </strong>
+                .
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "0.5rem",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                }}
               >
-                {CATEGORIES.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div>
-            <label>
-              Image URL (optional — paste Azure Blob Storage URL)
-              <input
-                type="text"
-                value={newMuscleImageUrl}
-                onChange={(e) => setNewMuscleImageUrl(e.target.value)}
-                placeholder="https://azulstoress23u277wpfnw.blob.core.windows.net/muscle-images/..."
-              />
-            </label>
-          </div>
-          {muscleFormSaved && <p>Muscle added successfully!</p>}
-          {muscleFormError && <p>{muscleFormError}</p>}
-          <button onClick={handleAddMuscle} disabled={muscleFormSaving}>
-            {muscleFormSaving ? "Adding..." : "Add Muscle"}
-          </button>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    setAddMuscleFile(e.target.files?.[0] ?? null);
+                    setAddMuscleUploaded(false);
+                    setAddMuscleUploadError("");
+                  }}
+                />
+                <button
+                  onClick={handleAddMuscleImageUpload}
+                  disabled={!addMuscleFile || addMuscleUploading}
+                >
+                  {addMuscleUploading ? "Uploading..." : "Upload Image"}
+                </button>
+                {addMuscleUploaded && (
+                  <span style={{ color: "#2ecc71" }}>✓ Image uploaded</span>
+                )}
+                {addMuscleUploadError && (
+                  <span style={{ color: "#e74c3c" }}>
+                    {addMuscleUploadError}
+                  </span>
+                )}
+              </div>
+              {addMuscleUploaded && (
+                <button
+                  onClick={() => {
+                    setCreatedMuscleId(null);
+                    setAddMuscleFile(null);
+                    setAddMuscleUploaded(false);
+                    // setMuscleFormSaved(false);
+                    setNewMuscleGroup("Chest");
+                  }}
+                  style={{ marginTop: "0.75rem" }}
+                >
+                  Add Another Muscle
+                </button>
+              )}
+            </>
+          )}
         </div>
       )}
     </div>

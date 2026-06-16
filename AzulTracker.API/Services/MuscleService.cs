@@ -14,13 +14,15 @@ public class MuscleService
         _context = context;
     }
 
-    public async Task<MuscleDto> CreateMuscleAsync(CreateMuscleDto dto)
+    public async Task<MuscleDto> CreateMuscleAsync(int userId,CreateMuscleDto dto)
     {
         var muscle = new Muscle
         {
             Name = dto.Name,
             MuscleGroup = dto.MuscleGroup,
-            IsApproved = false
+            IsApproved = false,
+            SubmittedByUserId = userId,
+            CreatedAt = DateTime.UtcNow
         };
 
         _context.Muscles.Add(muscle);
@@ -32,7 +34,9 @@ public class MuscleService
             Name = muscle.Name,
             MuscleGroup = muscle.MuscleGroup,
             ImageUrl = muscle.ImageUrl,
-            IsApproved = muscle.IsApproved
+            IsApproved = muscle.IsApproved,
+            SubmittedByUsername = null,
+            CreatedAt = muscle.CreatedAt
         };
     }
 

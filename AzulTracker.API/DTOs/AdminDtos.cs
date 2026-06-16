@@ -94,6 +94,8 @@ public class MuscleDto
     public string MuscleGroup { get; set; } = string.Empty;
     public string? ImageUrl { get; set; }
     public bool IsApproved { get; set; }
+    public string? SubmittedByUsername { get; set; }
+    public DateTime CreatedAt { get; set; }
 }
 
 public class AssignMusclesDto
