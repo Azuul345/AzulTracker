@@ -183,4 +183,11 @@ public class AdminController(AdminService adminService) : ControllerBase
         return NoContent();
     }
 
+    [HttpGet("exercises/rejected")]
+    public async Task<IActionResult> GetRejectedExercises()
+    {
+        var exercises = await adminService.GetRejectedExercisesAsync();
+        return Ok(exercises);
+    }
+
 }

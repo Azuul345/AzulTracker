@@ -178,6 +178,7 @@ export default function ProgramDetailPage() {
         description: submitDescription || undefined,
         muscleAssignments: allAssignments,
       });
+      window.dispatchEvent(new CustomEvent("admin-pending-changed"));
 
       // 3. Add it to the program day (video URL goes here, NOT on the exercise)
       const orderIndex = (exercisesByDay[dayId]?.length ?? 0) + 1;

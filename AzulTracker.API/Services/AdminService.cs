@@ -217,6 +217,7 @@ public class AdminService(AppDbContext db, BlobStorageService blobStorageService
         var exercises = await db.ExerciseLibrary
             .Include(e => e.ExerciseMuscles)
                 .ThenInclude(em => em.Muscle)
+            .Where(e => !e.IsRejected)
             .OrderBy(e => e.Name)
             .ToListAsync(); // fetch into memory first
 
@@ -272,7 +273,7 @@ public class AdminService(AppDbContext db, BlobStorageService blobStorageService
     public async Task<int> GetPendingExerciseCountAsync()
     {
     return await db.ExerciseLibrary
-        .CountAsync(e => !e.IsApproved);
+        .CountAsync(e => !e.IsApproved && !e.IsRejected);
     }
 
     public async Task<(bool Success, string Error)> DeleteExerciseAsync(int exerciseId)
@@ -302,14 +303,17 @@ public class AdminService(AppDbContext db, BlobStorageService blobStorageService
     {
         return await db.Muscles
             .Where(m => !m.IsApproved)
-            .OrderBy(m => m.MuscleGroup)
-            .ThenBy(m => m.Name)
+            .Include(m => m.SubmittedBy)
+            .OrderBy(m => m.CreatedAt)
             .Select(m => new MuscleDto
             {
                 Id = m.Id,
                 Name = m.Name,
                 MuscleGroup = m.MuscleGroup,
-                ImageUrl = m.ImageUrl
+                ImageUrl = m.ImageUrl,
+                IsApproved = m.IsApproved,
+                SubmittedByUsername = m.SubmittedBy != null ? m.SubmittedBy.Username : null,
+                CreatedAt = m.CreatedAt
             })
             .ToListAsync();
     }
@@ -334,7 +338,7 @@ public class AdminService(AppDbContext db, BlobStorageService blobStorageService
     {
         var muscle = await db.Muscles.FindAsync(muscleId);
         if (muscle is null) return (false, "Muscle not found.");
-        if (muscle.IsApproved) return (false, "Cannot delete an approved muscle.");
+        
 
         db.Muscles.Remove(muscle);
         await db.SaveChangesAsync();
@@ -342,18 +346,47 @@ public class AdminService(AppDbContext db, BlobStorageService blobStorageService
     }
 
     public async Task<(bool Success, string Error)> UploadMuscleImageAsync(int muscleId, IFormFile file)
-{
-    var muscle = await db.Muscles.FindAsync(muscleId);
-    if (muscle is null) return (false, "Muscle not found.");
+    {
+        var muscle = await db.Muscles.FindAsync(muscleId);
+        if (muscle is null) return (false, "Muscle not found.");
 
-    var extension = Path.GetExtension(file.FileName);
-    var fileName = $"muscle-{muscleId}{extension}";
+        var extension = Path.GetExtension(file.FileName);
+        var fileName = $"muscle-{muscleId}{extension}";
 
-    var imageUrl = await blobStorageService.UploadMuscleImageAsync(file, fileName);
-    muscle.ImageUrl = imageUrl;
+        var imageUrl = await blobStorageService.UploadMuscleImageAsync(file, fileName);
+        muscle.ImageUrl = imageUrl;
 
-    await db.SaveChangesAsync();
-    return (true, string.Empty);
-}
+        await db.SaveChangesAsync();
+        return (true, string.Empty);
+    }
+
+    public async Task<List<PendingExerciseDto>> GetRejectedExercisesAsync()
+    {
+        return await db.ExerciseLibrary
+            .Where(e => e.IsRejected)
+            .Include(e => e.SubmittedBy)
+            .Include(e => e.ExerciseMuscles)
+                .ThenInclude(em => em.Muscle)
+            .Select(e => new PendingExerciseDto
+            {
+                Id = e.Id,
+                Name = e.Name,
+                Category = e.Category,
+                VideoUrl = e.VideoUrl,
+                SubmittedByUserId = e.SubmittedByUserId,
+                SubmittedByUsername = e.SubmittedBy != null ? e.SubmittedBy.Username : null,
+                CreatedAt = e.CreatedAt,
+                Muscles = e.ExerciseMuscles.Select(em => new ExerciseMuscleDto
+                {
+                    MuscleId = em.MuscleId,
+                    MuscleName = em.Muscle.Name,
+                    MuscleGroup = em.Muscle.MuscleGroup,
+                    ImageUrl = em.Muscle.ImageUrl,
+                    IsPrimary = em.IsPrimary
+                }).ToList()
+            })
+            .OrderByDescending(e => e.CreatedAt)
+            .ToListAsync();
+    }
 
 }
