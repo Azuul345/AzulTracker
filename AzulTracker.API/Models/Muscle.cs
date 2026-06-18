@@ -8,4 +8,9 @@ public class Muscle
     public string? ImageUrl { get; set; }
 
     public ICollection<ExerciseMuscle> ExerciseMuscles { get; set; } = [];
+
+    public bool IsApproved { get; set; } = true;
+    public int? SubmittedByUserId { get; set; }
+    public User? SubmittedBy { get; set; }
+    public DateTime CreatedAt { get; set; } 
 }

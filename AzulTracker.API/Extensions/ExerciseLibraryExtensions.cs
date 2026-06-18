@@ -12,6 +12,7 @@ public static class ExerciseLibraryExtensions
             Id = exercise.Id,
             Name = exercise.Name,
             Category = exercise.Category,
+            Description = exercise.Description,
             VideoUrl = exercise.VideoUrl,
             IsCustom = exercise.IsCustom,
             IsApproved = exercise.IsApproved,
@@ -34,6 +35,7 @@ public static class ExerciseLibraryExtensions
         {
             Name = dto.Name,
             Category = dto.Category,
+            Description = dto.Description,
             VideoUrl = dto.VideoUrl,
             IsCustom = true,
             IsApproved = false,

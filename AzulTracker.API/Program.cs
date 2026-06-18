@@ -8,6 +8,9 @@ using System.Text;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using System.Security.Claims;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,11 +57,15 @@ builder.Services.AddScoped<ProgramExerciseService>();
 builder.Services.AddScoped<WorkoutLogService>();
 builder.Services.AddScoped<ExerciseLibraryService>();
 builder.Services.AddScoped<AdminService>();
+builder.Services.AddScoped<MuscleService>();
+builder.Services.AddScoped<BlobStorageService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddRateLimiter(options =>
 {
+
+    
     // Strict policy for auth routes — 5 attempts per 15 minutes per IP
     options.AddFixedWindowLimiter("AuthPolicy", opt =>
     {
@@ -77,6 +84,24 @@ builder.Services.AddRateLimiter(options =>
         opt.QueueLimit = 0;
     });
 
+    // Submit policy for exercise submission — 3 per hour per user, admins exempt
+  options.AddPolicy("SubmitPolicy", httpContext =>
+{
+    if (httpContext.User.IsInRole("Admin"))
+        return RateLimitPartition.GetNoLimiter<string>("admin");
+
+    var userId = httpContext.User
+        .FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
+
+    return RateLimitPartition.GetFixedWindowLimiter<string>(userId,
+        _ => new FixedWindowRateLimiterOptions
+        {
+            Window = TimeSpan.FromHours(1),
+            PermitLimit = 3,
+            QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+            QueueLimit = 0
+        });
+});
     // Return 429 Too Many Requests
     options.RejectionStatusCode = 429;
 });
@@ -111,17 +136,20 @@ app.UseRateLimiter();
 app.UseCors("AllowFrontend");
 
 // Security headers
-app.Use(async (context, next) =>
+if (!app.Environment.IsDevelopment())
 {
-    context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
-    context.Response.Headers.Append("X-Frame-Options", "DENY");
-    context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
-    context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
-    context.Response.Headers.Append("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
-    context.Response.Headers.Append("Content-Security-Policy",
-        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-ancestors 'none';");
-    await next();
-});
+    app.Use(async (context, next) =>
+    {
+        context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+        context.Response.Headers.Append("X-Frame-Options", "DENY");
+        context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
+        context.Response.Headers.Append("Referrer-Policy", "strict-origin-when-cross-origin");
+        context.Response.Headers.Append("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
+        context.Response.Headers.Append("Content-Security-Policy",
+            "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; frame-ancestors 'none';");
+        await next();
+    });
+}
 
 app.UseAuthentication();
 app.UseAuthorization();

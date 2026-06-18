@@ -37,16 +37,35 @@ public class ExerciseLibraryService(AppDbContext db)
 
         return exercise?.ToDto();
     }
+    
     public async Task<ExerciseLibraryDto> SubmitCustomAsync(
-    int userId, CreateExerciseLibraryDto dto)
+    int userId, CreateExerciseLibraryDto dto, bool isAdmin = false)
     {
         var exercise = dto.ToEntity(userId);
+        exercise.IsApproved = isAdmin;
         db.ExerciseLibrary.Add(exercise);
         await db.SaveChangesAsync();
 
-        // Reload with muscle includes for the response
-        // (new entity has no muscles yet — empty list is correct)
-        return exercise.ToDto();
+        // Save muscle assignments
+        foreach (var assignment in dto.MuscleAssignments)
+        {
+            db.ExerciseMuscles.Add(new ExerciseMuscle
+            {
+                ExerciseLibraryId = exercise.Id,
+                MuscleId = assignment.MuscleId,
+                IsPrimary = assignment.IsPrimary
+            });
+        }
+
+        await db.SaveChangesAsync();
+
+        // Reload with muscles included for the response
+        var result = await db.ExerciseLibrary
+            .Include(e => e.ExerciseMuscles)
+                .ThenInclude(em => em.Muscle)
+            .FirstAsync(e => e.Id == exercise.Id);
+
+        return result.ToDto();
     }
 
     public async Task<(ExerciseLibraryDto? Result, string? Error)> UpdateAsync(

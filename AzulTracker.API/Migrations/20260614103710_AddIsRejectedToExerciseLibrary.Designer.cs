@@ -4,6 +4,7 @@ using AzulTracker.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AzulTracker.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260614103710_AddIsRejectedToExerciseLibrary")]
+    partial class AddIsRejectedToExerciseLibrary
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,6 +56,9 @@ namespace AzulTracker.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SubmittedById")
+                        .HasColumnType("int");
+
                     b.Property<int?>("SubmittedByUserId")
                         .HasColumnType("int");
 
@@ -61,7 +67,7 @@ namespace AzulTracker.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SubmittedByUserId");
+                    b.HasIndex("SubmittedById");
 
                     b.ToTable("ExerciseLibrary");
 
@@ -6591,11 +6597,6 @@ namespace AzulTracker.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
@@ -6610,15 +6611,7 @@ namespace AzulTracker.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubmittedById")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SubmittedByUserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SubmittedById");
 
                     b.ToTable("Muscles");
 
@@ -6626,7 +6619,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Chest",
                             Name = "Pectoralis Major"
@@ -6634,7 +6626,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Chest",
                             Name = "Pectoralis Minor"
@@ -6642,7 +6633,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Back",
                             Name = "Latissimus Dorsi"
@@ -6650,7 +6640,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Back",
                             Name = "Rhomboids"
@@ -6658,7 +6647,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Back",
                             Name = "Erector Spinae"
@@ -6666,7 +6654,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Back",
                             Name = "Teres Major"
@@ -6674,7 +6661,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Shoulders",
                             Name = "Lateral Deltoid"
@@ -6682,7 +6668,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Shoulders",
                             Name = "Anterior Deltoid"
@@ -6690,7 +6675,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Shoulders",
                             Name = "Posterior Deltoid"
@@ -6698,7 +6682,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Shoulders",
                             Name = "Trapezius"
@@ -6706,7 +6689,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 11,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Shoulders",
                             Name = "Rotator Cuff"
@@ -6714,7 +6696,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 12,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Arms",
                             Name = "Biceps Brachii"
@@ -6722,7 +6703,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 13,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Arms",
                             Name = "Brachialis"
@@ -6730,7 +6710,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 14,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Arms",
                             Name = "Triceps Brachii"
@@ -6738,7 +6717,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 15,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Arms",
                             Name = "Forearms"
@@ -6746,7 +6724,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 30,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Arms",
                             Name = "Brachioradialis"
@@ -6754,7 +6731,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 16,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Core",
                             Name = "Rectus Abdominis"
@@ -6762,7 +6738,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 17,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Core",
                             Name = "Obliques"
@@ -6770,7 +6745,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 18,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Core",
                             Name = "Transverse Abdominis"
@@ -6778,7 +6752,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 19,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Core",
                             Name = "Serratus Anterior"
@@ -6786,7 +6759,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 20,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Legs",
                             Name = "Quadriceps"
@@ -6794,7 +6766,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 21,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Legs",
                             Name = "Hamstrings"
@@ -6802,7 +6773,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 22,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Legs",
                             Name = "Adductors"
@@ -6810,7 +6780,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 23,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Legs",
                             Name = "Abductors"
@@ -6818,7 +6787,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 29,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Legs",
                             Name = "Hip Flexors"
@@ -6826,7 +6794,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 24,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Glutes",
                             Name = "Gluteus Maximus"
@@ -6834,7 +6801,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 25,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Glutes",
                             Name = "Gluteus Medius"
@@ -6842,7 +6808,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 26,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Calves",
                             Name = "Gastrocnemius"
@@ -6850,7 +6815,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 27,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Calves",
                             Name = "Soleus"
@@ -6858,7 +6822,6 @@ namespace AzulTracker.API.Migrations
                         new
                         {
                             Id = 28,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsApproved = true,
                             MuscleGroup = "Calves",
                             Name = "Tibialis Anterior"
@@ -7091,8 +7054,7 @@ namespace AzulTracker.API.Migrations
                 {
                     b.HasOne("AzulTracker.API.Models.User", "SubmittedBy")
                         .WithMany()
-                        .HasForeignKey("SubmittedByUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("SubmittedById");
 
                     b.Navigation("SubmittedBy");
                 });
@@ -7114,15 +7076,6 @@ namespace AzulTracker.API.Migrations
                     b.Navigation("ExerciseLibrary");
 
                     b.Navigation("Muscle");
-                });
-
-            modelBuilder.Entity("AzulTracker.API.Models.Muscle", b =>
-                {
-                    b.HasOne("AzulTracker.API.Models.User", "SubmittedBy")
-                        .WithMany()
-                        .HasForeignKey("SubmittedById");
-
-                    b.Navigation("SubmittedBy");
                 });
 
             modelBuilder.Entity("AzulTracker.API.Models.ProgramDay", b =>

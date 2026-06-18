@@ -1,16 +1,27 @@
 import api from "./api";
-import type { TrainingProgram, ProgramDay, ProgramExercise, ExerciseSearchResult } from "../types/program";
+import type {
+  TrainingProgram,
+  ProgramDay,
+  ProgramExercise,
+  ExerciseSearchResult,
+  MuscleOption,
+} from "../types/program";
 
 // --- Training Programs ---
 
 export const getPrograms = () =>
   api.get<TrainingProgram[]>("/training-programs");
 
-export const createProgram = (data: { name: string; description?: string; daysPerWeek: number }) =>
-  api.post<TrainingProgram>("/training-programs", data);
+export const createProgram = (data: {
+  name: string;
+  description?: string;
+  daysPerWeek: number;
+}) => api.post<TrainingProgram>("/training-programs", data);
 
-export const updateProgram = (id: number, data: { name: string; description?: string; daysPerWeek: number }) =>
-  api.put<TrainingProgram>(`/training-programs/${id}`, data);
+export const updateProgram = (
+  id: number,
+  data: { name: string; description?: string; daysPerWeek: number },
+) => api.put<TrainingProgram>(`/training-programs/${id}`, data);
 
 export const deleteProgram = (id: number) =>
   api.delete(`/training-programs/${id}`);
@@ -22,15 +33,22 @@ export const getDays = (programId: number) =>
   api.get<ProgramDay[]>(`/training-programs/${programId}/days`);
 
 export const getExercisesForDay = (programId: number, dayId: number) =>
-  api.get<ProgramExercise[]>(`/training-programs/${programId}/days/${dayId}/exercises`);
+  api.get<ProgramExercise[]>(
+    `/training-programs/${programId}/days/${dayId}/exercises`,
+  );
 
 // --- Program Days ---
 
-export const createDay = (programId: number, data: { name: string; dayOrder: number }) =>
-  api.post<ProgramDay>(`/training-programs/${programId}/days`, data);
+export const createDay = (
+  programId: number,
+  data: { name: string; dayOrder: number },
+) => api.post<ProgramDay>(`/training-programs/${programId}/days`, data);
 
-export const updateDay = (programId: number, dayId: number, data: { name: string; dayOrder: number }) =>
-  api.put<ProgramDay>(`/training-programs/${programId}/days/${dayId}`, data);
+export const updateDay = (
+  programId: number,
+  dayId: number,
+  data: { name: string; dayOrder: number },
+) => api.put<ProgramDay>(`/training-programs/${programId}/days/${dayId}`, data);
 
 export const deleteDay = (programId: number, dayId: number) =>
   api.delete(`/training-programs/${programId}/days/${dayId}`);
@@ -47,8 +65,13 @@ export const createExercise = (
     reps: number;
     orderIndex: number;
     notes?: string;
-  }
-) => api.post<ProgramExercise>(`/training-programs/${programId}/days/${dayId}/exercises`, data);
+    videoUrl?: string;
+  },
+) =>
+  api.post<ProgramExercise>(
+    `/training-programs/${programId}/days/${dayId}/exercises`,
+    data,
+  );
 
 export const updateExercise = (
   programId: number,
@@ -61,13 +84,39 @@ export const updateExercise = (
     reps: number;
     orderIndex: number;
     notes?: string;
-  }
-) => api.put<ProgramExercise>(`/training-programs/${programId}/days/${dayId}/exercises/${exerciseId}`, data);
+    videoUrl?: string;
+  },
+) =>
+  api.put<ProgramExercise>(
+    `/training-programs/${programId}/days/${dayId}/exercises/${exerciseId}`,
+    data,
+  );
 
-export const deleteExercise = (programId: number, dayId: number, exerciseId: number) =>
-  api.delete(`/training-programs/${programId}/days/${dayId}/exercises/${exerciseId}`);
+export const deleteExercise = (
+  programId: number,
+  dayId: number,
+  exerciseId: number,
+) =>
+  api.delete(
+    `/training-programs/${programId}/days/${dayId}/exercises/${exerciseId}`,
+  );
 
 // --- Exercise Library Search ---
 
 export const searchExercises = (query: string) =>
-  api.get<ExerciseSearchResult[]>(`/exercises?query=${encodeURIComponent(query)}`);
+  api.get<ExerciseSearchResult[]>(
+    `/exercises?query=${encodeURIComponent(query)}`,
+  );
+
+export const getApprovedMuscles = () =>
+  api.get<MuscleOption[]>("/muscles?approved=true");
+
+export const submitMuscle = (dto: { name: string; muscleGroup: string }) =>
+  api.post<{ id: number; name: string; muscleGroup: string }>("/muscles", dto);
+
+export const submitExercise = (dto: {
+  name: string;
+  category: string;
+  description?: string;
+  muscleAssignments: { muscleId: number; isPrimary: boolean }[];
+}) => api.post<ExerciseSearchResult>("/exercises", dto);
